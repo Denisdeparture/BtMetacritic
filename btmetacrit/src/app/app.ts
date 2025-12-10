@@ -13,11 +13,13 @@ import { HeaderComponent, Hint } from "../components/header-component/header-com
 
 
 export class App {
-  protected readonly title = signal('btmetacrit');
-
-  private baseHints: Hint[] =  [
+    baseHints: Hint[] =  [
     {id: 0, title: 'Home', },
     {id: 1, title: 'Category' },
     {id: 2, title: 'New'}
   ]
+  
+  protected readonly title = signal('btmetacrit');
+
+
 }
