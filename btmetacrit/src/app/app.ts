@@ -14,7 +14,11 @@ import { HeaderComponent, Hint } from "../components/header-component/header-com
 
 export class App {
     baseHints: Hint[] =  [
-    {id: 0, title: 'Home', },
+    {id: 0, title: 'Home', roots: new Map<string, string>([
+      ["Game", "/game"],
+      ["User reviews", "/userreviews"],
+      ["Criric reviews", "/criticreviews"]
+    ])},
     {id: 1, title: 'Category' },
     {id: 2, title: 'New'}
   ]

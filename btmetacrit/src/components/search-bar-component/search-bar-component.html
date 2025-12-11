@@ -1,4 +1,4 @@
 <div class="search-bar">
-  <label for="search-bar-input"><i class="fa-solid fa-magnifying-glass"></i></label>
-  <input name="search-bar-input" type="text" [formControl]="validationForm" [(ngModel)]='value'>
+  <label for="search-bar-input"><i #searcher class="fa-solid fa-magnifying-glass"></i></label>
+  <input name="search-bar-input" type="text" [formControl]="validationForm" [(ngModel)]='value' (input)="clickOnInput()">
 </div>
