@@ -22,14 +22,16 @@ export class TitleHintsComponent implements OnInit {
   readonly listHints = input<Map<string,string>>();
 
   @HostListener('mouseenter') onMouseEnter(): void {
-    this.renderer.setStyle(this.listEl, 'display', 'none'); // Maybe opacity 1-0
-  }
-   @HostListener('mouseenter') onMouseLeave(): void {
     this.renderer.setStyle(this.listEl, 'display', 'block'); // Maybe opacity 1-0
+  }
+   @HostListener('mouseleave') onMouseLeave(): void {
+    this.renderer.setStyle(this.listEl, 'display', 'none'); // Maybe opacity 1-0
+    
   }
   ngOnInit(): void {
     this.renderer.addClass(this.listEl, NAMES.list);
 
+    if(!this.listHints()) { return; }
     for(const hint of this.listHints()!){
 
       const li = this.renderer.createElement('li');
@@ -37,11 +39,13 @@ export class TitleHintsComponent implements OnInit {
       this.renderer.addClass(li, NAMES.el)
   
       const titleHint = hint[0];
-
-      this.renderer.appendChild(li, titleHint);
+      
+      this.renderer.appendChild(li, this.renderer.createText(titleHint));
 
       this.renderer.appendChild(this.listEl, li)
     }
+    this.renderer.setStyle(this.listEl, 'display', 'none');
+    this.renderer.setStyle(this.listEl, 'position', 'absolute');
     this.renderer.appendChild(this.host.nativeElement, this.listEl)
   }
 }

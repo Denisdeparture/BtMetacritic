@@ -1,9 +1,14 @@
 <div class="right-part">
     <app-search-bar-component/>
-    @for(item of allHints(); track item.id){
+    <div class="right-part-hints">
+    @for(item of allHints(); track item){
         <app-title-hints-component [listHints]="item.roots" [title]="item.title"/>
     }
+    </div>
 </div>
-<button class="auth-button" type="button">
-    <i class="fa-solid fa-user"></i>
-</button>
+<div class="left-part">
+    <button class="left-part__button-auth" type="button">
+        <i class="fa-solid fa-user"></i>
+    </button>
+</div>
+
