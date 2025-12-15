@@ -1,0 +1,29 @@
+:host{
+    display: flex;
+    justify-content: center;
+}
+.caption-container{
+    display:flex;
+    height: 7vh;
+    margin-bottom: 10px;
+    width: 50%;
+    border: solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+.caption-container .title{
+    margin-right: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: end;
+}
+.caption-container .link {
+    display: flex;
+    align-items: center;
+}
+.caption-container .link a {
+    text-decoration: none;
+    color: #626262;
+}

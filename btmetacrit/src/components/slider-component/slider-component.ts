@@ -26,7 +26,6 @@ export class SliderComponent implements OnInit {
   readonly centerIndex = signal(0)
 
   recalculateToMap(): void{
-    
     const map = new Map<number, SliderObject[]>();
     let count = 0;
     const num = Math.floor(this.objects()!.length / this.maxLengthCell());
