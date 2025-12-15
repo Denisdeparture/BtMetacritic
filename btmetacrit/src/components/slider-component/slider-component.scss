@@ -1,9 +1,40 @@
 :host{
     display: flex;
-    justify-content: space-around;
+    flex-direction: row;
+    justify-content: center;
+
 }
+.slider{
+    display: flex;
+    background-color: rgba(228, 224, 216, 0.51);
+}
+
 .box {
     display: flex;
     justify-content: space-around;
     flex-direction: row;
+}
+.button-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.slider-button {
+    border-radius: 20px;
+    border: none;
+    background-color: black;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.slider-button:hover{
+    opacity: 0.7;
+}
+.slider-button:active{
+    opacity: 0.5;
+}
+.slider-button i {
+    color: white;
 }

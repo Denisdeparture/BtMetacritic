@@ -1,9 +1,10 @@
-<ng-container 
+<div class="slider">
+  <ng-container 
   [ngTemplateOutlet]="buttonSlider" 
-  [ngTemplateOutletContext]="{ rotate: 0 }"/>
+  [ngTemplateOutletContext]="{ rotate: 0, offset: -1 }"/>
 <div class="box">
 @for(so of objects();track so.id){
-    @if(centerObjIndex() === so.id){
+    @if(centerIndex() === so.id){
      <app-game-component [imageLink]="so.imageLink" [isCenter]="true" [rating]="so.rating" [title]="so.title"/>
     }
     @else {
@@ -14,12 +15,14 @@
 </div>
 <ng-container 
   [ngTemplateOutlet]="buttonSlider" 
-  [ngTemplateOutletContext]="{ rotate: 180 }"/>
+  [ngTemplateOutletContext]="{ rotate: 180, offset: 1 }"/>
 
-
-
-<ng-template #buttonSlider let-rotate="rotate">
-    <button class="slider-button" type="button">
+<ng-template #buttonSlider let-offset="offset" let-rotate="rotate">
+  <div class="button-container">
+    <button class="slider-button" type="button" (click)="calculateTransform(offset)" >
       <i class="fa-solid fa-arrow-left" [style.transform]="`rotate(`+rotate+`deg`+`)`"></i>
     </button>
+    </div>
 </ng-template>
+</div>
+

@@ -20,7 +20,7 @@ export class GameComponent implements OnInit {
 
 
   @HostBinding("style.margin-top") margin_top = '0px';
-
+  @HostBinding("style.transform") transform = '';
   calculateColor(): string {
     let color = "ffffff";
     if(this.rating()! < 39){
@@ -38,6 +38,7 @@ export class GameComponent implements OnInit {
   ngOnInit(): void {
     if(this.isCenter()){
       this.margin_top = '10px'
+      this.transform = 'scale(1.1)';
     }
   }
 }

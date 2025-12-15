@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "../components/header-component/header-component";
-import { MainPageComponent } from "../components/main-page-component/main-page-component";
 import { Hint } from '../types';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, MainPageComponent],
+  imports: [RouterOutlet, HeaderComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
