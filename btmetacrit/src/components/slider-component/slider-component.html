@@ -1,0 +1,25 @@
+<ng-container 
+  [ngTemplateOutlet]="buttonSlider" 
+  [ngTemplateOutletContext]="{ rotate: 0 }"/>
+<div class="box">
+@for(so of objects();track so.id){
+    @if(centerObjIndex() === so.id){
+     <app-game-component [imageLink]="so.imageLink" [isCenter]="true" [rating]="so.rating" [title]="so.title"/>
+    }
+    @else {
+     <app-game-component [imageLink]="so.imageLink" [isCenter]="false" [rating]="so.rating" [title]="so.title"/>
+    }
+
+}
+</div>
+<ng-container 
+  [ngTemplateOutlet]="buttonSlider" 
+  [ngTemplateOutletContext]="{ rotate: 180 }"/>
+
+
+
+<ng-template #buttonSlider let-rotate="rotate">
+    <button class="slider-button" type="button">
+      <i class="fa-solid fa-arrow-left" [style.transform]="`rotate(`+rotate+`deg`+`)`"></i>
+    </button>
+</ng-template>
