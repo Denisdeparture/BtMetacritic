@@ -1,0 +1,17 @@
+
+@for(obj of sliderGroups(); track obj.id){
+    <ul class="group">
+    @for(item of obj.sliderObjects; track item.id){
+        <li class="group-item"> 
+            @if(isActive(obj.id)){
+                <app-game-component [imageLink]="item.imageLink" [rating]="item.rating"  [style.display]="'block'" [title]="item.title"/>
+            }
+            @else {
+                <app-game-component [imageLink]="item.imageLink" [rating]="item.rating"  [style.display]="'flex'" [title]="item.title"/>
+            }
+        </li>
+    }
+    </ul>
+}
+
+{{log()}}

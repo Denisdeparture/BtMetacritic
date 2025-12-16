@@ -14,7 +14,7 @@ export class GameStorageService {
                     title: "Test",
                     link: './test'
                 },
-                games: [this.getSilksong(), this.getSilksong(), this.getSilksong()]
+                games: [this.getSilksong(), this.getSilksong(), this.getSilksong(), this.getSilksong()]
             });
         }
     }

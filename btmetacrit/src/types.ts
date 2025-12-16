@@ -5,6 +5,10 @@ export type SliderObject = {
   title: string,
   imageLink: string,
 }
+export type SliderGroup = {
+  id: number, 
+  sliderObjects: SliderObject[]
+}
 export type Section = {
   id: number,
   caption: Caption,

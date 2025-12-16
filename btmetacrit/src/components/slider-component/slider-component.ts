@@ -1,14 +1,15 @@
 import { CommonModule, NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, input, linkedSignal, OnInit, Renderer2, signal, WritableSignal } from '@angular/core';
-import { SliderObject } from '../../types';
-import { GameComponent } from "../game-component/game-component";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, inject, input, 
+   OnInit, signal } from '@angular/core';
+import { SliderGroup, SliderObject } from '../../types';
+import { GameGroupComponent } from '../game-group-component/game-group-component';
 
 @Component({
   selector: 'app-slider-component',
   imports: [
     CommonModule,
     NgTemplateOutlet,
-    GameComponent
+    GameGroupComponent,
 ],
   templateUrl: './slider-component.html',
   styleUrl: './slider-component.scss',
@@ -20,24 +21,38 @@ export class SliderComponent implements OnInit {
 
   readonly objects = input<SliderObject[]>();
 
-
   readonly maxLengthCell = input.required<number>();
+
+  readonly map = computed(() => this.recalculateToMap());
 
   readonly centerIndex = signal(0)
 
-  recalculateToMap(): void{
-    const map = new Map<number, SliderObject[]>();
-    let count = 0;
-    const num = Math.floor(this.objects()!.length / this.maxLengthCell());
-    for(let i = 1; i <= num; i++){
-      count = this.maxLengthCell() * i;
-      map.set(i, this.objects()!.slice(i, count));
-    }
-  }
+  recalculateToMap(): SliderGroup[]{
+    const map: SliderGroup[] = [] 
 
+    const length = this.objects()!.length! + 1;
+
+    let count = 0;
+
+    const lengthOfPart = Math.floor(length / this.maxLengthCell());
+
+    let num = this.maxLengthCell();
+    
+    for(let i = this.maxLengthCell() % 2 === 0 ? 0 : 1; i < lengthOfPart; i++){
+
+      const sliders = this.objects()!.slice(count, num >= length ? length - 1 : num);
+
+      num = sliders.length * 2;
+
+      count = sliders.length;
+
+      map.push({id:i, sliderObjects: sliders});
+    }
+    return map;
+  }
   centerObjIndex(): number{
 
-    const length = this.objects()?.length;
+    const length = this.map()?.length;
 
     let index = 0;
     
@@ -54,18 +69,21 @@ export class SliderComponent implements OnInit {
       index = (length! + 1) / 2;  
       index -= 1;   
     }
-    return index;
+    return Math.floor(index);
 
   }
   ngOnInit(): void {
     this.centerIndex.set(this.centerObjIndex());
   }
+  log(object: object): void{
+    console.log(object);
+  }
   calculateTransform(currentIndex: number): void{
-  const length = this.objects()?.length;
-
+   const length = this.map()?.length;
+   
    this.centerIndex.update((x) => {
     x = x + currentIndex;
-    if(x > length!) {
+    if(x >= length!) {
       x = 0;
     }
     if(x < 0){
@@ -73,6 +91,5 @@ export class SliderComponent implements OnInit {
     }
     return x;
    })
-    // ci can be negative
   }
 }

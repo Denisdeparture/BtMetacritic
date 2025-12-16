@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component,  computed,  HostBinding,  input, OnInit,  } from '@angular/core';
+import { ChangeDetectionStrategy, Component,  computed,  HostBinding,  input, OnChanges, OnInit,  } from '@angular/core';
 
 @Component({
   selector: 'app-game-component',
@@ -8,19 +8,15 @@ import { ChangeDetectionStrategy, Component,  computed,  HostBinding,  input, On
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class GameComponent implements OnInit {
+export class GameComponent  {
 
   readonly title = input<string>();
-  readonly isCenter = input<boolean>();
   readonly imageLink = input<string>();
   readonly imageSize = input<[string, string]>(['110', '200']);
   readonly rating = input<number>();
 
   readonly colorRating = computed(() => this.calculateColor())
-
-
-  @HostBinding("style.margin-top") margin_top = '0px';
-  @HostBinding("style.transform") transform = '';
+ 
   calculateColor(): string {
     let color = "ffffff";
     if(this.rating()! < 39){
@@ -33,13 +29,6 @@ export class GameComponent implements OnInit {
       color = RATINGS_COLORS.GOOD;
     }
     return color;
-  }
-
-  ngOnInit(): void {
-    if(this.isCenter()){
-      this.margin_top = '10px'
-      this.transform = 'scale(1.1)';
-    }
   }
 }
 export const RATINGS_COLORS = {
