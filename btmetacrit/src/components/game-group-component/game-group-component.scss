@@ -1,6 +1,18 @@
 :host {
     display: flex;
+    flex-direction: row;
+    background-color: aqua;
+    overflow-x: hidden;
+    width: 100%;
 }
 .group{
     list-style: none;
+    display: flex;
+}
+.active-el{
+    display: block;
+}
+.passive-el{
+    background-color: red;
+    display: none;
 }

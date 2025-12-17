@@ -14,7 +14,8 @@ export class GameStorageService {
                     title: "Test",
                     link: './test'
                 },
-                games: [this.getSilksong(), this.getSilksong(), this.getSilksong(), this.getSilksong()]
+                games: [this.getSilksong("Hollow knight"), this.getSilksong("Silksong"), 
+                    this.getSilksong("Test"), this.getSilksong("Game")]
             });
         }
     }
@@ -25,11 +26,11 @@ export class GameStorageService {
     getSections(): Observable<Section[]> {
         return this.storage.asObservable();
     }
-    getSilksong() : GameInfo {
+    getSilksong(name: string) : GameInfo {
         // call api, but now is test 
         return {
             type: 'app',
-            name: "Hollow knight Silksong",
+            name: name,
             is_free: false,
             short_description: "Discover a vast,"
              + "haunted kingdom in Hollow Knight: Silksong!" 
