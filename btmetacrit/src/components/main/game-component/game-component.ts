@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component,  computed,  HostBinding,  input, OnChanges, OnInit,  } from '@angular/core';
+import { ChangeDetectionStrategy, Component,  computed,   input,   } from '@angular/core';
 
 @Component({
   selector: 'app-game-component',

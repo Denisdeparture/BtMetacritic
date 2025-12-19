@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit, signal } from '@angular/core';
 import { CaptionComponent } from "../caption-component/caption-component";
 import { SliderComponent } from "../slider-component/slider-component";
-import { Section, SliderObject } from '../../types';
+import { Section, SliderObject } from '../../../types';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';

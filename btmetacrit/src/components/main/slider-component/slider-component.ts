@@ -1,7 +1,7 @@
 import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, inject, input, 
    OnInit, signal } from '@angular/core';
-import { SliderGroup, SliderObject } from '../../types';
+import { SliderGroup, SliderObject } from '../../../types';
 import { GameGroupComponent } from '../game-group-component/game-group-component';
 
 @Component({
@@ -16,6 +16,8 @@ import { GameGroupComponent } from '../game-group-component/game-group-component
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SliderComponent implements OnInit {
+
+  isRight = true;
 
   changeDetector = inject(ChangeDetectorRef);
 
@@ -78,7 +80,10 @@ export class SliderComponent implements OnInit {
   log(object: object): void{
     console.log(object);
   }
-  calculateTransform(currentIndex: number): void{
+  calculateTransform(currentIndex: number, side: 'RIGHT' | 'LEFT'): void{
+
+   this.isRight = side === 'RIGHT' ? true : false
+    
    const length = this.map()?.length;
    
    this.centerIndex.update((x) => {

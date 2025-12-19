@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { SearchBarComponent } from "../search-bar-component/search-bar-component";
 import { TitleHintsComponent } from "../title-hints-component/title-hints-component";
-import { Hint } from '../../types';
+import { Hint } from '../../../types';
 
 @Component({
   selector: 'app-header-component',

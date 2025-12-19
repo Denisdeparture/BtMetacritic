@@ -1,23 +1,27 @@
 import { ChangeDetectionStrategy, Component,  input, } from '@angular/core';
-import { SliderGroup } from '../../types';
+import { SliderGroup } from '../../../types';
 import { GameComponent } from "../game-component/game-component";
 import {animate, style, transition, trigger } from '@angular/animations'
 
 // please connect with button click
-const slideTransitionIn = transition(':enter', [
-  style({opacity: 1}),
-  animate('0.6s ease-in', style({transform: 'translateX(600px)', opacity: 0}))
+const slideTransitionInRight = transition(':enter', [
+  animate('1s ease-in', style({transform: 'translateX(600px)'}))
 ])
- const slideTransitionOut = transition(':enter', [
-  style({opacity: 0, transform: 'translateX(-600px)' }),
-  animate('0.6s ease-in', style({opacity: 1, transform: 'translateX(0px)'}))
+const slideTransitionLeft = transition(':enter', [
+  animate('1s ease-in', style({transform: 'translateX(-600px)'}))
 ])
+//  const slideTransitionOut = transition(':enter', [
+//   style({opacity: 1, transform: 'translateX(-600px)' }),
+//   animate('1s ease-in', style({opacity: 0, transform: 'translateX(0px)'}))
+// ])
 
-const slideIn = trigger('slideIn', [slideTransitionIn])
-const slideOut = trigger('slideOut', [slideTransitionOut])
+const slideInR = trigger('slideInR', [slideTransitionInRight])
+const slideInL = trigger('slideInL', [slideTransitionLeft])
+
+// const slideOut = trigger('slideOut', [slideTransitionOut])
 
 @Component({
-  animations: [slideIn, slideOut],
+  animations: [slideInR, slideInL],
   selector: 'app-game-group-component',
   imports: [ GameComponent],
   templateUrl: './game-group-component.html',
@@ -27,6 +31,8 @@ const slideOut = trigger('slideOut', [slideTransitionOut])
 export class GameGroupComponent  {
 
   readonly sliderGroups = input.required<SliderGroup[]>();
+
+  readonly isRightSlide = input.required<boolean>();
 
   readonly activeIndex = input.required<number>();
 

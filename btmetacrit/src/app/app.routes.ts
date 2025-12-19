@@ -1,13 +1,13 @@
 import { Routes } from '@angular/router';
 import { sectionsResolver } from '../resolvers';
 const LINKS = {
-    main: 'main'
+    MAIN: 'main'
 }
 export const routes: Routes = [
     {
-        path: LINKS.main,
+        path: LINKS.MAIN,
          loadComponent: () =>
-          import('../components/main-page-component/main-page-component').then((c) => c.MainPageComponent),
+          import('../components/main//main-page-component/main-page-component').then((c) => c.MainPageComponent),
          resolve: {
             sections: sectionsResolver
          }
