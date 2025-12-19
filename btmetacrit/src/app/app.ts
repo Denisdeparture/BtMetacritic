@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent, Hint } from "../components/header-component/header-component";
-
-
+import { HeaderComponent } from "../components/header//header-component/header-component";
+import { Hint } from '../types';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, HeaderComponent],
@@ -22,7 +21,6 @@ export class App {
     {id: 1, title: 'Category' },
     {id: 2, title: 'New'}
   ]
-  
   protected readonly title = signal('btmetacrit');
 
 
