@@ -1,1 +1,39 @@
-<p>auth-pop-up-component works!</p>
+<div class="title">
+    <img alt="#" height="200" priority width="200" [ngSrc]="'/img/logoSiteMetacrit.png'">
+    <h3>metacrit</h3>
+</div>
+<ul class="oauth2_list">
+    @for (button of OAuth2Buttons; track button) {
+        <li class="oauth2_list_item">
+            <app-o-auth-2-button-component  [logoLink]="button.logoLink" [provider]="button.provider"/>
+        </li>
+    }
+</ul>
+<div class="radio">
+     <mat-radio-group
+    aria-label="Filter tasks"
+    class="radio_group"
+    [(ngModel)]="option"
+    (change)="clickOnRadioButton()"
+  >
+    <mat-radio-button class="radio_group_item" value="Login">Login</mat-radio-button>
+    <mat-radio-button class="radio_group_item" value="Registration">Register</mat-radio-button>
+</mat-radio-group>
+</div>
+<div class="description">
+    <p>Let`s go to create a free account on BT metacritic</p>
+</div>
+@if(condition()){
+    <app-auth-form-component>
+        <p #title>
+            Login
+        </p>
+    </app-auth-form-component>
+}
+@else {
+    <app-auth-form-component>
+          <p #title>
+            Register
+        </p>
+    </app-auth-form-component>
+}
