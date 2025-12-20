@@ -1,7 +1,9 @@
 <form class="auth_form" [formGroup]="authForm" (ngSubmit)="submit()">
-    @for(fi of authArray; track fi.id){
-        <label class="auth_form_title" [for]="fi.name">{{takeANormal(fi.name)}}</label>
-        <input class="auth_form_input" [formControlName]="fi.name" [name]="fi.name" [type]="fi.type">
+    @for(fi of authArray(); track fi.id){
+        <label class="auth_form_title" >
+            {{takeANormal(fi.name)}}
+             <input class="auth_form_input" [formControlName]="fi.name" [id]="fi.name" [name]="fi.name" [type]="fi.type">
+        </label>
     }
-    <button type="submit">{{buttonTitle()}}</button>
+    <button type="submit">{{takeANormal(name())}}</button>
 </form>

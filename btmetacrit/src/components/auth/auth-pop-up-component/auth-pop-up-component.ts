@@ -1,9 +1,11 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {  FormsModule,  } from '@angular/forms';
-import { MatRadioModule } from '@angular/material/radio';
+import {  AfterContentInit, AfterViewInit, ChangeDetectionStrategy, 
+  Component, computed, CUSTOM_ELEMENTS_SCHEMA, ElementRef, inject, OnInit, Renderer2, signal, viewChild, viewChildren } from '@angular/core';
+import {  FormControl, FormsModule,  } from '@angular/forms';
+import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
 import { AuthFormComponent} from "../auth-form-component/auth-form-component";
 import { OAuth2ButtonComponent } from "../o-auth-2-button-component/o-auth-2-button-component";
+import { from } from 'rxjs';
 @Component({
   selector: 'app-auth-pop-up-component',
   imports: [NgOptimizedImage, MatRadioModule, CommonModule, FormsModule, AuthFormComponent, OAuth2ButtonComponent],
@@ -12,23 +14,101 @@ import { OAuth2ButtonComponent } from "../o-auth-2-button-component/o-auth-2-but
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AuthPopUpComponent {
+export class AuthPopUpComponent implements AfterViewInit{
 
-  option = KindOfAuthOp.Login.toString();
+  rerender = inject(Renderer2);
+
+  login = KindOfAuthOp.LOGIN.toString();
+
+  registration = KindOfAuthOp.REGISTRATION.toString();
+
+  readonly loginButton = viewChild<ElementRef>('login');
+
+  readonly regButton = viewChild<ElementRef>('reg');
+
+  readonly option = signal<string>(this.login);
+
+  readonly authForm = viewChild(AuthFormComponent);
 
   readonly OAuth2Buttons: OAuth2Type[] = []; // maybe with resolver like in main
 
-  readonly condition = computed(() => this.option === KindOfAuthOp.Login.toString() ? true : false)
- 
-  clickOnRadioButton() : void
+  readonly condition = computed(() => this.option() === KindOfAuthOp.LOGIN.toString() ? true : false)
+
+  ngAfterViewInit(): void 
   {
-    throw new Error('Method not implemented.');
-    
+    this.initOperationForms();
+  }
+  initOperationForms() : void {
+    const form = this.authForm()!; 
+    if(form.name() === this.login){
+      this.createForms(form, undefined);
+       
+      this.rerender.setStyle(this.loginButton()?.nativeElement, 'background-color','#AA8A7D');
+      this.rerender.setStyle(this.regButton()?.nativeElement, 'background-color','none');
+
+      console.log("Init login")
+    }
+    else{
+      this.createForms(undefined, form);
+      // fix set style
+      this.rerender.setStyle(this.regButton()?.nativeElement, 'background-color','#AA8A7D');
+      this.rerender.setStyle(this.loginButton()?.nativeElement, 'background-color','none');
+      console.log("Init reg")
+    }
+  }
+  createForms(login?: AuthFormComponent,reg?: AuthFormComponent): void 
+  {
+  if(login){
+    console.log("Create login")
+    login.addNewParam({
+      id: 0,
+      name: "email",
+      formControl: new FormControl(),
+      type: 'text',
+    })
+    login.addNewParam({
+      id: 1,
+      name: "password",
+      formControl: new FormControl(),
+      type: 'text',
+    })
+  }
+  if(reg){
+    reg.addNewParam({
+      id: 0,
+      name: "name",
+      formControl: new FormControl(),
+      type: 'text',
+    })
+    reg.addNewParam({
+      id: 1,
+      name: "email",
+      formControl: new FormControl(),
+      type: 'text',
+    })
+    reg.addNewParam({
+      id: 2,
+      name: "password",
+      formControl: new FormControl(),
+      type: 'text',
+    })
+  }
+  }
+  clickOnRadioButton(event: MatRadioChange) : void
+  {
+    this.option.set(event.value);
+
+    this.authForm()?.name.set(event.value);
+
+
+    this.authForm()?.clearAll();
+
+    this.initOperationForms();
   }
 }
-export enum KindOfAuthOp {
-  Registration,
-  Login
+export const KindOfAuthOp = {
+  REGISTRATION: "Registartion",
+  LOGIN: "Login"
 }
 export type OAuth2Type = {
   provider: string,

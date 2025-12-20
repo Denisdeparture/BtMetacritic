@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, Component, contentChild, output } from '@angular/core';
+import { ChangeDetectionStrategy, 
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  inject, model, output, Renderer2, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -9,16 +13,33 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthFormComponent {
-  authForm: FormGroup = new FormGroup(null);
-  authArray: Auth[]  = [];
-  readonly buttonTitle = contentChild('title')
+  authForm: FormGroup = new FormGroup([]);
+  changeDetector = inject(ChangeDetectorRef);
+  readonly authArray = signal<Auth[]>([]);
+  readonly name = model.required<string>();
   readonly complete = output();
   addNewParam(item: Auth): void{
+
+    const retry = this.authArray().find(x => x.id === item.id)
+    if(retry) { return; }
+
     this.authForm.addControl(item.name, item.formControl);
-    this.authArray.push(item)
+    
+    this.authArray.update((arr) => {
+      arr.push(item);
+      return arr;
+    })
+    this.changeDetector.detectChanges();
   }
   clearAll(): void{
-    this.authForm = new FormGroup(null); 
+    this.authArray.set([]);
+    this.authForm = new FormGroup([]);
+
+    console.log(this.authForm);
+
+  }
+  log(obj: any): void{
+    console.log(obj);
   }
   submit(): void{
     this.complete.emit();
@@ -30,7 +51,7 @@ export class AuthFormComponent {
 }
 export type Auth = {
   id: number,
-  type: any,
+  type: string,
   formControl: FormControl,
   name: string
 }
