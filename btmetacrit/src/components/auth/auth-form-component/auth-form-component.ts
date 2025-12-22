@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, 
   ChangeDetectorRef,
   Component,
-  ElementRef,
-  inject, model, output, Renderer2, signal } from '@angular/core';
+  inject, model, output, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -34,9 +33,6 @@ export class AuthFormComponent {
   clearAll(): void{
     this.authArray.set([]);
     this.authForm = new FormGroup([]);
-
-    console.log(this.authForm);
-
   }
   log(obj: any): void{
     console.log(obj);

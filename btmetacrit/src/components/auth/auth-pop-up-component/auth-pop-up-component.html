@@ -1,6 +1,6 @@
 <div class="container">
     <div class="title">
-    <img alt="#" height="30"  priority="" width="40" [ngSrc]="'../../../assets/img/logoSiteMetacrit.png'">
+    <img alt="#" height="30"  priority="" src='../../../assets/img/logoSiteMetacrit.png' width="40">
     <h3>metacrit</h3>
 </div>
 <ul class="oauth2_list">
@@ -11,15 +11,14 @@
     }
 </ul>
 <div class="radio">
-     <mat-radio-group
-    aria-label="Filter tasks"
-    class="radio_group"
-    [(ngModel)]="option"
-    (change)="clickOnRadioButton($event)"
-  >
-    <mat-radio-button #login class="radio_group_item_login" [value]="login">Login</mat-radio-button>
-    <mat-radio-button #reg class="radio_group_item_reg" [value]="registration">Register</mat-radio-button>
-</mat-radio-group>
+    <label #login class="radio_group_item_login">
+    <input name="radio_group_item" type="radio" [value]="authentitication" [(ngModel)]="option" (change)="clickOnRadioButton($event)"/>
+    Login
+    </label>
+    <label #reg class="radio_group_item_reg">
+    <input  ame="radio_group_item" type="radio" [value]="registration" [(ngModel)]="option" (change)="clickOnRadioButton($event)"/>
+    Register
+    </label>
 </div>
 <div class="description">
     <p>Let`s go to create a free account on BT metacritic</p>

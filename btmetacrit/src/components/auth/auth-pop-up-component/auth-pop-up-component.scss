@@ -1,3 +1,4 @@
+@import "../../../mixin.scss";
 .container{
     background-color: #D2CFC9;
     width: 30%;
@@ -16,6 +17,15 @@
 .title img{
     margin-top: 7px;
 }
+.description{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+.description p {
+    text-align: center;
+}
 .radio_group{
     background-color: #D9D9D9;
     padding: 10px;
@@ -23,12 +33,30 @@
     padding-right: 40px;
     border-radius: 20px;
 }
-.radio_group_item_login::after{
-    content: '';
-    position: relative;
-    top: 10px;
-    left: 5px;
-    border: 1px solid;
-    height: 30px;
-    display: inline-block;
+input[type="radio"] {
+  opacity: 0; /* Делает невидимым */
+  position: absolute; /* Убирает из потока документа */
+  width: 100%;
+}
+.radio_group_item_login, .radio_group_item_reg{
+    padding: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    background-color: #D9D9D9;
+    color: usecolor(for_font_dark);
+    font-weight: bold;
+}
+.radio_group_item_login:hover, .radio_group_item_reg:hover{
+    opacity: 0.8;
+}
+.radio_group_item_login:active, .radio_group_item_reg:active{
+    opacity: 0.4;
+}
+.radio_group_item_login {
+    border-radius: 20px 0px 0px 20px;
+    border-right: 2px solid black;
+}
+.radio_group_item_reg{
+    border-radius: 0px 20px 20px 0px;
+
 }

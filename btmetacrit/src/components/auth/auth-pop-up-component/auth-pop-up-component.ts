@@ -1,14 +1,14 @@
-import { CommonModule, NgOptimizedImage } from '@angular/common';
-import {  AfterContentInit, AfterViewInit, ChangeDetectionStrategy, 
-  Component, computed, CUSTOM_ELEMENTS_SCHEMA, ElementRef, inject, OnInit, Renderer2, signal, viewChild, viewChildren } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {  AfterViewInit, ChangeDetectionStrategy, 
+  Component, computed, CUSTOM_ELEMENTS_SCHEMA, ElementRef, HostBinding, inject,
+   Renderer2, signal, viewChild} from '@angular/core';
 import {  FormControl, FormsModule,  } from '@angular/forms';
-import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
+import {  MatRadioModule } from '@angular/material/radio';
 import { AuthFormComponent} from "../auth-form-component/auth-form-component";
 import { OAuth2ButtonComponent } from "../o-auth-2-button-component/o-auth-2-button-component";
-import { from } from 'rxjs';
 @Component({
   selector: 'app-auth-pop-up-component',
-  imports: [NgOptimizedImage, MatRadioModule, CommonModule, FormsModule, AuthFormComponent, OAuth2ButtonComponent],
+  imports: [MatRadioModule, CommonModule, FormsModule, AuthFormComponent, OAuth2ButtonComponent],
   templateUrl: './auth-pop-up-component.html',
   styleUrl: './auth-pop-up-component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -18,7 +18,7 @@ export class AuthPopUpComponent implements AfterViewInit{
 
   rerender = inject(Renderer2);
 
-  login = KindOfAuthOp.LOGIN.toString();
+  authentitication = KindOfAuthOp.LOGIN.toString();
 
   registration = KindOfAuthOp.REGISTRATION.toString();
 
@@ -26,7 +26,7 @@ export class AuthPopUpComponent implements AfterViewInit{
 
   readonly regButton = viewChild<ElementRef>('reg');
 
-  readonly option = signal<string>(this.login);
+  readonly option = signal<string>(this.authentitication);
 
   readonly authForm = viewChild(AuthFormComponent);
 
@@ -34,26 +34,23 @@ export class AuthPopUpComponent implements AfterViewInit{
 
   readonly condition = computed(() => this.option() === KindOfAuthOp.LOGIN.toString() ? true : false)
 
+  @HostBinding('style.background-color') baseColor = '';
+
   ngAfterViewInit(): void 
   {
     this.initOperationForms();
   }
   initOperationForms() : void {
     const form = this.authForm()!; 
-    if(form.name() === this.login){
+    if(form.name() === this.authentitication){
       this.createForms(form, undefined);
-       
       this.rerender.setStyle(this.loginButton()?.nativeElement, 'background-color','#AA8A7D');
-      this.rerender.setStyle(this.regButton()?.nativeElement, 'background-color','none');
-
-      console.log("Init login")
+      this.rerender.setStyle(this.regButton()?.nativeElement, 'background-color',this.baseColor);
     }
     else{
       this.createForms(undefined, form);
-      // fix set style
       this.rerender.setStyle(this.regButton()?.nativeElement, 'background-color','#AA8A7D');
-      this.rerender.setStyle(this.loginButton()?.nativeElement, 'background-color','none');
-      console.log("Init reg")
+      this.rerender.setStyle(this.loginButton()?.nativeElement, 'background-color',this.baseColor);
     }
   }
   createForms(login?: AuthFormComponent,reg?: AuthFormComponent): void 
@@ -94,12 +91,9 @@ export class AuthPopUpComponent implements AfterViewInit{
     })
   }
   }
-  clickOnRadioButton(event: MatRadioChange) : void
+  clickOnRadioButton(event: Event) : void
   {
-    this.option.set(event.value);
-
-    this.authForm()?.name.set(event.value);
-
+    this.authForm()?.name.set(this.option());
 
     this.authForm()?.clearAll();
 
