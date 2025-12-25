@@ -1,0 +1,82 @@
+@import "../../../mixin.scss";
+:host{
+    width: 100%;
+}
+// :host::before{
+//   content: '';
+//   background-color: aqua;
+//   padding: 10px;
+//   position: relative;
+//   display: inline;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 10vh;
+//   
+//   // opacity: 0;
+//   transition: opacity 0.5s ease; 
+//   z-index: 3;
+// }
+// :host:hover::before {
+//   opacity: 1;
+// }
+button{
+    border: none;
+}
+.app_button{
+    background-color: usecolor(for_general_button);
+    background: 
+    linear-gradient(to right, #af8e4800, #AF8F48),
+    radial-gradient(circle, #9D9278 49%, #BFB396 76%);
+    border-radius: 10px;
+    color: usecolor(for_font_dark);
+    font-weight: 400;
+    font-size: 18px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s;
+}
+@keyframes gradientHover {
+  0% {
+    opacity: 1;
+    background-color: usecolor(for_general_button);
+    background: 
+    linear-gradient(to right, #af8e4800, #AF8F48),
+    radial-gradient(circle, #9D9278 49%, #BFB396 76%);
+  }
+  100% {
+    opacity: 0.6;
+    background: 
+    linear-gradient(to right, #af8e4800, #AF8F48),
+    radial-gradient(circle, #E0E0E0, #AF8F48); 
+  }
+}
+
+/* Анимация для active */
+@keyframes gradientActive {
+  0% {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.568);
+        background: 
+    linear-gradient(to right, #af8e4800, #AF8F48),
+    radial-gradient(circle, #9D9278 49%, #BFB396 76%);
+  }
+  100% {
+      background:
+    linear-gradient(to right, #af8e4800, #AF8F48),
+    radial-gradient(circle, #E0E0E0, #AF8F48);
+  opacity: 0.8;
+
+  }
+}
+
+.app_button:hover {
+  transform: scale(1.05s);
+  animation: gradientHover 1s forwards;
+}
+
+.app_button:active {
+  animation: gradientActive 0.5s forwards;
+}

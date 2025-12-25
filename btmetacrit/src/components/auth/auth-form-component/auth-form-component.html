@@ -5,5 +5,5 @@
             <input class="auth_form_item_input" id="item_input" [formControlName]="fi.name" [id]="fi.name" [name]="fi.name" [type]="fi.type">
         </div>
     }
-    <button type="submit">{{takeANormal(name())}}</button>
+    <app-button-component class="form_button" [styles]="styleForButton" [type]="'submit'"><p #title>{{takeANormal(name())}}</p></app-button-component>
 </form>

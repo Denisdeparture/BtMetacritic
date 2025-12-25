@@ -1,6 +1,9 @@
-import { ApplicationRef, ComponentRef, inject, Injectable, Injector, Type, ViewContainerRef } from "@angular/core";
+import { ViewContainerRef } from "@angular/core";
+import { ApplicationRef, ComponentRef, inject, Injectable, Injector, Type } from "@angular/core";
 
-@Injectable({providedIn: 'any'})
+@Injectable({
+  providedIn: 'any',
+})
 export class DynamicComponentRenderer<T>  {
   private component?: ComponentRef<T>;
 
@@ -10,7 +13,7 @@ export class DynamicComponentRenderer<T>  {
 
   private injector = inject(Injector);
 
-  showComponent(component: Type<T>,color: string, data?: any ): T{
+  spawn(component: Type<T>, data?: any ): T{
 
     const componentRef = this.componentFactory.createComponent(component,{ injector: this.injector } );
 

@@ -3,9 +3,10 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "../components/header//header-component/header-component";
 import { Hint } from '../types';
 import { AuthPopUpComponent } from "../components/auth/auth-pop-up-component/auth-pop-up-component";
+import { ButtonComponent } from "../components/common/button-component/button-component";
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, AuthPopUpComponent],
+  imports: [RouterOutlet, HeaderComponent, AuthPopUpComponent, ButtonComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

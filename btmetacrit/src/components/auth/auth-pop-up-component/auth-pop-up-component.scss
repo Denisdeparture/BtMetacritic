@@ -1,15 +1,23 @@
 @import "../../../mixin.scss";
+:host{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 20%; // translate on 
+    width: 100%;
+    align-items: center;
+}
 .container{
     background-color: #D2CFC9;
-    width: 30%;
+    width: 25%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 10px;
 }
 .title{
     display: flex;
-
 }
 .title h3{
     font-weight: 700;
@@ -33,9 +41,9 @@
     padding-right: 40px;
     border-radius: 20px;
 }
-input[type="radio"] {
-  opacity: 0; /* Делает невидимым */
-  position: absolute; /* Убирает из потока документа */
+input {
+  opacity: 0; 
+  position: absolute; 
   width: 100%;
 }
 .radio_group_item_login, .radio_group_item_reg{
@@ -59,4 +67,7 @@ input[type="radio"] {
 .radio_group_item_reg{
     border-radius: 0px 20px 20px 0px;
 
+}
+.auth_form{
+    margin-bottom: 30px;
 }

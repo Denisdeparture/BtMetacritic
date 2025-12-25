@@ -1,17 +1,26 @@
 import { ChangeDetectionStrategy, 
   ChangeDetectorRef,
   Component,
+  CUSTOM_ELEMENTS_SCHEMA,
   inject, model, output, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ButtonComponent } from "../../common/button-component/button-component";
 
 @Component({
   selector: 'app-auth-form-component',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ButtonComponent],
   templateUrl: './auth-form-component.html',
   styleUrl: './auth-form-component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AuthFormComponent {
+  styleForButton = {
+    'width': '200px',
+    'height': '30px',
+    'padding': '10px',
+    'font-weight': '400',
+  }
   authForm: FormGroup = new FormGroup([]);
   changeDetector = inject(ChangeDetectorRef);
   readonly authArray = signal<Auth[]>([]);
