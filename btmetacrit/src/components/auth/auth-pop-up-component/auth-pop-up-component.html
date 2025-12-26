@@ -1,8 +1,13 @@
 <div @show class="container">
-    <div class="title">
-    <img alt="#" height="30"  priority="" src='../../../assets/img/logoSiteMetacrit.png' width="40">
-    <h3>metacrit</h3>
-</div>
+    <div class="container-up">
+        <div class="title">
+        <img alt="#" height="30"  priority="" src='../../../assets/img/logoSiteMetacrit.png' width="40">
+        <h3>metacrit</h3>
+    </div>
+    <div class="container-up_button">
+        <button class="close_button" type="button" (click)="closePopUp()"><i class="fa-solid fa-x"></i></button>
+    </div>
+    </div>
 <ul class="oauth2_list">
     @for (button of OAuth2Buttons; track button) {
         <li class="oauth2_list_item">

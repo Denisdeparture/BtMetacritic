@@ -2,24 +2,6 @@
 :host{
     width: 100%;
 }
-// :host::before{
-//   content: '';
-//   background-color: aqua;
-//   padding: 10px;
-//   position: relative;
-//   display: inline;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 10vh;
-//   
-//   // opacity: 0;
-//   transition: opacity 0.5s ease; 
-//   z-index: 3;
-// }
-// :host:hover::before {
-//   opacity: 1;
-// }
 button{
     border: none;
 }
@@ -36,7 +18,6 @@ button{
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: transform 0.2s;
 }
 @keyframes gradientHover {
   0% {
@@ -48,6 +29,7 @@ button{
   }
   100% {
     opacity: 0.6;
+    transform: scale(1.1);
     background: 
     linear-gradient(to right, #af8e4800, #AF8F48),
     radial-gradient(circle, #E0E0E0, #AF8F48); 
@@ -73,10 +55,10 @@ button{
 }
 
 .app_button:hover {
-  transform: scale(1.05s);
-  animation: gradientHover 1s forwards;
+  cursor: pointer;
+  animation: gradientHover 0.5s both;
 }
 
 .app_button:active {
-  animation: gradientActive 0.5s forwards;
+  animation: gradientActive 0.5s both;
 }

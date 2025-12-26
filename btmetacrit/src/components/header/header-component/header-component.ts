@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input, linkedSignal, OnChanges, OnInit, SimpleChanges, viewChild } from '@angular/core';
 import { SearchBarComponent } from "../search-bar-component/search-bar-component";
 import { TitleHintsComponent } from "../title-hints-component/title-hints-component";
 import { Hint } from '../../../types';
@@ -13,20 +13,27 @@ import { AuthPopUpComponent } from '../../auth/auth-pop-up-component/auth-pop-up
   styleUrl: './header-component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent {
+export class HeaderComponent  {
 
-  dynamicRenderer = inject(DynamicComponentRenderer<AuthPopUpComponent>)
+  authPopUp? = new AuthPopUpComponent();
+
+  dynamicRenderer: DynamicComponentRenderer<AuthPopUpComponent> = inject(DynamicComponentRenderer<AuthPopUpComponent>)
 
   wasClick = false;
 
   readonly allHints = input<Hint[]>();
-
+  
   onClick(): void
   {
-    if(this.wasClick){
-      
-    }
+    if(this.wasClick) { return; }
     this.dynamicRenderer.spawn(AuthPopUpComponent);
-
+    this.wasClick = true;
+    this.authPopUp = this.dynamicRenderer.component?.instance;
+    this.authPopUp?.destroySignal.subscribe(() => this.close())
   }
+  close(): void{
+    this.dynamicRenderer.destroyComponent();
+    this.wasClick = false;
+  }
+
 }

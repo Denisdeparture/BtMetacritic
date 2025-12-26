@@ -5,7 +5,7 @@ import { ApplicationRef, ComponentRef, inject, Injectable, Injector, Type } from
   providedIn: 'any',
 })
 export class DynamicComponentRenderer<T>  {
-  private component?: ComponentRef<T>;
+  component?: ComponentRef<T>;
 
   private componentFactory = inject(ViewContainerRef);
 

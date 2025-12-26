@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {  AfterViewInit, ChangeDetectionStrategy, 
   Component, computed, CUSTOM_ELEMENTS_SCHEMA, ElementRef, HostBinding, inject,
+   output,
    Renderer2, signal, viewChild} from '@angular/core';
 import {  FormControl, FormsModule,  } from '@angular/forms';
 import {  MatRadioModule } from '@angular/material/radio';
@@ -36,6 +37,8 @@ export class AuthPopUpComponent implements AfterViewInit{
   readonly regButton = viewChild<ElementRef>('reg');
 
   readonly option = signal<string>(this.authentitication);
+
+  readonly destroySignal = output<void>();
 
   readonly authForm = viewChild(AuthFormComponent);
 
@@ -108,6 +111,10 @@ export class AuthPopUpComponent implements AfterViewInit{
 
     this.initOperationForms();
   }
+  closePopUp(): void{
+    this.destroySignal.emit();
+  }
+
 }
 export const KindOfAuthOp = {
   REGISTRATION: "Registartion",
