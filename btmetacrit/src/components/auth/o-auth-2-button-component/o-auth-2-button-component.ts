@@ -13,6 +13,4 @@ export class OAuth2ButtonComponent {
   readonly provider = input.required<string>(); // check 
   // this sample https://github.com/Denisdeparture/BT3DModelStore/blob/main/Server/Application/Controllers/AccountController.cs
   // and go to backend
-
-
 }

@@ -1,4 +1,4 @@
-@import "../../mixin.scss";
+@import "../../../mixin.scss";
 
 :host{
     background-color: usecolor(basic);
@@ -35,6 +35,7 @@
     border-radius: 30px;
 }
 .left-part button:hover{
+    cursor: pointer;
     background-color: usecolor(for_button_auth);
     opacity: 0.8;
 }

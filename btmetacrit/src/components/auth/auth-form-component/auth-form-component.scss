@@ -1,0 +1,22 @@
+.auth_form{
+    display: flex;
+    flex-direction: column;
+}
+.auth_form_label{
+    margin-bottom: 2px;
+    font-weight: 500;
+
+}
+.auth_form_item_input{
+    background-color: #D9D9D9;
+    padding: 6px;
+    border: none;
+}
+.auth_form_item{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+.form_button{
+    margin-top: 10px;
+}

@@ -1,4 +1,4 @@
-@import '../../mixin.scss';
+@import '../../../mixin.scss';
 
 .title{
     color: usecolor(for_font_light);
@@ -22,6 +22,7 @@
     padding: 10px;
 }
 .list-hints-el:hover{
+    cursor: pointer;
     background-color: #938F86;
 }
 .list-hints-el:active{

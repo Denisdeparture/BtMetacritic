@@ -1,0 +1,64 @@
+@import "../../../mixin.scss";
+:host{
+    width: 100%;
+}
+button{
+    border: none;
+}
+.app_button{
+    background-color: usecolor(for_general_button);
+    background: 
+    linear-gradient(to right, #af8e4800, #AF8F48),
+    radial-gradient(circle, #9D9278 49%, #BFB396 76%);
+    border-radius: 10px;
+    color: usecolor(for_font_dark);
+    font-weight: 400;
+    font-size: 18px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@keyframes gradientHover {
+  0% {
+    opacity: 1;
+    background-color: usecolor(for_general_button);
+    background: 
+    linear-gradient(to right, #af8e4800, #AF8F48),
+    radial-gradient(circle, #9D9278 49%, #BFB396 76%);
+  }
+  100% {
+    opacity: 0.6;
+    transform: scale(1.1);
+    background: 
+    linear-gradient(to right, #af8e4800, #AF8F48),
+    radial-gradient(circle, #E0E0E0, #AF8F48); 
+  }
+}
+
+/* Анимация для active */
+@keyframes gradientActive {
+  0% {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.568);
+        background: 
+    linear-gradient(to right, #af8e4800, #AF8F48),
+    radial-gradient(circle, #9D9278 49%, #BFB396 76%);
+  }
+  100% {
+      background:
+    linear-gradient(to right, #af8e4800, #AF8F48),
+    radial-gradient(circle, #E0E0E0, #AF8F48);
+  opacity: 0.8;
+
+  }
+}
+
+.app_button:hover {
+  cursor: pointer;
+  animation: gradientHover 0.5s both;
+}
+
+.app_button:active {
+  animation: gradientActive 0.5s both;
+}

@@ -1,3 +1,6 @@
 @function usecolor($color-name){
     @return var(--color-#{$color-name});
 }
+@function usefont($font-name){
+    @return var(--font-#{$font-name})
+}
