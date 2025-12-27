@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
-import { GameInfo, Section } from ".././types";
+import { GameInfo, Section } from "../types";
 
 @Injectable({providedIn: 'root'})
 export class GameStorageService {

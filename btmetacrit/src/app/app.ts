@@ -2,11 +2,10 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "../components/header//header-component/header-component";
 import { Hint } from '../types';
-import { AuthPopUpComponent } from "../components/auth/auth-pop-up-component/auth-pop-up-component";
-import { ButtonComponent } from "../components/common/button-component/button-component";
+import { UserPageComponent } from "../components/user/user-page-component/user-page-component";
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, AuthPopUpComponent, ButtonComponent],
+  imports: [RouterOutlet, HeaderComponent, UserPageComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

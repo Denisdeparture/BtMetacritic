@@ -1,4 +1,18 @@
 //main types
+export type User = {
+  id: number,
+  info: SimpleUserInfo
+  imgPath: string,
+  likeGames: GameInfo[]
+}
+// it for user input component
+export type SimpleUserInfo = {
+    location: string,
+    firstname: string,
+    lastname: string,
+    age: number, 
+    mail: string
+}
 export type SliderObject = {
   id: number,
   rating: number,
