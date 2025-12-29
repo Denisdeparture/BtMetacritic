@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { takeANormal } from '../../common/helpers';
 
 @Component({
   selector: 'app-user-info-input-component',
@@ -10,6 +11,7 @@ import { FormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserInfoInputComponent {
+
   model = null;
   readonly value = model<string | number>();
   readonly baseParam = model<string | number>();
@@ -19,5 +21,7 @@ export class UserInfoInputComponent {
     if(model === null) {return} 
     this.baseParam.set(model as any)
   }
-
+  takeANormal(str: string): string {
+    return takeANormal(str);
+  }
 }

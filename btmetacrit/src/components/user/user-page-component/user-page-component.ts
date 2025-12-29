@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, viewChildren } from '@angular/core';
-import { SliderObject, User } from '../../../types';
+import { Section, SliderObject, User } from '../../../types';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -43,8 +43,6 @@ export class UserPageComponent {
   readonly img = computed(() => this.user()?.imgPath)
 
   readonly userTypeMap = computed(() => new Map(Object.entries(this.user()!.info)))
-
-
   save(): void{
     for(const ui of this.userInputs()){
       ui.saveChnages();
@@ -53,7 +51,14 @@ export class UserPageComponent {
   getType(obj: any): any{
       return typeof obj;
   }
-  mapToSlider(): SliderObject[]{
-    return mapToSliderInfoById();
+  createSection(): Section[]{
+    const customUserSection: Section = {
+      id: 0,
+      games: this.user()!.likeGames
+    }; 
+    return [customUserSection]
+  }
+  mapToSlider(id: number): SliderObject[]{
+    return mapToSliderInfoById(id,this.createSection());
   }
 }

@@ -25,8 +25,8 @@ export type SliderGroup = {
 }
 export type Section = {
   id: number,
-  caption: Caption,
-  games: GameInfo[]
+  caption?: Caption,
+  games?: GameInfo[]
 }
 export type Caption = {
   title: string,

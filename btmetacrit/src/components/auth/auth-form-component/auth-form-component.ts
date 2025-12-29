@@ -20,6 +20,7 @@ export class AuthFormComponent {
     'height': '30px',
     'padding': '10px',
     'font-weight': '400',
+    'font-size': '16px'
   }
   authForm: FormGroup = new FormGroup([]);
   changeDetector = inject(ChangeDetectorRef);

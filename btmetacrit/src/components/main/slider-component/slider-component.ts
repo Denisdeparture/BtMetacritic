@@ -1,5 +1,5 @@
 import { CommonModule, NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, inject, input, 
+import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, HostBinding, inject, input, 
    OnInit, signal } from '@angular/core';
 import { SliderGroup, SliderObject } from '../../../types';
 import { GameGroupComponent } from '../game-group-component/game-group-component';
@@ -15,11 +15,16 @@ import { GameGroupComponent } from '../game-group-component/game-group-component
   styleUrl: './slider-component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SliderComponent implements OnInit {
+export class SliderComponent implements OnInit, AfterContentInit {
+ 
 
   isRight = true;
 
   changeDetector = inject(ChangeDetectorRef);
+
+  @HostBinding('style.justify-content') content = 'center'
+
+  readonly orientation = input<'center' | 'start' | 'end'>('center'); 
 
   readonly objects = input<SliderObject[]>();
 
@@ -32,7 +37,11 @@ export class SliderComponent implements OnInit {
   recalculateToMap(): SliderGroup[]{
     const map: SliderGroup[] = [] 
 
-    const length = this.objects()!.length! + 1;
+    const objs = this.objects();
+
+    if(!objs) {return map}
+
+    const length = objs.length + 1;
 
     let count = 0;
 
@@ -56,6 +65,8 @@ export class SliderComponent implements OnInit {
 
     const length = this.map()?.length;
 
+    if(!length) {return 0}
+
     let index = 0;
     
     if(length! % 2 === 0) {
@@ -77,6 +88,9 @@ export class SliderComponent implements OnInit {
   ngOnInit(): void {
     this.centerIndex.set(this.centerObjIndex());
   }
+  ngAfterContentInit(): void {
+    this.content = this.orientation();
+  }
   log(object: object): void{
     console.log(object);
   }
@@ -85,6 +99,8 @@ export class SliderComponent implements OnInit {
    this.isRight = side === 'RIGHT' ? true : false
     
    const length = this.map()?.length;
+
+   if(!length) {return}
    
    this.centerIndex.update((x) => {
     x = x + currentIndex;

@@ -1,11 +1,13 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { User } from "../types";
+import { GameStorageService } from "./game-storage-service";
 @Injectable({providedIn: 'root'})
 export class UserStorageService {
+    gameStorage = inject(GameStorageService);
     getUser(id: number): User {
         return {
             id: id,
-            likeGames: [],
+            likeGames: [this.gameStorage.getSilksong("Test"), this.gameStorage.getSilksong('Test')],
             info: {
                 firstname: 'Test',
                 lastname: "All",

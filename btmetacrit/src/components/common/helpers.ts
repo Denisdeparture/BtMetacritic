@@ -5,6 +5,7 @@ export function mapToSliderInfoById(idSection: number, sections: Section[] ): Sl
     const games = sections![idSection].games;
     const list: SliderObject[] =  [];
     let counter = 0; 
+    if(!games) {return []}
     for(const game of games){
       list.push({
       id: counter,
