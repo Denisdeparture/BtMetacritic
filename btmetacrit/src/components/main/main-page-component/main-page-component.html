@@ -1,4 +1,4 @@
 @for(sect of sections(); track sect.id){
     <app-caption-component [rootForLink]="sect.caption.link"><p #title> {{sect.caption.title}}</p></app-caption-component>
-    <app-slider-component [maxLengthCell]='2' [objects]="getSliderInfoById(sect.id)"/>
+    <app-slider-component [maxLengthCell]='2' [objects]="mapToSlider(sect.id)"/>
 }

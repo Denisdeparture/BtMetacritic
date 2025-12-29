@@ -25,6 +25,7 @@ export class ButtonComponent {
     'height': '100px',
     'padding': '10px',
     'font-weight': '400',
+    'font-size': '20px'
   });
 
   actionChange(): void{

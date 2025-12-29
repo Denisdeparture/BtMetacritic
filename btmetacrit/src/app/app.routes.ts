@@ -6,6 +6,14 @@ const LINKS = {
 }
 export const routes: Routes = [
     {
+    path: LINKS.USER + '/:id',
+    loadComponent: () => import('../components/user/user-page-component/user-page-component')
+    .then((c) => c.UserPageComponent),
+    resolve: {
+        user: userDataResolver
+    }
+    },   
+    {
         path: LINKS.MAIN,
          loadComponent: () =>
           import('../components/main//main-page-component/main-page-component').then((c) => c.MainPageComponent),
@@ -16,12 +24,5 @@ export const routes: Routes = [
          
          // if you get a bag with route see your old repo
     },
-    {
-        path: LINKS.USER + '/id',
-        loadComponent: () => import('../components/user/user-page-component/user-page-component')
-        .then((c) => c.UserPageComponent),
-        resolve: {
-            user: userDataResolver
-        }
-    }
+
 ];

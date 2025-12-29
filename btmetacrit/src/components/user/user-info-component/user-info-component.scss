@@ -1,0 +1,44 @@
+@import "../../../mixin.scss";
+
+:host{
+    display: flex;
+    flex-direction: row;
+}
+
+.left{
+    display: flex;
+    height: 10vh;
+}
+
+.left .info{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+.left .info::after{
+    content: '';
+    display: inline-block;
+    border-bottom: solid black 1px;
+    width: 200px
+}
+.left .info h4{
+    margin: 0;
+    font-family: usefont(general)
+}
+.left .info p{
+    margin: 0;
+    font-family: usefont(general)
+}
+.right_button_close{
+    border: solid 1px #77746c;
+    background-color: white;
+}
+.right_button_close:hover{
+    opacity: 0.8;
+}
+.right_button_close:active{
+    opacity: 0.6;
+}
+.right_button_close i{
+    color: usecolor(basic);
+}

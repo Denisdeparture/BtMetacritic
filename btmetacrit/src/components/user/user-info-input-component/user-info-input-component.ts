@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class UserInfoInputComponent {
   model = null;
+  readonly value = model<string | number>();
   readonly baseParam = model<string | number>();
   readonly type = input.required<'email' | 'text' | 'number'>();
 
@@ -18,4 +19,5 @@ export class UserInfoInputComponent {
     if(model === null) {return} 
     this.baseParam.set(model as any)
   }
+
 }

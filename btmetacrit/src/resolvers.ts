@@ -13,6 +13,7 @@ export const userDataResolver: ResolveFn<User>  = (route: ActivatedRouteSnapshot
   const storage = inject(UserStorageService);
 
   if(route.queryParams['id']) {console.log("Id was null");}
+  
 
   return storage.getUser(route.queryParams['id']);
 }

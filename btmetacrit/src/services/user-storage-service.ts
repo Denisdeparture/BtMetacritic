@@ -1,5 +1,6 @@
+import { Injectable } from "@angular/core";
 import { User } from "../types";
-
+@Injectable({providedIn: 'root'})
 export class UserStorageService {
     getUser(id: number): User {
         return {
@@ -12,7 +13,8 @@ export class UserStorageService {
                 location: "Ru",
                 age: 16
             },
-            imgPath: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzj2Zl_Fw5WZ3CPR86fG2wQ9TNpENSL7JtSQ&s"
+            //../../../assets/img/logoSiteMetacrit.png 
+            imgPath: "../../../assets/img/logoSiteMetacrit.png"
         }
     }
 }

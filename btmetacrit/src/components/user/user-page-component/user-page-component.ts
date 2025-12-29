@@ -1,14 +1,17 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { User } from '../../../types';
+import { ChangeDetectionStrategy, Component, computed, inject, viewChildren } from '@angular/core';
+import { SliderObject, User } from '../../../types';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { UserInfoComponent } from '../user-info-component/user-info-component';
 import { UserInfoInputComponent } from '../user-info-input-component/user-info-input-component';
-
+import { ButtonComponent } from "../../common/button-component/button-component";
+import { CaptionComponent } from "../../main/caption-component/caption-component";
+import { SliderComponent } from "../../main/slider-component/slider-component";
+import { mapToSliderInfoById } from '../../common/helpers';
 @Component({
   selector: 'app-user-page-component',
-  imports: [UserInfoComponent, UserInfoInputComponent],
+  imports: [UserInfoComponent, UserInfoInputComponent, ButtonComponent, CaptionComponent, SliderComponent],
   templateUrl: './user-page-component.html',
   styleUrl: './user-page-component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -20,6 +23,15 @@ export class UserPageComponent {
     map((data) => data['user'] as User)
   );
 
+ styles = {
+    'width': '150px',
+    'height': '30px',
+    'padding': '5px',
+    'font-weight': '400',
+    'font-size': '14px'
+  };
+  readonly userInputs = viewChildren(UserInfoInputComponent);
+
   readonly userSignal = toSignal(this.userAsync); 
 
   readonly user = computed(() => this.userSignal());
@@ -30,5 +42,18 @@ export class UserPageComponent {
 
   readonly img = computed(() => this.user()?.imgPath)
 
-  
+  readonly userTypeMap = computed(() => new Map(Object.entries(this.user()!.info)))
+
+
+  save(): void{
+    for(const ui of this.userInputs()){
+      ui.saveChnages();
+    }
+  }
+  getType(obj: any): any{
+      return typeof obj;
+  }
+  mapToSlider(): SliderObject[]{
+    return mapToSliderInfoById();
+  }
 }

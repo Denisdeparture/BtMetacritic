@@ -5,6 +5,7 @@ import { Section, SliderObject } from '../../../types';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
+import { mapToSliderInfoById } from '../../common/helpers';
 
 @Component({
   selector: 'app-main-page-component',
@@ -29,20 +30,8 @@ export class MainPageComponent implements OnInit {
   ngOnInit(): void {
     this.sectionsAsync.subscribe((d) => console.log(d));
   }
- // create a helper for this
-  getSliderInfoById(idSection: number): SliderObject[]{
-    const games = this.sections()![idSection].games;
-    const list: SliderObject[] =  [];
-    let counter = 0; 
-    for(const game of games){
-      list.push({
-      id: counter,
-      rating: game.metacritic.score,
-      title: game.name,
-      imageLink: game.header_image
-      })
-      counter++;
-    }
-    return list;
+  mapToSlider(id: number): SliderObject[]{
+    return mapToSliderInfoById(id, this.sections()!)
   }
 }
+

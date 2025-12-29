@@ -1,0 +1,23 @@
+@import "../../../mixin.scss";
+:host{
+    margin-bottom: 30px;
+    display: flex;
+}
+.container{
+    display: flex;
+    justify-content: space-between;
+    width: 30%;
+    border-bottom: solid 1px rgb(160, 159, 159);
+}
+
+.name_field{
+    font-family: usefont(general)
+}
+.input_field{
+    border: none;
+    border-bottom: 3px;
+    border-color: rgb(41, 39, 39);
+}
+.input_field:focus{
+    outline: none;
+}
