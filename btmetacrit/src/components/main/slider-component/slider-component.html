@@ -1,24 +1,41 @@
-<div class="slider" >
+<div class="slider">
   @if(centerIndex() !== 0) {
-      <ng-container 
-  [ngTemplateOutlet]="buttonSlider" 
-  [ngTemplateOutletContext]="{ rotate: 0, offset: -1, side: 'LEFT' }"/>
+  <ng-container
+    [ngTemplateOutlet]="buttonSlider"
+    [ngTemplateOutletContext]="{ rotate: 0, offset: -1, side: 'LEFT' }"
+  />
   }
 
-<div class="box">
-  <app-game-group-component [activeIndex]="centerIndex()"  [isRightSlide]="isRight" [sliderGroups]="map()"/>
-</div>
-@if(centerIndex() !== map().length){
-<ng-container 
-  [ngTemplateOutlet]="buttonSlider" 
-  [ngTemplateOutletContext]="{ rotate: 180, offset: 1, side: 'RIGHT' }"/>
-}
-<ng-template #buttonSlider let-offset="offset" let-rotate="rotate" let-side="side">
-  <div class="button-container">
-    <button class="slider-button" type="button" (click)="calculateTransform(offset, side)" >
-      <i class="fa-solid fa-arrow-left" [style.transform]="`rotate(`+rotate+`deg`+`)`"></i>
-    </button>
+  <div class="box">
+    <app-game-group-component
+      [activeIndex]="centerIndex()"
+      [isRightSlide]="isRight"
+      [sliderGroups]="map()"
+    />
+  </div>
+  @if(centerIndex() !== map().length && objects()!.length !== maxLengthCell()){
+  <ng-container
+    [ngTemplateOutlet]="buttonSlider"
+    [ngTemplateOutletContext]="{ rotate: 180, offset: 1, side: 'RIGHT' }"
+  />
+  }
+  <ng-template
+    #buttonSlider
+    let-offset="offset"
+    let-rotate="rotate"
+    let-side="side"
+  >
+    <div class="button-container">
+      <button
+        class="slider-button"
+        type="button"
+        (click)="calculateTransform(offset, side)"
+      >
+        <i
+          class="fa-solid fa-arrow-left"
+          [style.transform]="`rotate(`+rotate+`deg`+`)`"
+        ></i>
+      </button>
     </div>
-</ng-template>
+  </ng-template>
 </div>
-
