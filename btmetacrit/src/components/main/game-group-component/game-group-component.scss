@@ -1,17 +1,17 @@
 :host {
-    display: flex;
-    flex-direction: row;
-    overflow-x: hidden;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow-x: hidden;
+  width: 100%;
 }
-.group{
-    list-style: none;
-    display: flex;
+.group {
+  list-style: none;
+  display: flex;
 }
-.active-el{
-    display: block;
+.active-el {
+  display: block;
 }
-.passive-el{
-    background-color: red;
-    display: none;
+.passive-el {
+  background-color: red;
+  display: none;
 }

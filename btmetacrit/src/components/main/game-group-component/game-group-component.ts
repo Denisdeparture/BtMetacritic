@@ -2,17 +2,10 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { SliderGameObject, SliderGroup } from '../../../types';
 import { GameComponent } from '../game-component/game-component';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { slideInR, slideInL } from './animations';
+import { ISLide } from '../slider-component/helper';
 
 // please connect with button click
-const slideTransitionInRight = transition(':enter', [
-  animate('1s ease-in', style({ transform: 'translateX(600px)' })),
-]);
-const slideTransitionLeft = transition(':enter', [
-  animate('1s ease-in', style({ transform: 'translateX(-600px)' })),
-]);
-
-const slideInR = trigger('slideInR', [slideTransitionInRight]);
-const slideInL = trigger('slideInL', [slideTransitionLeft]);
 
 @Component({
   animations: [slideInR, slideInL],
@@ -22,7 +15,7 @@ const slideInL = trigger('slideInL', [slideTransitionLeft]);
   styleUrl: './game-group-component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GameGroupComponent {
+export class GameGroupComponent implements ISLide {
   isSlide = false;
 
   readonly sliderGroups = input.required<SliderGroup<SliderGameObject>[]>();

@@ -10,23 +10,31 @@ import {
   input,
   OnInit,
   signal,
+  viewChildren,
 } from '@angular/core';
 import { SliderGameObject, SliderGroup, SliderObject } from '../../../types';
 import { GameGroupComponent } from '../game-group-component/game-group-component';
+import { calculateTransformForSlider, centerObjIndex, ISLide } from './helper';
+import {
+  SliderButtonComponent,
+  TransformSlide,
+} from '../slider-button-component/slider-button-component';
 
 @Component({
   selector: 'app-slider-component',
-  imports: [CommonModule, NgTemplateOutlet, GameGroupComponent],
+  imports: [CommonModule, GameGroupComponent, SliderButtonComponent],
   templateUrl: './slider-component.html',
   styleUrl: './slider-component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SliderComponent implements OnInit, AfterContentInit {
-  isRight = true;
-
   changeDetector = inject(ChangeDetectorRef);
 
   @HostBinding('style.justify-content') content = 'center';
+
+  gameGroup = viewChildren(GameGroupComponent);
+
+  readonly isRight = signal(true);
 
   readonly orientation = input<'center' | 'start' | 'end'>('center');
 
@@ -38,6 +46,15 @@ export class SliderComponent implements OnInit, AfterContentInit {
 
   readonly centerIndex = signal(0);
 
+  calculateTransform(trObj: TransformSlide): void {
+    calculateTransformForSlider(
+      trObj,
+      this.map().length,
+      this.isRight,
+      this.centerIndex,
+      this.gameGroup()
+    );
+  }
   recalculateToMap(): SliderGroup<SliderGameObject>[] {
     const map: SliderGroup<SliderGameObject>[] = [];
 
@@ -73,56 +90,14 @@ export class SliderComponent implements OnInit, AfterContentInit {
     }
     return map;
   }
-  centerObjIndex(): number {
-    const length = this.map()?.length;
 
-    if (!length) {
-      return 0;
-    }
-
-    let index = 0;
-
-    if (length! % 2 === 0) {
-      const num1 = length! / 2;
-
-      const num2 = length! / 2 + 1;
-
-      index = (num1 + num2) / 2;
-
-      index -= 1;
-    } else {
-      index = (length! + 1) / 2;
-      index -= 1;
-    }
-    return Math.floor(index);
-  }
   ngOnInit(): void {
-    this.centerIndex.set(this.centerObjIndex());
+    this.centerIndex.set(centerObjIndex(this.map().length));
   }
   ngAfterContentInit(): void {
     this.content = this.orientation();
   }
   log(object: object): void {
     console.log(object);
-  }
-  calculateTransform(currentIndex: number, side: 'RIGHT' | 'LEFT'): void {
-    this.isRight = side === 'RIGHT' ? true : false;
-
-    const length = this.map()?.length;
-
-    if (!length) {
-      return;
-    }
-
-    this.centerIndex.update((x) => {
-      x = x + currentIndex;
-      if (x >= length!) {
-        x = 0;
-      }
-      if (x < 0) {
-        x = length!;
-      }
-      return x;
-    });
   }
 }

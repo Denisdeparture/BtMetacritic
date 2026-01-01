@@ -1,0 +1,48 @@
+<app-slider-button-component
+  side="LEFT"
+  [rotate]="0"
+  [offset]="-1"
+  (slideChange)="calculateTransform($event)"
+></app-slider-button-component>
+<div class="container">
+  <ul class="images">
+    @for (img of images(); track img.id) { @if(isSlide){ @if(isRight() &&
+    isActive(img.id)) {
+    <li @slideInR class="images__item__active">
+      <img
+        #screen
+        [src]="img.path_full"
+        [style.width]="width()"
+        [style.height]="height()"
+        alt="#"
+      />
+    </li>
+    } @else {
+    <li class="images__item__passive">
+      <img
+        #screen
+        [src]="img.path_full"
+        [style.width]="width()"
+        [style.height]="height()"
+        alt="#"
+      />
+    </li>
+    } } @else {
+    <li class="images__item__active">
+      <img
+        #screen
+        [src]="img.path_full"
+        [style.width]="width()"
+        [style.height]="height()"
+        alt="#"
+      />
+    </li>
+    } }
+  </ul>
+</div>
+<app-slider-button-component
+  side="RIGHT"
+  [rotate]="180"
+  [offset]="1"
+  (slideChange)="calculateTransform($event)"
+></app-slider-button-component>

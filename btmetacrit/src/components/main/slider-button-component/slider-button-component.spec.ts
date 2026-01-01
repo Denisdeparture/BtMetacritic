@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ImagesGroupComponent } from './images-group-component';
+import { SliderButtonComponent } from './slider-button-component';
 
-describe('ImagesGroupComponent', () => {
-  let component: ImagesGroupComponent;
-  let fixture: ComponentFixture<ImagesGroupComponent>;
+describe('SliderButtonComponent', () => {
+  let component: SliderButtonComponent;
+  let fixture: ComponentFixture<SliderButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ImagesGroupComponent]
+      imports: [SliderButtonComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ImagesGroupComponent);
+    fixture = TestBed.createComponent(SliderButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

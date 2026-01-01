@@ -6,7 +6,14 @@ import {
   OnInit,
   viewChildren,
 } from '@angular/core';
-import { Section, SliderGameObject, SliderObject, User } from '../../../types';
+import {
+  GameInfo,
+  Price,
+  Section,
+  SliderGameObject,
+  SliderObject,
+  User,
+} from '../../../types';
 import { ActivatedRoute } from '@angular/router';
 import { delay, map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -16,11 +23,9 @@ import { ButtonComponent } from '../../common/button-component/button-component'
 import { CaptionComponent } from '../../main/caption-component/caption-component';
 import { SliderComponent } from '../../main/slider-component/slider-component';
 import { mapToSliderInfoById } from '../../common/helpers';
-import {
-  KindOfSpinner,
-  ToDoSpinner,
-} from '../../common/to-do-spinner/to-do-spinner';
+import { KindOfSpinner } from '../../common/to-do-spinner/to-do-spinner';
 import { ToDoSpinnerService } from '../../../services/to-do-spinner-service';
+import { LikedGame, UserLikedGame } from '../user-liked-game/user-liked-game';
 @Component({
   selector: 'app-user-page-component',
   providers: [ToDoSpinnerService],
@@ -30,6 +35,7 @@ import { ToDoSpinnerService } from '../../../services/to-do-spinner-service';
     ButtonComponent,
     CaptionComponent,
     SliderComponent,
+    UserLikedGame,
   ],
   templateUrl: './user-page-component.html',
   styleUrl: './user-page-component.scss',
@@ -57,6 +63,8 @@ export class UserPageComponent implements OnInit {
 
   readonly email = computed(() => this.user()?.info.mail + '');
 
+  readonly likedGames = computed(() => this.user()?.likeGames);
+
   readonly fname = computed(
     () => this.user()?.info.firstname + ' ' + this.user()?.info.lastname
   );
@@ -83,6 +91,15 @@ export class UserPageComponent implements OnInit {
   getType(obj: any): any {
     return typeof obj;
   }
+  mapToLikedGame(gf: GameInfo): LikedGame {
+    return {
+      name: gf.name,
+      price_overview: gf.price_overview,
+      header_image: gf.header_image,
+      screenshots: gf.screenshots,
+    };
+  }
+
   createSection(): Section[] {
     const customUserSection: Section = {
       id: 0,

@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  width: 50%;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+  overflow-x: hidden;
+  width: 100%;
+  background-color: aqua;
+}
+.images {
+  list-style: none;
+  display: flex;
+}
+.images__item__active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.images__item__passive {
+  display: none;
+}
