@@ -4,7 +4,12 @@
     @for(item of obj.sliderObjects; track item.id){
         @if(isActive(obj.id)){
             @if(isRightSlide()){
-                <app-game-component  @slideInR class="active-el" [imageLink]="item.imageLink" [rating]="item.rating"   [title]="item.title"/>
+                @if(isSlide){
+                    <app-game-component  @slideInR class="active-el" [imageLink]="item.imageLink" [rating]="item.rating"   [title]="item.title"/>
+                }
+                @else{
+                    <app-game-component  class="active-el" [imageLink]="item.imageLink" [rating]="item.rating"   [title]="item.title"/>
+                }
             }
             @else{
                 <app-game-component  @slideInL class="active-el" [imageLink]="item.imageLink" [rating]="item.rating"   [title]="item.title"/>
