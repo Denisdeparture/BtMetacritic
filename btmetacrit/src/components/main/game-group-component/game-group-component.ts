@@ -43,7 +43,5 @@ export class GameGroupComponent  {
   log(): void{
      console.log("Active index: " + this.activeIndex());
   }
-  // ngOnInit(): void {
-  //   console.log(this.sliderObjects())
-  // }
+ 
 }

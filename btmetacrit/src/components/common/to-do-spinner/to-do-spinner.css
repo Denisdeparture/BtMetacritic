@@ -1,0 +1,152 @@
+:host{
+    position: absolute;
+    z-index: 3;
+    width: 100%;
+    margin: auto;
+    min-height: 100vh;
+    top: 0px;
+    left: 0px;
+}
+/* Spinner */
+@keyframes spinner-base {
+  0% { opacity: 1 }
+  100% { opacity: 0 }
+}
+.spinner-base-12 div {
+  left: 94px;
+  top: 48px;
+  position: absolute;
+  animation: spinner-base linear 1s infinite;
+  background: #fe718d;
+  width: 12px;
+  height: 24px;
+  border-radius: 6px / 12px;
+  transform-origin: 6px 52px;
+}.spinner-base-12 div:nth-child(1) {
+  transform: rotate(0deg);
+  animation-delay: -0.9166666666666666s;
+  background: #fe718d;
+}.spinner-base-12 div:nth-child(2) {
+  transform: rotate(30deg);
+  animation-delay: -0.8333333333333334s;
+  background: #fe718d;
+}.spinner-base-12 div:nth-child(3) {
+  transform: rotate(60deg);
+  animation-delay: -0.75s;
+  background: #fe718d;
+}.spinner-base-12 div:nth-child(4) {
+  transform: rotate(90deg);
+  animation-delay: -0.6666666666666666s;
+  background: #fe718d;
+}.spinner-base-12 div:nth-child(5) {
+  transform: rotate(120deg);
+  animation-delay: -0.5833333333333334s;
+  background: #fe718d;
+}.spinner-base-12 div:nth-child(6) {
+  transform: rotate(150deg);
+  animation-delay: -0.5s;
+  background: #fe718d;
+}.spinner-base-12 div:nth-child(7) {
+  transform: rotate(180deg);
+  animation-delay: -0.4166666666666667s;
+  background: #fe718d;
+}.spinner-base-12 div:nth-child(8) {
+  transform: rotate(210deg);
+  animation-delay: -0.3333333333333333s;
+  background: #fe718d;
+}.spinner-base-12 div:nth-child(9) {
+  transform: rotate(240deg);
+  animation-delay: -0.25s;
+  background: #fe718d;
+}.spinner-base-12 div:nth-child(10) {
+  transform: rotate(270deg);
+  animation-delay: -0.16666666666666666s;
+  background: #fe718d;
+}.spinner-base-12 div:nth-child(11) {
+  transform: rotate(300deg);
+  animation-delay: -0.08333333333333333s;
+  background: #fe718d;
+}.spinner-base-12 div:nth-child(12) {
+  transform: rotate(330deg);
+  animation-delay: 0s;
+  background: #fe718d;
+}
+.spinner-12 {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  display: inline-block;
+  overflow: hidden;
+}
+.spinner-base-12 {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; 
+}
+.spinner-base-12 div { box-sizing: content-box; }
+
+
+/* elipse */
+@keyframes ldio-x2uulkbinbj {
+   0% { transform: translate(12px,80px) scale(0); }
+  25% { transform: translate(12px,80px) scale(0); }
+  50% { transform: translate(12px,80px) scale(1); }
+  75% { transform: translate(80px,80px) scale(1); }
+ 100% { transform: translate(148px,80px) scale(1); }
+}
+@keyframes ldio-x2uulkbinbj-r {
+   0% { transform: translate(148px,80px) scale(1); }
+ 100% { transform: translate(148px,80px) scale(0); }
+}
+/* @keyframes ldio-x2uulkbinbj-c {
+   0% { background: #e15b64 }
+  25% { background: #abbd81 }
+  50% { background: #f8b26a }
+  75% { background: #f47e60 }
+ 100% { background: #e15b64 }
+} */
+.spinner-base-5 div {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transform: translate(80px,80px) scale(1);
+  background: #e15b64;
+  animation: ldio-x2uulkbinbj 1s infinite cubic-bezier(0,0.5,0.5,1);
+}
+.spinner-base-5 div:nth-child(1) {
+  background: #f47e60;
+  transform: translate(148px,80px) scale(1);
+  animation: ldio-x2uulkbinbj-r 0.25s infinite cubic-bezier(0,0.5,0.5,1), /*  ldio-x2uulkbinbj-c 1s infinite step-start */;
+}.spinner-base-5 div:nth-child(2) {
+  animation-delay: -0.25s;
+  background: #e15b64;
+}.spinner-base-5 div:nth-child(3) {
+  animation-delay: -0.5s;
+  background: #f47e60;
+}.spinner-base-5 div:nth-child(4) {
+  animation-delay: -0.75s;
+  background: #f8b26a;
+}.spinner-base-5 div:nth-child(5) {
+  animation-delay: -1s;
+  background: #abbd81;
+}
+.spinner-5 {
+  width: 200px;
+  height: 200px;
+  display: inline-block;
+  overflow: hidden;
+}
+.spinner-base-5 {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; 
+}
+.spinner-base-5 div { box-sizing: content-box; }
+

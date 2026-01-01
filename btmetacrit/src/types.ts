@@ -1,18 +1,23 @@
 //main types
-export type SliderObject = {
+export type User = {
   id: number,
-  rating: number,
-  title: string,
-  imageLink: string,
+  info: SimpleUserInfo
+  imgPath: string,
+  likeGames: GameInfo[]
 }
-export type SliderGroup = {
-  id: number, 
-  sliderObjects: SliderObject[]
+// it for user input component
+export type SimpleUserInfo = {
+    location: string,
+    firstname: string,
+    lastname: string,
+    age: number, 
+    mail: string
 }
+
 export type Section = {
   id: number,
-  caption: Caption,
-  games: GameInfo[]
+  caption?: Caption,
+  games?: GameInfo[]
 }
 export type Caption = {
   title: string,
@@ -123,4 +128,16 @@ export type SteamGermany = {
   banned: string
   use_age_gate: string
   descriptors: string
+}
+export type SliderGameObject = {
+  rating: number,
+  title: string,
+} & SliderObject
+export type SliderObject = {
+  id: number,
+  imageLink: string,
+}
+export type SliderGroup<T extends SliderObject> = {
+  id: number, 
+  sliderObjects: T[]
 }
