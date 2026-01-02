@@ -1,6 +1,15 @@
-<div class="conatiner-img"> <img alt="#" [height]="imageSize()[0]" [src]="imageLink()" [width]="imageSize()[1]" /> </div>
+<div class="conatiner-img">
+  <img
+    alt="#"
+    [height]="imageSize()[0]"
+    [src]="imageLink()"
+    [width]="imageSize()[1]"
+  />
+</div>
 <div class="container-info">
-    <div class="container-info-rating" [style.background-color]="colorRating()"><p>{{rating()}}</p></div>
-    <h4 class="container-info-title">{{title()}}</h4>
-    <button class="container-info-button-like" type="button"><i class="fa-regular fa-heart"></i></button>
+  <div class="container-info-rating" [style.background-color]="colorRating()">
+    <p>{{ rating() }}</p>
+  </div>
+  <h4 class="container-info-title">{{ title() }}</h4>
+  <app-button-likes-component />
 </div>

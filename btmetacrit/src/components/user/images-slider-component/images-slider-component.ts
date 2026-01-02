@@ -12,7 +12,6 @@ import {
   viewChild,
   viewChildren,
 } from '@angular/core';
-import { slideInL, slideInR } from '../../main/game-group-component/animations';
 import {
   SliderButtonComponent,
   TransformSlide,
@@ -22,11 +21,8 @@ import {
   ISLide,
 } from '../../main/slider-component/helper';
 import { Screenshot } from '../../../types';
-import { state, style, trigger } from '@angular/animations';
-
 
 @Component({
-  animations: [slideInR, slideInL],
   selector: 'app-images-slider-component',
   imports: [SliderButtonComponent],
   templateUrl: './images-slider-component.html',
@@ -39,39 +35,45 @@ export class ImagesSliderComponent implements ISLide, OnInit {
 
   readonly isRight = signal(true);
 
+  @HostBinding('style.width.px') widthHost = 0;
+  @HostBinding('style.height.px') heightHost = 0;
+
   readonly screens = viewChild('screen');
 
   readonly images = input.required<Screenshot[]>();
 
-  readonly width = input<string>('200px');
+  readonly width = input<number>(200);
 
-  readonly height = input<string>('200px');
+  readonly height = input<number>(100);
 
   readonly orientation = input<'center' | 'start' | 'end'>('center');
 
   readonly centerIndex = signal(0);
 
   ngOnInit(): void {
+    console.log(this.images());
+    this.widthHost = this.width() + 150;
+    this.heightHost = this.height();
     this.content = this.orientation();
-    this.slide();
   }
   isActive(id: number): boolean {
-    console.log('Id was ' + id);
-    console.log('Id center: ' + this.centerIndex());
+    console.log('Active now: ' + id);
+    console.log(id == this.centerIndex());
     return id == this.centerIndex();
   }
   calculateTransform(event: TransformSlide) {
-    this.slide();
+    console.log('Before: ' + this.centerIndex());
     calculateTransformForSlider(
       event,
       this.images().length,
       this.isRight,
       this.centerIndex
     );
-    console.log(this.centerIndex() + 'Index now');
+    console.log('Index now: ' + this.centerIndex());
+    this.slide();
   }
   slide(): void {
     console.log('slide');
     this.isSlide = !this.isSlide;
   }
-});
+}

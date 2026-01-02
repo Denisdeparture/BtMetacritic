@@ -1,9 +1,10 @@
 <app-images-slider-component [images]="recalculateImg()" />
 <div class="info">
-  <h4 class="info__title">{{ game()?.name }}</h4>
+  <div class="info__title">
+    <h4>{{ game()?.name }}</h4>
+  </div>
   <p class="info__price">{{ price() }}</p>
+  <app-button-likes-component />
 </div>
-<button class="button_like" type="button">
-  <i class="fa-regular fa-heart"></i>
-</button>
+
 <!-- check make up on game component -->

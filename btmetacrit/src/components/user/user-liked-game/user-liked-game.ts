@@ -6,10 +6,11 @@ import {
 } from '@angular/core';
 import { GameInfo, Price, Screenshot } from '../../../types';
 import { ImagesSliderComponent } from '../images-slider-component/images-slider-component';
+import { ButtonLikesComponent } from '../../common/button-likes-component/button-likes-component';
 
 @Component({
   selector: 'app-user-liked-game',
-  imports: [ImagesSliderComponent],
+  imports: [ImagesSliderComponent, ButtonLikesComponent],
   templateUrl: './user-liked-game.html',
   styleUrl: './user-liked-game.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,9 +28,11 @@ export class UserLikedGame {
       path_thumbnail: '',
       path_full: this.game()?.header_image,
     });
-    for (const item of this.game()!.screenshots) {
-      item.id += 1;
+    let counterId = 1; // one el had
+    for (const item of this.game()?.screenshots) {
+      item.id = counterId;
       array.push(item);
+      counterId++;
     }
     return array;
   }

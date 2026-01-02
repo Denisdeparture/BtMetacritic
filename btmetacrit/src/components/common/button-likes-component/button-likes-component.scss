@@ -1,0 +1,26 @@
+@import "../../../mixin.scss";
+
+.dont-likes .likes {
+  border: none;
+  background-color: black;
+  border-radius: 20px;
+  width: 30px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+}
+.likes {
+  background-color: white;
+}
+.likes:active .dont-likes:active {
+  background-color: plum;
+  opacity: 0.8;
+}
+.likes i {
+  color: usecolor(basic_dark);
+}
+.dont-likes i {
+  color: usecolor(basic);
+}

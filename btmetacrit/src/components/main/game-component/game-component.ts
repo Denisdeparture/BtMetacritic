@@ -1,31 +1,33 @@
-import { ChangeDetectionStrategy, Component,  computed,   input,   } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+} from '@angular/core';
+import { ButtonLikesComponent } from '../../common/button-likes-component/button-likes-component';
 
 @Component({
   selector: 'app-game-component',
-  imports: [],
+  imports: [ButtonLikesComponent],
   templateUrl: './game-component.html',
   styleUrl: './game-component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
-export class GameComponent  {
-
+export class GameComponent {
   readonly title = input<string>();
   readonly imageLink = input<string>();
   readonly imageSize = input<[string, string]>(['110', '200']);
   readonly rating = input<number>();
 
-  readonly colorRating = computed(() => this.calculateColor())
- 
+  readonly colorRating = computed(() => this.calculateColor());
+
   calculateColor(): string {
-    let color = "ffffff";
-    if(this.rating()! < 39){
+    let color = 'ffffff';
+    if (this.rating()! < 39) {
       color = RATINGS_COLORS.BAD;
-    }
-    else if(this.rating()! > 39 && this.rating()! < 80){
+    } else if (this.rating()! > 39 && this.rating()! < 80) {
       color = RATINGS_COLORS.MIDDLE;
-    }
-    else if(this.rating()! > 80){
+    } else if (this.rating()! > 80) {
       color = RATINGS_COLORS.GOOD;
     }
     return color;
@@ -34,5 +36,5 @@ export class GameComponent  {
 export const RATINGS_COLORS = {
   GOOD: '#0BFF38',
   BAD: '#D8000C',
-  MIDDLE: '#FFC659'
+  MIDDLE: '#FFC659',
 };
