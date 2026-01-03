@@ -5,6 +5,7 @@ import {
   input,
 } from '@angular/core';
 import { ButtonLikesComponent } from '../../common/button-likes-component/button-likes-component';
+import { TextLengthDirective } from '../../../directives/text-length-directive';
 
 @Component({
   selector: 'app-game-component',

@@ -6,7 +6,6 @@ import {
   inject,
   input,
   output,
-  signal,
 } from '@angular/core';
 import { GameInfo, Price, Screenshot } from '../../../types';
 import { ImagesSliderComponent } from '../images-slider-component/images-slider-component';

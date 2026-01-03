@@ -1,0 +1,18 @@
+<div class="tooltip__title">
+  <h4>{{ info().title }}</h4>
+</div>
+<img class="tooltip__img" src="" alt="#" />
+<div class="add-info">
+  <p class="tooltip__genre">{{ info().genre }}</p>
+  <p class="tooltip__date">{{ info().dateRealese }}</p>
+</div>
+<div class="tooltip__description">
+  <p
+    appTextLengthDirective
+    [link]="info().linkForMoreInfo"
+    [maxLength]="maxlength()"
+    class="tooltip__description"
+  >
+    {{ info().description }}
+  </p>
+</div>
