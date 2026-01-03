@@ -1,8 +1,6 @@
 @import "../../../mixin.scss";
 :host {
   background-color: #c9c6be;
-  width: 200px;
-  /*  width equal with img   */
   padding-bottom: 50px;
   position: absolute;
   top: 10px;
@@ -27,7 +25,6 @@
   display: block;
   position: relative;
   z-index: 1;
-  /*  z-index donesn t work :(   */
   top: 20px;
   right: 180px;
   width: 36px;
@@ -47,11 +44,7 @@
 .tooltip__title h4 {
   font-size: 18px;
   margin: 0;
-  font-family: "Inter";
-}
-.tooltip__img {
-  width: 200px;
-  height: 100px;
+  font-family: usefont(basic);
 }
 .tooltip__description {
   background-color: #d9d9d9;

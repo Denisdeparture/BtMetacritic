@@ -5,11 +5,11 @@ import {
   input,
 } from '@angular/core';
 import { ButtonLikesComponent } from '../../common/button-likes-component/button-likes-component';
-import { TextLengthDirective } from '../../../directives/text-length-directive';
+import { TooltipComponent } from '../tooltip-component/tooltip-component';
 
 @Component({
   selector: 'app-game-component',
-  imports: [ButtonLikesComponent],
+  imports: [ButtonLikesComponent, TooltipComponent],
   templateUrl: './game-component.html',
   styleUrl: './game-component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
