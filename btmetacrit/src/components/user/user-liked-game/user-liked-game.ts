@@ -2,7 +2,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  ElementRef,
+  inject,
   input,
+  output,
+  signal,
 } from '@angular/core';
 import { GameInfo, Price, Screenshot } from '../../../types';
 import { ImagesSliderComponent } from '../images-slider-component/images-slider-component';
@@ -16,11 +20,16 @@ import { ButtonLikesComponent } from '../../common/button-likes-component/button
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserLikedGame {
+  host = inject(ElementRef);
+
   readonly game = input.required<LikedGame>();
 
   readonly price = computed(() =>
     this.takePriceInDollars(this.game().price_overview)
   );
+
+  readonly isLikes = output<[boolean, ElementRef]>();
+
   recalculateImg(): Screenshot[] {
     const array: Screenshot[] = [];
     array.push({
@@ -38,6 +47,9 @@ export class UserLikedGame {
   }
   takePriceInDollars(prices: Price[]): string | undefined {
     return prices.find((x) => x.final_formatted.includes('$'))?.final_formatted;
+  }
+  changeLike(event: boolean) {
+    this.isLikes.emit([event, this.host]);
   }
 }
 

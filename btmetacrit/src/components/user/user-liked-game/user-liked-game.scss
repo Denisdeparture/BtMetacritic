@@ -1,12 +1,11 @@
 @import "../../../mixin.scss";
-:host {
-  width: 23%;
-}
+
 .info {
   display: flex;
   flex-direction: flex;
   justify-content: space-between;
   background-color: usecolor(basic);
+  width: 350px;
 }
 .info__title {
   display: flex;

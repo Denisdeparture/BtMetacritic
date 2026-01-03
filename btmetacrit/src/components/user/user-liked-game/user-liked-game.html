@@ -4,7 +4,8 @@
     <h4>{{ game()?.name }}</h4>
   </div>
   <p class="info__price">{{ price() }}</p>
-  <app-button-likes-component />
+  <app-button-likes-component
+    [isLikes]="true"
+    (likeChange)="changeLike($event)"
+  />
 </div>
-
-<!-- check make up on game component -->

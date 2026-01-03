@@ -4,6 +4,7 @@ export type User = {
   info: SimpleUserInfo;
   imgPath: string;
   likeGames: GameInfo[];
+  recentSeeGames: GameInfo[];
 };
 // it for user input component
 export type SimpleUserInfo = {

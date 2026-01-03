@@ -1,3 +1,12 @@
-<button type="button" (click)="(clickOnButton)" [ngClass]="style()">
+<button
+  #button_icon
+  type="button"
+  (click)="clickOnButton()"
+  [ngClass]="isLikes() ? likesStyle : notlikeStyle"
+>
+  @if(isLikes()){
+  <i class="fa-solid fa-heart"></i>
+  } @else {
   <i class="fa-regular fa-heart"></i>
+  }
 </button>

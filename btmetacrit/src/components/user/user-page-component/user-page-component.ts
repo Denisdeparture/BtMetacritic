@@ -1,9 +1,12 @@
 import {
+  AfterContentInit,
   ChangeDetectionStrategy,
   Component,
   computed,
+  ElementRef,
   inject,
   OnInit,
+  Renderer2,
   viewChildren,
 } from '@angular/core';
 import {
@@ -46,6 +49,8 @@ export class UserPageComponent implements OnInit {
 
   spinner = inject(ToDoSpinnerService);
 
+  rerender = inject(Renderer2);
+
   userAsync = this.route.data.pipe(map((data) => data['user'] as User));
 
   styles = {
@@ -68,6 +73,8 @@ export class UserPageComponent implements OnInit {
   readonly fname = computed(
     () => this.user()?.info.firstname + ' ' + this.user()?.info.lastname
   );
+
+  readonly liked = viewChildren(UserLikedGame);
 
   readonly img = computed(() => this.user()?.imgPath);
 
@@ -99,11 +106,16 @@ export class UserPageComponent implements OnInit {
       screenshots: gf.screenshots,
     };
   }
-
+  changeLikes(event: [boolean, ElementRef]): void {
+    if (!event[0]) {
+      this.rerender.setStyle(event[1].nativeElement, 'display', 'none');
+      // add user.deleteLikedGame()
+    }
+  }
   createSection(): Section[] {
     const customUserSection: Section = {
       id: 0,
-      games: this.user()!.likeGames,
+      games: this.user()!.recentSeeGames,
     };
     return [customUserSection]; // one section
   }

@@ -7,7 +7,16 @@ export class UserStorageService {
   getUser(id: number): User {
     return {
       id: id,
-      likeGames: [this.gameStorage.getSilksong('Test')],
+      likeGames: [
+        this.gameStorage.getSilksong('Test'),
+        this.gameStorage.getSilksong('Masterpiece'),
+        this.gameStorage.getSilksong('Test'),
+        this.gameStorage.getSilksong('Masterpiece'),
+      ],
+      recentSeeGames: [
+        this.gameStorage.getSilksong('Test'),
+        this.gameStorage.getSilksong('Masterpiece'),
+      ],
       info: {
         firstname: 'Test',
         lastname: 'All',
