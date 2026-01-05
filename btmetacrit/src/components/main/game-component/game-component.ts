@@ -2,10 +2,17 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  HostListener,
   input,
+  signal,
 } from '@angular/core';
 import { ButtonLikesComponent } from '../../common/button-likes-component/button-likes-component';
-import { TooltipComponent } from '../tooltip-component/tooltip-component';
+import {
+  TooltipComponent,
+  TooltipInfo,
+} from '../tooltip-component/tooltip-component';
+import { GameInfo } from '../../../types';
+import { recalcImg } from '../../common/helpers';
 
 @Component({
   selector: 'app-game-component',
@@ -15,12 +22,20 @@ import { TooltipComponent } from '../tooltip-component/tooltip-component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameComponent {
-  readonly title = input<string>();
-  readonly imageLink = input<string>();
+  readonly istdisplay = signal<boolean>(false);
+  readonly game = input.required<GameInfo>();
+  readonly title = computed<string>(() => this.game().name);
+  readonly imageLink = computed<string>(() => this.game().header_image);
   readonly imageSize = input<[string, string]>(['110', '200']);
-  readonly rating = input<number>();
+  readonly rating = computed<number>(() => this.game().metacritic.score);
 
   readonly colorRating = computed(() => this.calculateColor());
+  @HostListener('mouseenter') tooltipShow(): void {
+    this.istdisplay.set(true);
+  }
+  @HostListener('mouseleave') tooltipHide(): void {
+    this.istdisplay.set(false);
+  }
 
   calculateColor(): string {
     let color = 'ffffff';
@@ -32,6 +47,16 @@ export class GameComponent {
       color = RATINGS_COLORS.GOOD;
     }
     return color;
+  }
+  mapToTooltip(): TooltipInfo {
+    return {
+      title: this.game().name,
+      imagesLinks: recalcImg(this.game().header_image, this.game().screenshots),
+      dateRealese: new Date(this.game().release_date.date),
+      genres: this.game().genres,
+      linkForMoreInfo: ' ', // add here link,  routes for it
+      description: this.game().short_description,
+    };
   }
 }
 export const RATINGS_COLORS = {

@@ -10,6 +10,7 @@ import {
 import { GameInfo, Price, Screenshot } from '../../../types';
 import { ImagesSliderComponent } from '../images-slider-component/images-slider-component';
 import { ButtonLikesComponent } from '../../common/button-likes-component/button-likes-component';
+import { recalcImg } from '../../common/helpers';
 
 @Component({
   selector: 'app-user-liked-game',
@@ -30,19 +31,7 @@ export class UserLikedGame {
   readonly isLikes = output<[boolean, ElementRef]>();
 
   recalculateImg(): Screenshot[] {
-    const array: Screenshot[] = [];
-    array.push({
-      id: 0,
-      path_thumbnail: '',
-      path_full: this.game()?.header_image,
-    });
-    let counterId = 1; // one el had
-    for (const item of this.game()?.screenshots) {
-      item.id = counterId;
-      array.push(item);
-      counterId++;
-    }
-    return array;
+    return recalcImg(this.game().header_image, this.game().screenshots);
   }
   takePriceInDollars(prices: Price[]): string | undefined {
     return prices.find((x) => x.final_formatted.includes('$'))?.final_formatted;

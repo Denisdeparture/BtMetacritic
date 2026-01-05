@@ -1,4 +1,3 @@
-@if(conditiondisplay()){
 <div
   #wrapper
   class="tooltip"
@@ -21,8 +20,10 @@
   } }
 
   <div class="add-info">
-    <p class="tooltip__genre">{{ info().genre }}</p>
-    <p class="tooltip__date">{{ info().dateRealese }}</p>
+    @for(genre of info().genres; track genre.id){
+    <p class="tooltip__genre">{{ genre.description }}</p>
+    }
+    <p class="tooltip__date">{{ info().dateRealese | date : "dd/MM/yyyy" }}</p>
   </div>
   <div class="tooltip__description">
     <p
@@ -35,4 +36,3 @@
     </p>
   </div>
 </div>
-}

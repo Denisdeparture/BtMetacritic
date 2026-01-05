@@ -30,7 +30,7 @@ export class TextLengthDirective implements OnInit {
 
     const text = paragraph.textContent;
 
-    if (text.length < this.maxLength()) {
+    if (text!.length < this.maxLength()) {
       return;
     }
 
@@ -44,7 +44,7 @@ export class TextLengthDirective implements OnInit {
 
     this.rerender.setStyle(link, 'margin', '0');
 
-    const newtext = text.substring(0, this.maxLength());
+    const newtext = text!.substring(0, this.maxLength());
 
     this.rerender.appendChild(
       this.host.nativeElement,

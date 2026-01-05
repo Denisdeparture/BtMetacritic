@@ -131,12 +131,11 @@ export type SteamGermany = {
   descriptors: string;
 };
 export type SliderGameObject = {
-  rating: number;
-  title: string;
+  game: GameInfo;
 } & SliderObject;
 export type SliderObject = {
   id: number;
-  imageLink: string;
+  imageLink?: string;
 };
 export type SliderGroup<T extends SliderObject> = {
   id: number;

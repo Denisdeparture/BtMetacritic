@@ -1,17 +1,20 @@
 @import "../../../mixin.scss";
 :host {
-  background-color: #c9c6be;
-  padding-bottom: 50px;
+  // background-color: #c9c6be;
   position: absolute;
-  top: 10px;
-  left: 250px;
-  z-index: 3;
-  border-radius: 0px 0px 20px 20px;
+  opacity: 1;
+  background-color: #c9c6be;
+}
+.tooltip {
+  display: flex;
+  background-color: #c9c6be;
+  flex-direction: column;
+  opacity: 1;
+  margin: 0;
+  padding-bottom: 10px;
 }
 .tooltip__title {
   display: flex;
-  position: relative;
-  z-index: 3;
   justify-content: start;
   align-items: end;
   width: 100%;
@@ -20,34 +23,38 @@
   box-sizing: border-box;
   margin-bottom: 10px;
 }
-.tooltip__title::after {
-  content: "";
-  display: block;
-  position: relative;
-  z-index: 1;
-  top: 20px;
-  right: 180px;
-  width: 36px;
-  height: 36px;
-  background-color: #c9c6be;
-  transform: rotate(40deg);
-}
 .add-info {
   display: flex;
+  opacity: 1;
+  margin: 0;
+  background-color: #c9c6be;
+  padding: 0;
+  box-sizing: border-box;
+  margin-top: 0px;
 }
 .tooltip__genre,
 .tooltip__date {
-  margin: 0;
   margin-right: 10px;
-  margin-bottom: 2px;
+}
+.tooltip__genre p,
+.tooltip__date p {
+  margin: 0;
 }
 .tooltip__title h4 {
   font-size: 18px;
   margin: 0;
   font-family: usefont(basic);
 }
+.tooltip__img {
+  height: 20vh;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #c9c6be;
+}
 .tooltip__description {
+  border-radius: 0px 0px 20px 20px;
   background-color: #d9d9d9;
+  padding: 5px;
 }
 .tooltip__description p {
   width: 90%;
