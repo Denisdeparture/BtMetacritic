@@ -1,25 +1,14 @@
-
 @for(obj of sliderGroups(); track obj.id){
-    <div class="group">
-    @for(item of obj.sliderObjects; track item.id){
-        @if(isActive(obj.id)){
-            @if(isRightSlide()){
-                @if(isSlide){
-                    <app-game-component  @slideInR class="active-el" [imageLink]="item.imageLink" [rating]="item.rating"   [title]="item.title"/>
-                }
-                @else{
-                    <app-game-component  class="active-el" [imageLink]="item.imageLink" [rating]="item.rating"   [title]="item.title"/>
-                }
-            }
-            @else{
-                <app-game-component  @slideInL class="active-el" [imageLink]="item.imageLink" [rating]="item.rating"   [title]="item.title"/>
-            }
-        }
-        @else {
-            <app-game-component class="passive-el" [imageLink]="item.imageLink" [rating]="item.rating"   [title]="item.title"/>
-        }
-    }
+<div class="group">
+  @for(item of obj.sliderObjects; track item.id){ @if(isActive(obj.id)){
+  @if(isRightSlide()){ @if(isSlide){
+  <app-game-component @slideInR class="active-el" [game]="item.game" />
+  } @else{
+  <app-game-component class="active-el" [game]="item.game" />
+  } } @else{
+  <app-game-component @slideInL class="active-el" [game]="item.game" />
+  } } @else {
+  <app-game-component class="passive-el" [game]="item.game" />
+  } }
 </div>
 }
-
-{{log()}}

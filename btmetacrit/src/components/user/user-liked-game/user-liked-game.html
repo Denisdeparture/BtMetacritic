@@ -1,1 +1,11 @@
-
+<app-images-slider-component [images]="recalculateImg()" />
+<div class="info">
+  <div class="info__title">
+    <h4>{{ game()?.name }}</h4>
+  </div>
+  <p class="info__price">{{ price() }}</p>
+  <app-button-likes-component
+    [isLikes]="true"
+    (likeChange)="changeLike($event)"
+  />
+</div>

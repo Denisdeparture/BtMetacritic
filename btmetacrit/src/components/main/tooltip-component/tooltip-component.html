@@ -1,0 +1,38 @@
+<div
+  #wrapper
+  class="tooltip"
+  [style.width.px]="width()"
+  [style.height.px]="height()"
+>
+  <div class="tooltip__title">
+    <h4>{{ info().title }}</h4>
+  </div>
+  @for(screen of info().imagesLinks; track screen.id) { @if(screen.id ===
+  activeIndex()){
+  <img
+    @developImg
+    [style.width.px]="width()"
+    [style.height.px]="height()"
+    class="tooltip__img"
+    [src]="screen.path_full"
+    alt="#"
+  />
+  } }
+
+  <div class="add-info">
+    @for(genre of info().genres; track genre.id){
+    <p class="tooltip__genre">{{ genre.description }}</p>
+    }
+    <p class="tooltip__date">{{ info().dateRealese | date : "dd/MM/yyyy" }}</p>
+  </div>
+  <div class="tooltip__description">
+    <p
+      appTextLengthDirective
+      [link]="info().linkForMoreInfo"
+      [maxLength]="maxlength()"
+      class="tooltip__description"
+    >
+      {{ info().description }}
+    </p>
+  </div>
+</div>

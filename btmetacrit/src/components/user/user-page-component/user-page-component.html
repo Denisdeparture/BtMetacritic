@@ -1,18 +1,51 @@
-<app-user-info-component [fullName]="fname()" [imgPath]="img()" [mail]="email()"/>
-<app-caption-component class="caption" [isHasLink]="false" [orientation]="'start'"><p #title>About User</p></app-caption-component>
-<div class="user-info">
+<section class="user">
+  <app-user-info-component
+    [fullName]="fname()"
+    [imgPath]="img()"
+    [mail]="email()"
+  />
+  <app-caption-component
+    class="caption"
+    [isHasLink]="false"
+    [orientation]="'start'"
+    ><p #title>About User</p></app-caption-component
+  >
+  <div class="user-info">
     @for(item of userTypeMap(); track item[0]){
-    <app-user-info-input-component [baseParam]="item[0]" [type]="getType(item[0])" [value]="item[1]"/>
-}
-</div>
-<app-button-component class="app_button" [styles]="styles" [type]="'button'"><p #title>Save Changes</p></app-button-component>
-
-<app-caption-component class="caption" [isHasLink]="false" [orientation]="'start'"><p #title>You see it</p></app-caption-component>
-<app-slider-component [maxLengthCell]="2" [objects]="mapToSlider(0)" [orientation]="'start'"/>
-
-<app-caption-component class="caption" [isHasLink]="false" [orientation]="'start'"><p #title>You like it</p></app-caption-component>
-<!-- Liked component -->
-
-
-
-
+    <app-user-info-input-component
+      [baseParam]="item[0]"
+      [type]="getType(item[0])"
+      [value]="item[1]"
+    />
+    }
+  </div>
+  <app-button-component class="app_button" [styles]="styles" [type]="'button'"
+    ><p #title>Save Changes</p></app-button-component
+  >
+</section>
+<section class="saw it">
+  <app-caption-component
+    class="caption"
+    [isHasLink]="false"
+    [orientation]="'start'"
+    ><p #title>You see it</p></app-caption-component
+  >
+  <app-slider-component
+    [maxLengthCell]="2"
+    [objects]="mapToSlider(0)"
+    [orientation]="'start'"
+  />
+</section>
+<section class="liked">
+  <app-caption-component
+    class="caption"
+    [isHasLink]="false"
+    [orientation]="'start'"
+    ><p #title>You like it</p></app-caption-component
+  >
+  <div class="liked_list">
+    @for(ligame of likedGames(); track ligame){
+    <app-user-liked-game [game]="ligame" (isLikes)="changeLikes($event)" />
+    }
+  </div>
+</section>

@@ -1,4 +1,9 @@
-import { Section, SliderGameObject, SliderObject } from '../../types';
+import {
+  Screenshot,
+  Section,
+  SliderGameObject,
+  SliderObject,
+} from '../../types';
 
 export function mapToSliderInfoById(
   idSection: number,
@@ -13,9 +18,7 @@ export function mapToSliderInfoById(
   for (const game of games) {
     list.push({
       id: counter,
-      rating: game.metacritic.score,
-      title: game.name,
-      imageLink: game.header_image,
+      game: game,
     });
     counter++;
   }
@@ -24,4 +27,22 @@ export function mapToSliderInfoById(
 export function takeANormal(name: string): string {
   const result = name[0].toUpperCase() + name.slice(1);
   return result;
+}
+export function recalcImg(
+  addLink: string,
+  screens: Screenshot[]
+): Screenshot[] {
+  const array: Screenshot[] = [];
+  array.push({
+    id: 0,
+    path_thumbnail: '',
+    path_full: addLink,
+  });
+  let counterId = 1; // one el had
+  for (const item of screens) {
+    item.id = counterId;
+    array.push(item);
+    counterId++;
+  }
+  return array;
 }

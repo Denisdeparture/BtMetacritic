@@ -1,14 +1,27 @@
-:host{
-    display: flex;
-    flex-direction: column;
+:host {
+  display: flex;
+  flex-direction: column;
 }
-.user-info{
-    display: flex;
-    flex-direction: column;
+.liked {
+  height: 400px;
 }
-.app_button{
-    margin-top: 15px;
+.liked_list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  justify-content: space-around;
+  width: 60%;
+  max-height: 200px;
+  gap: 30px;
 }
-.caption{
-    margin-bottom: 20px;
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+.app_button {
+  margin-top: 15px;
+}
+.caption {
+  margin-bottom: 20px;
 }

@@ -1,0 +1,34 @@
+@import "../../../mixin.scss";
+
+.dont-likes,
+.likes {
+  border: none;
+  background-color: black;
+  border-radius: 20px;
+  width: 30px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+}
+.likes {
+  background-color: white;
+}
+.likes:hover,
+.dont-likes:hover {
+  opacity: 0.8;
+  transform: scale(1.08);
+}
+.likes:active,
+.dont-likes:active {
+  background-color: plum;
+  opacity: 0.6;
+  transform: scale(1.08);
+}
+.likes i {
+  color: red;
+}
+.dont-likes i {
+  color: usecolor(basic);
+}

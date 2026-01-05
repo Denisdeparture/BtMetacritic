@@ -1,0 +1,29 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.slider-button {
+  border-radius: 20px;
+  border: none;
+  background-color: black;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.slider-button:hover {
+  opacity: 0.7;
+}
+.slider-button:active {
+  opacity: 0.5;
+}
+.slider-button i {
+  color: white;
+}

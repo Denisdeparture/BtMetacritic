@@ -1,12 +1,22 @@
 import {
+  AfterContentInit,
   ChangeDetectionStrategy,
   Component,
   computed,
+  ElementRef,
   inject,
   OnInit,
+  Renderer2,
   viewChildren,
 } from '@angular/core';
-import { Section, SliderGameObject, SliderObject, User } from '../../../types';
+import {
+  GameInfo,
+  Price,
+  Section,
+  SliderGameObject,
+  SliderObject,
+  User,
+} from '../../../types';
 import { ActivatedRoute } from '@angular/router';
 import { delay, map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -16,11 +26,9 @@ import { ButtonComponent } from '../../common/button-component/button-component'
 import { CaptionComponent } from '../../main/caption-component/caption-component';
 import { SliderComponent } from '../../main/slider-component/slider-component';
 import { mapToSliderInfoById } from '../../common/helpers';
-import {
-  KindOfSpinner,
-  ToDoSpinner,
-} from '../../common/to-do-spinner/to-do-spinner';
+import { KindOfSpinner } from '../../common/to-do-spinner/to-do-spinner';
 import { ToDoSpinnerService } from '../../../services/to-do-spinner-service';
+import { LikedGame, UserLikedGame } from '../user-liked-game/user-liked-game';
 @Component({
   selector: 'app-user-page-component',
   providers: [ToDoSpinnerService],
@@ -30,6 +38,7 @@ import { ToDoSpinnerService } from '../../../services/to-do-spinner-service';
     ButtonComponent,
     CaptionComponent,
     SliderComponent,
+    UserLikedGame,
   ],
   templateUrl: './user-page-component.html',
   styleUrl: './user-page-component.scss',
@@ -39,6 +48,8 @@ export class UserPageComponent implements OnInit {
   route = inject(ActivatedRoute);
 
   spinner = inject(ToDoSpinnerService);
+
+  rerender = inject(Renderer2);
 
   userAsync = this.route.data.pipe(map((data) => data['user'] as User));
 
@@ -57,9 +68,13 @@ export class UserPageComponent implements OnInit {
 
   readonly email = computed(() => this.user()?.info.mail + '');
 
+  readonly likedGames = computed(() => this.user()?.likeGames);
+
   readonly fname = computed(
     () => this.user()?.info.firstname + ' ' + this.user()?.info.lastname
   );
+
+  readonly liked = viewChildren(UserLikedGame);
 
   readonly img = computed(() => this.user()?.imgPath);
 
@@ -83,10 +98,24 @@ export class UserPageComponent implements OnInit {
   getType(obj: any): any {
     return typeof obj;
   }
+  mapToLikedGame(gf: GameInfo): LikedGame {
+    return {
+      name: gf.name,
+      price_overview: gf.price_overview,
+      header_image: gf.header_image,
+      screenshots: gf.screenshots,
+    };
+  }
+  changeLikes(event: [boolean, ElementRef]): void {
+    if (!event[0]) {
+      this.rerender.setStyle(event[1].nativeElement, 'display', 'none');
+      // add user.deleteLikedGame()
+    }
+  }
   createSection(): Section[] {
     const customUserSection: Section = {
       id: 0,
-      games: this.user()!.likeGames,
+      games: this.user()!.recentSeeGames,
     };
     return [customUserSection]; // one section
   }
