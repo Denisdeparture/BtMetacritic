@@ -35,6 +35,7 @@ export type Hint = {
 // steam api
 // Original Name is Data
 export type GameInfo = {
+  id: number,
   type: string;
   name: string;
   metacritic: Metacritic;

@@ -4,12 +4,13 @@ import {
   sectionsResolver,
   userDataResolver,
 } from '../resolvers';
-const LINKS = {
+export const LINKS = {
   MAIN: 'main',
   USER: 'user',
   GAME: 'game',
 };
 export const routes: Routes = [
+
   {
     path: LINKS.USER + '/:id',
     loadComponent: () =>
@@ -39,5 +40,9 @@ export const routes: Routes = [
     resolve: {
       sections: sectionsResolver,
     },
+  },
+    {
+    path: '**',
+    redirectTo: LINKS.MAIN
   },
 ];

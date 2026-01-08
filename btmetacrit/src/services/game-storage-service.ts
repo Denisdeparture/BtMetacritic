@@ -29,6 +29,7 @@ export class GameStorageService {
     getSilksong(name: string) : GameInfo {
         // call api, but now is test 
         return {
+            id: 1,
             type: 'app',
             name: name,
             is_free: false,

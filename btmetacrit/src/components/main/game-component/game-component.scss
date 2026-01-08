@@ -1,7 +1,7 @@
 @import "../../../mixin.scss";
 :host {
   margin-right: 20px;
-  margin-left: 20px;
+  cursor: pointer;
   width: 15vw;
   background-color: usecolor(basic_dark);
   border-radius: 10px 10px 0px 0px;

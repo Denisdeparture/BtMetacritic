@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   HostListener,
+  inject,
   input,
   signal,
 } from '@angular/core';
@@ -13,6 +14,8 @@ import {
 } from '../tooltip-component/tooltip-component';
 import { GameInfo } from '../../../types';
 import { calculateColor, recalcImg } from '../../common/helpers';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LINKS } from '../../../app/app.routes';
 
 @Component({
   selector: 'app-game-component',
@@ -22,6 +25,9 @@ import { calculateColor, recalcImg } from '../../common/helpers';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameComponent {
+  router = inject(Router);
+
+  route = inject(ActivatedRoute);
   readonly istdisplay = signal<boolean>(false);
   readonly game = input.required<GameInfo>();
   readonly title = computed<string>(() => this.game().name);
@@ -30,6 +36,9 @@ export class GameComponent {
   readonly rating = computed<number>(() => this.game().metacritic.score);
 
   readonly colorRating = computed(() => this.calculateColor());
+  @HostListener('click') click() : void{
+    this.router.navigate([LINKS.GAME, this.game().id]);
+  }
   @HostListener('mouseenter') tooltipShow(): void {
     this.istdisplay.set(true);
   }
