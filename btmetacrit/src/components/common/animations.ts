@@ -9,3 +9,10 @@ const slideTransitionLeft = transition(':enter', [
 
 export const slideInR = trigger('slideInR', [slideTransitionInRight]);
 export const slideInL = trigger('slideInL', [slideTransitionLeft]);
+
+export const developTransitionImg = transition(':enter', [
+  style({ opacity: 0 }),
+  animate('0.5s ease-in', style({ opacity: 1 })),
+]);
+
+export const develop = trigger('developImg', [developTransitionImg]);

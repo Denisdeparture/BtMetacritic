@@ -12,7 +12,7 @@ import {
   TooltipInfo,
 } from '../tooltip-component/tooltip-component';
 import { GameInfo } from '../../../types';
-import { recalcImg } from '../../common/helpers';
+import { calculateColor, recalcImg } from '../../common/helpers';
 
 @Component({
   selector: 'app-game-component',
@@ -38,15 +38,7 @@ export class GameComponent {
   }
 
   calculateColor(): string {
-    let color = 'ffffff';
-    if (this.rating()! < 39) {
-      color = RATINGS_COLORS.BAD;
-    } else if (this.rating()! > 39 && this.rating()! < 80) {
-      color = RATINGS_COLORS.MIDDLE;
-    } else if (this.rating()! > 80) {
-      color = RATINGS_COLORS.GOOD;
-    }
-    return color;
+    return calculateColor(this.rating());
   }
   mapToTooltip(): TooltipInfo {
     return {
@@ -59,8 +51,4 @@ export class GameComponent {
     };
   }
 }
-export const RATINGS_COLORS = {
-  GOOD: '#0BFF38',
-  BAD: '#D8000C',
-  MIDDLE: '#FFC659',
-};
+

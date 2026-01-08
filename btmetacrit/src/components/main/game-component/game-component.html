@@ -6,7 +6,7 @@
     [width]="imageSize()[1]"
   />
 </div>
-<div class="container-info" appMyTooltip>
+<div appMyTooltip class="container-info">
   <div class="container-info-rating" [style.background-color]="colorRating()">
     <p>{{ rating() }}</p>
   </div>
@@ -15,9 +15,9 @@
 </div>
 @if(istdisplay()){
 <app-tooltip-component
-  [info]="mapToTooltip()"
-  [verticalOffset]="-100"
   [horizontalOffset]="-200"
   [imagechangeinterval]="2000"
+  [info]="mapToTooltip()"
+  [verticalOffset]="-100"
 />
 }

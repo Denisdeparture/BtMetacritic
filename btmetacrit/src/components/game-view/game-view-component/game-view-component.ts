@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   inject,
+  signal,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GameInfo } from '../../../types';
@@ -10,10 +11,12 @@ import { map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { recalcImg } from '../../common/helpers';
 import { SliderBarComponent } from '../slider-bar-component/slider-bar-component';
+import { GameViewImageGroupComponent } from '../game-view-image-group-component/game-view-image-group-component';
+import { GameViewFullInfoComponent } from "../game-view-full-info-component/game-view-full-info-component";
 
 @Component({
   selector: 'app-game-view-component',
-  imports: [SliderBarComponent],
+  imports: [SliderBarComponent, GameViewImageGroupComponent, GameViewFullInfoComponent],
   templateUrl: './game-view-component.html',
   styleUrl: './game-view-component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,7 +34,9 @@ export class GameViewComponent {
     return recalcImg(this.game()!.header_image, this.game()!.screenshots);
   });
 
+  readonly indexForImg = signal<number>(0);
+
   changeImage(event: number): void {
-    console.log('Now value in slide bar change on: ' + event);
+    this.indexForImg.set(event);
   }
 }

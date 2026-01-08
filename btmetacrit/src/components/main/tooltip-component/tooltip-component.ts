@@ -11,16 +11,12 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { TextLengthDirective } from '../../../directives/text-length-directive';
+import { TextLengthDirective } from '../../../directives/text-length/text-length-directive';
 import { Genre, Screenshot } from '../../../types';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { DatePipe } from '@angular/common';
-const developTransitionImg = transition(':enter', [
-  style({ opacity: 0 }),
-  animate('0.5s ease-in', style({ opacity: 1 })),
-]);
+import { develop } from '../../common/animations';
 
-const develop = trigger('developImg', [developTransitionImg]);
 @Component({
   animations: [develop],
   selector: 'app-tooltip-component',

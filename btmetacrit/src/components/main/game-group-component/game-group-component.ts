@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { SliderGameObject, SliderGroup } from '../../../types';
 import { GameComponent } from '../game-component/game-component';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { slideInR, slideInL } from './animations';
+import { slideInR, slideInL } from '../../common/animations';
 import { ISLide } from '../slider-component/helper';
 
 // please connect with button click

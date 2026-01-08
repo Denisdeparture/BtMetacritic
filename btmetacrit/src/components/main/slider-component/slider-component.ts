@@ -19,6 +19,7 @@ import {
   SliderButtonComponent,
   TransformSlide,
 } from '../slider-button-component/slider-button-component';
+import { recalcToMap } from '../../common/helpers';
 
 @Component({
   selector: 'app-slider-component',
@@ -56,39 +57,7 @@ export class SliderComponent implements OnInit, AfterContentInit {
     );
   }
   recalculateToMap(): SliderGroup<SliderGameObject>[] {
-    const map: SliderGroup<SliderGameObject>[] = [];
-
-    const objs = this.objects();
-
-    if (!objs) {
-      return map;
-    }
-
-    const length = objs.length + 1;
-
-    let count = 0;
-
-    const lengthOfPart = Math.floor(length / this.maxLengthCell());
-
-    let num = this.maxLengthCell();
-
-    for (
-      let i = this.maxLengthCell() % 2 === 0 ? 0 : 1;
-      i < lengthOfPart;
-      i++
-    ) {
-      const sliders = this.objects()!.slice(
-        count,
-        num >= length ? length - 1 : num
-      );
-
-      num = sliders.length * 2;
-
-      count = sliders.length;
-
-      map.push({ id: i, sliderObjects: sliders });
-    }
-    return map;
+    return recalcToMap(this.objects()!, this.maxLengthCell());
   }
 
   ngOnInit(): void {

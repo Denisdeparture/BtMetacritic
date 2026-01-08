@@ -41,10 +41,16 @@ export class GameStorageService {
             capsule_image:
              "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1030300/b73ec03fbdb9e21e3c59eb7e59966949d0c17f29/capsule_231x87.jpg?t=1764916587",
             developers: [
-                "Team Cherry"
+                "Team Cherry",
+                "Team Cherry",
+                "Team Cherry",
+                "Team Cherry",
             ],
             publishers: [
-                "Team Cherry"
+                 "Team Cherry",
+                "Team Cherry",
+                "Team Cherry",
+                "Team Cherry",
             ],
             price_overview: [ {
                    final_formatted: "R 185.00"

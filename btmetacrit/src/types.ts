@@ -133,6 +133,9 @@ export type SteamGermany = {
 export type SliderGameObject = {
   game: GameInfo;
 } & SliderObject;
+export type SliderScreenObject = {
+  screen: Screenshot;
+} & SliderObject;
 export type SliderObject = {
   id: number;
   imageLink?: string;
@@ -140,4 +143,9 @@ export type SliderObject = {
 export type SliderGroup<T extends SliderObject> = {
   id: number;
   sliderObjects: T[];
+};
+export const RATINGS_COLORS = {
+  GOOD: '#0BFF38',
+  BAD: '#D8000C',
+  MIDDLE: '#FFC659',
 };

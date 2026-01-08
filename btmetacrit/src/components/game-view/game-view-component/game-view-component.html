@@ -1,5 +1,16 @@
-<app-slider-bar-component
-  [length]="images().length"
-  (nowValueEmitter)="changeImage($event)"
->
-</app-slider-bar-component>
+<section class="main">
+<div class="main__info">
+<app-game-view-image-group-component
+  [images]="images()"
+  [index]="indexForImg()"
+/>
+<app-game-view-full-info-component [info]="game()!" [userMarks]="100"/>
+</div>
+<div class="main__slider">
+  <app-slider-bar-component
+    [length]="images().length"
+    (nowValueEmitter)="changeImage($event)"
+  >
+  </app-slider-bar-component>
+</div>
+</section>

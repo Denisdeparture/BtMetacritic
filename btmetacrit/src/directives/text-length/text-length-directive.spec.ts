@@ -1,4 +1,4 @@
-import { TextLengthDirective } from './text-length-directive';
+import { TextLengthDirective } from '../text-length/text-length-directive';
 
 describe('TextLengthDirective', () => {
   it('should create an instance', () => {

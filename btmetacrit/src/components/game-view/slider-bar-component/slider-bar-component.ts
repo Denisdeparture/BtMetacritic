@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   input,
   output,
 } from '@angular/core';
@@ -24,6 +25,10 @@ export class SliderBarComponent {
 
   readonly multiplayer = input<number>(10);
 
+  readonly normalizedLength = computed(
+    () => this.length() * this.multiplayer()
+  );
+
   readonly nowValueEmitter = output<number>();
 
   changeNowValue(): void {
@@ -33,7 +38,9 @@ export class SliderBarComponent {
     this.nowValue =
       Math.floor(this.nowValue) + event.offset * this.multiplayer();
     if (this.nowValue < 0) {
-      this.nowValue = this.length() * this.multiplayer();
+      this.nowValue = this.normalizedLength();
+    } else if (this.nowValue >= this.normalizedLength()) {
+      this.nowValue = 0;
     }
     this.changeNowValue();
   }
