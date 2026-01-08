@@ -1,9 +1,9 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 
-const slideTransitionInRight = transition(':enter', [
+export const slideTransitionInRight = transition(':enter', [
   animate('1s ease-in', style({ transform: 'translateX(600px)' })),
 ]);
-const slideTransitionLeft = transition(':enter', [
+export const slideTransitionLeft = transition(':enter', [
   animate('1s ease-in', style({ transform: 'translateX(-600px)' })),
 ]);
 
@@ -16,3 +16,8 @@ export const developTransitionImg = transition(':enter', [
 ]);
 
 export const develop = trigger('developImg', [developTransitionImg]);
+export const showAnimate = transition(':enter', [
+  style({opacity: 0, transform: 'translateY(-20px)'}),
+  animate('1s ease-in', style({transform: 'translateY(0px)', opacity: 1}))
+])
+export const show = trigger('show', [showAnimate])

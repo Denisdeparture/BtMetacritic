@@ -1,0 +1,25 @@
+:host{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+.container{
+    background-color: #bebcb6;
+}
+.description-button{
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: #938F86;
+    padding: 10px;
+    border: none;
+}
+.description-button:hover{
+    opacity: 0.8;
+}
+.description-button:active{
+    opacity: 0.6;
+}

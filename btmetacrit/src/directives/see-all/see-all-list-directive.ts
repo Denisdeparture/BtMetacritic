@@ -50,6 +50,8 @@ export class SeeAllListDirective implements OnInit {
      this.afterClick(true);
     });
 
+    this.rerender.setStyle(a, 'color', '#626262');
+
     this.rerender.appendChild(this.host.nativeElement, a);
 
     this.rerender.setStyle(a, 'cursor', 'pointer');

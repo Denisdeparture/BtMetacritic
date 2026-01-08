@@ -4,6 +4,7 @@ import {
   inject,
   input,
   OnInit,
+  output,
   Renderer2,
 } from '@angular/core';
 
@@ -15,7 +16,9 @@ export class TextLengthDirective implements OnInit {
 
   host = inject(ElementRef);
 
-  readonly link = input.required<string>();
+  readonly func = output<string | undefined>();
+
+  readonly link = input<string>();
 
   readonly maxLength = input.required<number>();
 
@@ -38,7 +41,9 @@ export class TextLengthDirective implements OnInit {
 
     const link: HTMLAnchorElement = this.rerender.createElement('a');
 
-    link.href = this.link();
+    this.rerender.listen(link, 'click', () => {
+     this.func.emit(this.link())
+    });
 
     link.text = '...' + this.someText();
 

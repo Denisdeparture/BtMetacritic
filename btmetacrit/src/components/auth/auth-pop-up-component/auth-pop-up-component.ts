@@ -7,14 +7,8 @@ import {  FormControl, FormsModule,  } from '@angular/forms';
 import {  MatRadioModule } from '@angular/material/radio';
 import { AuthFormComponent} from "../auth-form-component/auth-form-component";
 import { OAuth2ButtonComponent } from "../o-auth-2-button-component/o-auth-2-button-component";
-import { animate, style, transition, trigger } from '@angular/animations';
-import { transform } from 'typescript';
+import { show } from '../../common/animations';
 
-const showAnimate = transition(':enter', [
-  style({opacity: 0, transform: 'translateY(-20px)'}),
-  animate('1s ease-in', style({transform: 'translateY(0px)', opacity: 1}))
-])
-const show = trigger('show', [showAnimate])
 @Component({
   animations: [show],
   selector: 'app-auth-pop-up-component',

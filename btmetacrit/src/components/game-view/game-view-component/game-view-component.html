@@ -14,3 +14,7 @@
   </app-slider-bar-component>
 </div>
 </section>
+<section class="description">
+  <app-caption-component [orientation]="'start'"><p #title>Description</p></app-caption-component>
+  <app-game-view-full-description-component [description]="getDescription()"/>
+</section>
