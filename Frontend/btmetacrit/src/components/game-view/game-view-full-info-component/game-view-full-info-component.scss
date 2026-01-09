@@ -1,0 +1,56 @@
+@import '../../../mixin';
+:host{
+    display: flex;
+    flex-direction: column;
+    background-color: #D9D4C7;
+    width: 200px;
+    padding: 10px;
+    border-radius: 0px 0px 8px 8px;
+}
+ul{
+    list-style: none;
+}
+.game__img{
+    width: 200px;
+    height: 100px;
+}
+.game__title{
+    color: usecolor(font_light);
+    font-family: usefont(general);
+    font-size: 20px;
+}
+.game__platforms{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.g__title{
+    margin-right: 10px;
+}
+.game__realese, .game__score__user, .game__score__critic{
+    display: flex;
+    color: usecolor(font_light);
+    font-family: usefont(general);
+    flex-direction: row;
+    align-items: center;
+}
+.game__score__user .mark{
+  padding: 0px;
+  padding-right: 10px;
+  padding-left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5vh;
+  border-radius: 8px;
+}
+ .game__score__critic .mark{
+  padding: 0px;
+  padding-right: 10px;
+  padding-left: 10px;
+  height: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+ }

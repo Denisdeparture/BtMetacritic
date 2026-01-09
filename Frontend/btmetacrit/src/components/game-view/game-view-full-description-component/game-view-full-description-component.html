@@ -1,0 +1,6 @@
+<div class="container" [style.height.px]="height()">
+    <p appTextLengthDirective [maxLength]="description().length" (func)="readMoreWithDirective($event)" >{{description()}}</p>
+</div>
+<button class="description-button" type="button" (click)="readMore()">Read more</button>
+
+

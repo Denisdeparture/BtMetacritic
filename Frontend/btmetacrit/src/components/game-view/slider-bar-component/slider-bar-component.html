@@ -1,0 +1,20 @@
+<app-slider-button-component
+  [side]="'LEFT'"
+  [offset]="-1"
+  [rotate]="0"
+  (slideChange)="calculateTransform($event)"
+></app-slider-button-component>
+<input
+  class="slider-bar"
+  type="range"
+  [min]="0"
+  [max]="length() * multiplayer()"
+  (change)="changeNowValue()"
+  [(ngModel)]="nowValue"
+/>
+<app-slider-button-component
+  side="RIGHT"
+  [rotate]="180"
+  [offset]="1"
+  (slideChange)="calculateTransform($event)"
+></app-slider-button-component>

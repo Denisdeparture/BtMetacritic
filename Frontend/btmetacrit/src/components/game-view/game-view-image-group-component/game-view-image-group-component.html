@@ -1,0 +1,23 @@
+<div class="container-for-central-img">
+  <img alt="#" class="central-img" [src]="images()[index()].path_full" />
+</div>
+<div class="conatiner-for-img" [style.max-width.px]="widthForContainerImg()">
+  @for(screen of images(); track screen.id){ @if(screen.id === index()){
+  <img
+    alt="#"
+    class="active-img"
+    [src]="screen.path_full"
+    [style.height.px]="height()"
+    [style.width.px]="width()"
+  />
+  }@else {
+  <img
+    alt="#"
+    class="passive-img"
+    [src]="screen.path_full"
+    [style.height.px]="height()"
+    [style.width.px]="width()"
+    (click)="clickImg(screen.id)"
+  />
+  } }
+</div>

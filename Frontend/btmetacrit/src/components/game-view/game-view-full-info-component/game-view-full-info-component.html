@@ -1,0 +1,53 @@
+<img alt="#" class="game__img" [src]="mainImg()">
+
+<h2 class="game__title">{{title()}}</h2>
+
+<div class="game__platforms">
+    @if(platformsSupported().linux){
+        <i class="fa-brands fa-linux"></i>
+    }
+    @if(platformsSupported().mac){
+        <i class="fa-brands fa-apple"></i>
+    }  
+    @if(platformsSupported().windows){
+        <i class="fa-brands fa-windows"></i>
+    }
+</div>
+
+<div class="game__realese">
+    <p class="g__title">Realesed on: </p>
+    <p>{{dateRealese()}}</p>
+</div>
+<div class="game__development">
+    <p class="game__development__title">Development: </p>
+       <div appSeeAllListDirective class="game__development__list" 
+    [beginWith]="1" 
+    [dropDownlist]="developers()"
+    [maxheight]="200">
+        <div class="game__pevelopment__list__part"><p> {{developers()[0]}} </p></div>
+</div>
+</div>
+<div class="game__publisher">
+    <p class="game__publisher__title">Publisher: </p>
+    <ul appSeeAllListDirective class="game__publisher__list" 
+    [beginWith]="1" 
+    [dropDownlist]="publisher()"
+    [maxheight]="200">
+        <li class="game__publisher__list__part">{{publisher()[0]}}</li>
+    </ul>
+</div>
+@if(userMarks()){
+<div class="game__score__user">
+    <p class="g__title">User Marks: </p>
+    <div class="mark" [style.background-color]="calcRating(userMarks()!)"> <p>{{userMarks()}}</p> </div>
+</div>
+}
+<div class="game__score__critic">
+    <p class="g__title">Critic Marks: </p>
+    <div class="mark" [style.background-color]="calcRating(criticScore())"> <p>{{criticScore()}}</p> </div>
+</div>
+
+
+
+
+
