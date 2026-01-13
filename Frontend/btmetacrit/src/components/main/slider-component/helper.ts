@@ -2,8 +2,6 @@ import { WritableSignal } from '@angular/core';
 import { TransformSlide } from '../slider-button-component/slider-button-component';
 
 export function centerObjIndex(length: number): number {
-  //const length = this.map()?.length;
-
   if (!length) {
     return 0;
   }

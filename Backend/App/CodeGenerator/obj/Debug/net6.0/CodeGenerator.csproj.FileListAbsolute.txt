@@ -1,0 +1,5 @@
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\obj\Debug\net6.0\CodeGenerator.csproj.AssemblyReference.cache
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\obj\Debug\net6.0\CodeGenerator.GeneratedMSBuildEditorConfig.editorconfig
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\obj\Debug\net6.0\CodeGenerator.AssemblyInfoInputs.cache
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\obj\Debug\net6.0\CodeGenerator.AssemblyInfo.cs
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\obj\Debug\net6.0\CodeGenerator.csproj.CoreCompileInputs.cache

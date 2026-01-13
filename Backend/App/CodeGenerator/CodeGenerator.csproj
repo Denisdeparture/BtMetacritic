@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+	 <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+	 <Nullable>enable</Nullable>
+	 <LangVersion>preview</LangVersion>
+	 <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	 <EmitCompilerGeneratedFiles>True</EmitCompilerGeneratedFiles>
+	 <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3" PrivateAssets="all" GeneratePathProperty="true"/>
+	  <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0"  PrivateAssets="all" GeneratePathProperty="true"/>
+  </ItemGroup>
+	
+	<ItemGroup>
+		<ProjectReference Include="..\Data\Data.csproj" OutputItemType="Analyzer"/>
+	</ItemGroup>
+</Project>

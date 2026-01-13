@@ -1,0 +1,15 @@
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\bin\Debug\net8.0\CodeGenerator.deps.json
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\bin\Debug\net8.0\CodeGenerator.dll
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\bin\Debug\net8.0\CodeGenerator.pdb
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\bin\Debug\net8.0\Data.dll
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\bin\Debug\net8.0\Data.pdb
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\obj\Debug\net8.0\CodeGenerator.csproj.AssemblyReference.cache
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\obj\Debug\net8.0\CodeGenerator.GeneratedMSBuildEditorConfig.editorconfig
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\obj\Debug\net8.0\CodeGenerator.AssemblyInfoInputs.cache
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\obj\Debug\net8.0\CodeGenerator.AssemblyInfo.cs
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\obj\Debug\net8.0\CodeGenerator.csproj.CoreCompileInputs.cache
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\obj\Debug\net8.0\CodeGene.5CC6BE46.Up2Date
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\obj\Debug\net8.0\CodeGenerator.dll
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\obj\Debug\net8.0\refint\CodeGenerator.dll
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\obj\Debug\net8.0\CodeGenerator.pdb
+D:\ReposProjects\UnitOfWorkUpgradeAdditionalLibrary\CodeGenerator\obj\Debug\net8.0\ref\CodeGenerator.dll

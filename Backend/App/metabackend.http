@@ -1,6 +1,0 @@
-@metabackend_HostAddress = http://localhost:5053
-
-GET {{metabackend_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

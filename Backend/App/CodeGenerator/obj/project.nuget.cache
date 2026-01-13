@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "dgSpecHash": "OntW9Eoo1w8=",
+  "success": false,
+  "projectFilePath": "D:\\BtMetacritic\\Backend\\App\\CodeGenerator\\CodeGenerator.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1201",
+      "level": "Error",
+      "message": "Проект Data несовместим с netstandard2.0 (.NETStandard,Version=v2.0). Проект Data поддерживает: net9.0 (.NETCoreApp,Version=v9.0)",
+      "projectPath": "D:\\BtMetacritic\\Backend\\App\\CodeGenerator\\CodeGenerator.csproj",
+      "filePath": "D:\\BtMetacritic\\Backend\\App\\CodeGenerator\\CodeGenerator.csproj",
+      "libraryId": "Data",
+      "targetGraphs": [
+        ".NETStandard,Version=v2.0"
+      ]
+    }
+  ]
+}

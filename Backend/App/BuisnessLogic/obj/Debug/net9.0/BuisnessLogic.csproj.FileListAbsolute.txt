@@ -1,0 +1,16 @@
+D:\BtMetacritic\Backend\App\BuisnessLogic\obj\Debug\net9.0\BuisnessLogic.csproj.AssemblyReference.cache
+D:\BtMetacritic\Backend\App\BuisnessLogic\obj\Debug\net9.0\BuisnessLogic.GeneratedMSBuildEditorConfig.editorconfig
+D:\BtMetacritic\Backend\App\BuisnessLogic\obj\Debug\net9.0\BuisnessLogic.AssemblyInfoInputs.cache
+D:\BtMetacritic\Backend\App\BuisnessLogic\obj\Debug\net9.0\BuisnessLogic.AssemblyInfo.cs
+D:\BtMetacritic\Backend\App\BuisnessLogic\obj\Debug\net9.0\BuisnessLogic.csproj.CoreCompileInputs.cache
+D:\BtMetacritic\Backend\App\BuisnessLogic\obj\Debug\net9.0\BuisnessLogic.sourcelink.json
+D:\BtMetacritic\Backend\App\BuisnessLogic\bin\Debug\net9.0\BuisnessLogic.deps.json
+D:\BtMetacritic\Backend\App\BuisnessLogic\bin\Debug\net9.0\BuisnessLogic.dll
+D:\BtMetacritic\Backend\App\BuisnessLogic\bin\Debug\net9.0\BuisnessLogic.pdb
+D:\BtMetacritic\Backend\App\BuisnessLogic\bin\Debug\net9.0\Data.dll
+D:\BtMetacritic\Backend\App\BuisnessLogic\bin\Debug\net9.0\Data.pdb
+D:\BtMetacritic\Backend\App\BuisnessLogic\obj\Debug\net9.0\Buisness.22E12408.Up2Date
+D:\BtMetacritic\Backend\App\BuisnessLogic\obj\Debug\net9.0\BuisnessLogic.dll
+D:\BtMetacritic\Backend\App\BuisnessLogic\obj\Debug\net9.0\refint\BuisnessLogic.dll
+D:\BtMetacritic\Backend\App\BuisnessLogic\obj\Debug\net9.0\BuisnessLogic.pdb
+D:\BtMetacritic\Backend\App\BuisnessLogic\obj\Debug\net9.0\ref\BuisnessLogic.dll

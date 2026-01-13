@@ -3,14 +3,13 @@
   "WorkspaceRootPath": "D:\\BtMetacritic\\Backend\\App\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{F1715270-A4E7-D501-3F6B-92FF1C08C4D7}|..\\Data\\Data.csproj|d:\\btmetacritic\\backend\\data\\myappcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5E88E456-0660-50D6-7B4F-779BBC1EBE8E}|..\\BuisnessLogic\\BuisnessLogic.csproj|d:\\btmetacritic\\backend\\buisnesslogic\\services\\steamapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5E88E456-0660-50D6-7B4F-779BBC1EBE8E}|..\\BuisnessLogic\\BuisnessLogic.csproj|d:\\btmetacritic\\backend\\buisnesslogic\\models\\gameinfomodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{36E2B472-E10E-48AF-AD75-0127F7C7FD2D}|metabackend.csproj|d:\\btmetacritic\\backend\\app\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{36E2B472-E10E-48AF-AD75-0127F7C7FD2D}|metabackend.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{66248900-9B12-486F-A039-DF49D3AD8F70}|..\\WebApi\\WebApi.csproj|d:\\btmetacritic\\backend\\webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -20,47 +19,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 6,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "GameInfoModel.cs",
-              "DocumentMoniker": "D:\\BtMetacritic\\Backend\\BuisnessLogic\\Models\\GameInfoModel.cs",
-              "RelativeDocumentMoniker": "..\\BuisnessLogic\\Models\\GameInfoModel.cs",
-              "ToolTip": "D:\\BtMetacritic\\Backend\\BuisnessLogic\\Models\\GameInfoModel.cs",
-              "RelativeToolTip": "..\\BuisnessLogic\\Models\\GameInfoModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-12T22:17:58.335Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SteamApi.cs",
-              "DocumentMoniker": "D:\\BtMetacritic\\Backend\\BuisnessLogic\\Services\\SteamApi.cs",
-              "RelativeDocumentMoniker": "..\\BuisnessLogic\\Services\\SteamApi.cs",
-              "ToolTip": "D:\\BtMetacritic\\Backend\\BuisnessLogic\\Services\\SteamApi.cs",
-              "RelativeToolTip": "..\\BuisnessLogic\\Services\\SteamApi.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAAAQwDYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-12T21:50:26.386Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\BtMetacritic\\Backend\\App\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "D:\\BtMetacritic\\Backend\\App\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-12T21:48:34.341Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
@@ -84,6 +44,45 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MyAppContext.cs",
+              "DocumentMoniker": "D:\\BtMetacritic\\Backend\\Data\\MyAppContext.cs",
+              "RelativeDocumentMoniker": "..\\Data\\MyAppContext.cs",
+              "ToolTip": "D:\\BtMetacritic\\Backend\\Data\\MyAppContext.cs",
+              "RelativeToolTip": "..\\Data\\MyAppContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-13T08:36:12.252Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\BtMetacritic\\Backend\\WebApi\\Program.cs",
+              "RelativeDocumentMoniker": "..\\WebApi\\Program.cs",
+              "ToolTip": "D:\\BtMetacritic\\Backend\\WebApi\\Program.cs",
+              "RelativeToolTip": "..\\WebApi\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-13T08:26:16.568Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SteamApi.cs",
+              "DocumentMoniker": "D:\\BtMetacritic\\Backend\\BuisnessLogic\\Services\\SteamApi.cs",
+              "RelativeDocumentMoniker": "..\\BuisnessLogic\\Services\\SteamApi.cs",
+              "ToolTip": "D:\\BtMetacritic\\Backend\\BuisnessLogic\\Services\\SteamApi.cs",
+              "RelativeToolTip": "..\\BuisnessLogic\\Services\\SteamApi.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-12T21:50:26.386Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
