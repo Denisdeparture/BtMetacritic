@@ -8,11 +8,11 @@ namespace CodeGenerator.Data;
 
 public interface IWorker<T>
 {
-    void Add(T data);
-    T Get(int id);
+    Task AddAsync(T data);
+    Task<T?> GetAsync(int id);
 
-    IList<T> GetAll();
-    void Update(int id, T newdata);
+    Task<IList<T>?> GetAllAsync();
+    void UpdateAsync(int id, T newdata);
 
-    void Delete(int id);
+    Task DeleteAsync(int id);
 }

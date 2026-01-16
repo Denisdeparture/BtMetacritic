@@ -35,7 +35,7 @@ export type Hint = {
 // steam api
 // Original Name is Data
 export type GameInfo = {
-  id: number,
+  id: number;
   type: string;
   name: string;
   metacritic: Metacritic;
@@ -149,4 +149,16 @@ export const RATINGS_COLORS = {
   GOOD: '#0BFF38',
   BAD: '#D8000C',
   MIDDLE: '#FFC659',
+};
+// auth
+export type UserLoginRequest = {
+  email: string;
+  password: string;
+};
+export type UserLoginResponce = {
+  accessToken: string;
+  refreshToken: string;
+};
+export type UserRegisterRequest = UserLoginRequest & {
+  name: string;
 };

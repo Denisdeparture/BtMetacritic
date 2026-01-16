@@ -6,11 +6,9 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   imports: [NgOptimizedImage],
   templateUrl: './o-auth-2-button-component.html',
   styleUrl: './o-auth-2-button-component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OAuth2ButtonComponent {
   readonly logoLink = input.required<string>(); // link in asset or web
-  readonly provider = input.required<string>(); // check 
-  // this sample https://github.com/Denisdeparture/BT3DModelStore/blob/main/Server/Application/Controllers/AccountController.cs
-  // and go to backend
+  readonly provider = input.required<string>(); // check
 }

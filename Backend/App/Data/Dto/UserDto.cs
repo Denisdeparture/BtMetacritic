@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Data.Dto;
 
-public class UserDto : IdentityUser
+public class UserDto : IdentityUser<int>
 {
     public string SaltForPassword { get; set; } = null!;
     public List<GameDto>? GamesWhichLiked { get; set; }
