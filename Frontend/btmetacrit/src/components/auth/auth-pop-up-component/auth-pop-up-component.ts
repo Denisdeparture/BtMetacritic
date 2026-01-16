@@ -23,6 +23,7 @@ import { complexPasswordValidator } from '../../../validators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LINKS } from '../../../app/app.routes';
+import { OAuth2Type } from '../../../types';
 
 @Component({
   animations: [show],
@@ -64,7 +65,7 @@ export class AuthPopUpComponent implements AfterViewInit {
   readonly OAuth2Buttons: OAuth2Type[] = []; // maybe with resolver like in main
 
   readonly condition = computed(() =>
-    this.option() === KindOfAuthOp.LOGIN.toString() ? true : false
+    this.option() === KindOfAuthOp.LOGIN.toString() ? true : false,
   );
 
   @HostBinding('style.background-color') baseColor = '';
@@ -79,24 +80,24 @@ export class AuthPopUpComponent implements AfterViewInit {
       this.rerender.setStyle(
         this.loginButton()?.nativeElement,
         'background-color',
-        '#AA8A7D'
+        '#AA8A7D',
       );
       this.rerender.setStyle(
         this.regButton()?.nativeElement,
         'background-color',
-        this.baseColor
+        this.baseColor,
       );
     } else {
       this.createForms(undefined, form);
       this.rerender.setStyle(
         this.regButton()?.nativeElement,
         'background-color',
-        '#AA8A7D'
+        '#AA8A7D',
       );
       this.rerender.setStyle(
         this.loginButton()?.nativeElement,
         'background-color',
-        this.baseColor
+        this.baseColor,
       );
     }
   }
@@ -188,8 +189,4 @@ export class AuthPopUpComponent implements AfterViewInit {
 export const KindOfAuthOp = {
   REGISTRATION: 'Registartion',
   LOGIN: 'Login',
-};
-export type OAuth2Type = {
-  provider: string;
-  logoLink: string;
 };

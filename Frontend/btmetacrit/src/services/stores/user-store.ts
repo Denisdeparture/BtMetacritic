@@ -4,33 +4,25 @@ import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { addEntity, removeEntity, withEntities } from '@ngrx/signals/entities';
 import { Signal } from '@angular/core';
 
-const initialState: User[] = [];
+const initialState: User = {
+  id: 0,
+};
 export const UserStore = signalStore(
   { providedIn: 'root' },
-  withState<User[]>(initialState),
-  withEntities<User>(),
+  withState<User>(initialState),
   withDevtools('Users Storage'),
   withMethods((state) => ({
-    addUser: (task: User): void => {
-      patchState(state, addEntity(task));
+    addUser: (user: User): void => {
+      patchState(state, user);
     },
     deleteUser: (id: number): void => {
-      patchState(state, removeEntity(id));
+      patchState(state, initialState);
     },
-    getUserById: (id: number): User | undefined => {
-      return state.entities().find((x) => x.id == id);
+    getUserId: (): number => {
+      return state.id();
     },
-    getUserByName: (name: string): User | undefined => {
-      return state
-        .entities()
-        .find((x) => x.info.firstname + x.info.lastname === name);
+    updateUser: (newValue: User): void => {
+      patchState(state, newValue);
     },
-    getUsers: (): Signal<User[]> => {
-      return state.entities;
-    },
-    updateUser: (id: number, newValue: User): void => {
-      id -= 1;
-      patchState(state, removeEntity(id), addEntity(newValue));
-    },
-  }))
+  })),
 );

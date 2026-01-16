@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment.development';
 import {
+  OAuth2Type,
   UserLoginRequest,
   UserLoginResponce,
   UserRegisterRequest,
@@ -21,7 +22,7 @@ export class AuthService {
   login(info: UserLoginRequest): Observable<UserLoginResponce> {
     return this.httpClient.post<UserLoginResponce>(
       environment.apiUrl + '/sign-in',
-      info
+      info,
     );
   }
   setTokens(tokens: UserLoginResponce): void {
@@ -32,5 +33,12 @@ export class AuthService {
   }
   register(info: UserRegisterRequest): Observable<any> {
     return this.httpClient.post<any>(environment.apiUrl + '/sign-up', info);
+  }
+  getOAuthProviders(): OAuth2Type[] {
+    return [
+      { logoLink: '../../../assets/img/google.png', provider: 'Google' },
+      { logoLink: '../../../assets/img/discord-logo.png', provider: 'Discord' },
+      { logoLink: '../../../assets/img/yandex-logo.png', provider: 'Yandex' },
+    ];
   }
 }

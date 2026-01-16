@@ -1,10 +1,10 @@
 //main types
 export type User = {
   id: number;
-  info: SimpleUserInfo;
-  imgPath: string;
-  likeGames: GameInfo[];
-  recentSeeGames: GameInfo[];
+  info?: SimpleUserInfo;
+  imgPath?: string;
+  likeGames?: GameInfo[];
+  recentSeeGames?: GameInfo[];
 };
 // it for user input component
 export type SimpleUserInfo = {
@@ -161,4 +161,8 @@ export type UserLoginResponce = {
 };
 export type UserRegisterRequest = UserLoginRequest & {
   name: string;
+};
+export type OAuth2Type = {
+  provider: string;
+  logoLink: string;
 };

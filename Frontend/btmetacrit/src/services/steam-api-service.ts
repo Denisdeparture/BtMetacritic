@@ -20,7 +20,7 @@ export class SteamApiService {
         params: {
           count: count,
         },
-      }
+      },
     );
   }
   getGame(id: number): Observable<GameInfo> {
@@ -30,58 +30,51 @@ export class SteamApiService {
         params: {
           id: id,
         },
-      }
+      },
     );
   }
   getLikedGameByUser(userId: number): Observable<GameInfo[]> {
-    return this.httpClient.get<GameInfo[]>(
-      environment.apiUrl + this.addtionalPath + '/liked',
-      {
-        params: {
-          userId: userId,
-        },
-      }
-    );
+    return this.get(userId, '/liked');
   }
-  getSadGameByUser(userId: number): Observable<GameInfo[]> {
-    return this.httpClient.get<GameInfo[]>(
-      environment.apiUrl + this.addtionalPath + '/sad',
-      {
-        params: {
-          userId: userId,
-        },
-      }
-    );
+  getViewGameByUser(userId: number): Observable<GameInfo[]> {
+    return this.get(userId, '/viewed');
   }
   addGameToLikedByUser(gf: GameInfo, userId: number): void {
-    this.httpClient.post(environment.apiUrl + this.addtionalPath + '/liked', {
-      params: {
-        gameId: gf.id,
-        userId: userId,
-      },
-    });
+    this.post(gf.id, userId, '/liked');
   }
-  addGameToSadByUser(gf: GameInfo, userId: number): void {
-    this.httpClient.post(environment.apiUrl + this.addtionalPath + '/sad', {
-      params: {
-        gameId: gf.id,
-        userId: userId,
-      },
-    });
+  addGameToViewByUser(gf: GameInfo, userId: number): void {
+    this.post(gf.id, userId, '/viewed');
   }
   deleteGameToLikedByUser(gfd: number, userId: number): void {
-    this.httpClient.delete(environment.apiUrl + this.addtionalPath + '/liked', {
+    this.delete(gfd, userId, '/liked');
+  }
+  deleteGameToViewByUser(gfd: number, userId: number): void {
+    this.delete(gfd, userId, '/viewed');
+  }
+
+  delete(gid: number, uid: number, path: string): void {
+    this.httpClient.delete(environment.apiUrl + this.addtionalPath + path, {
       params: {
-        gameId: gfd,
-        userId: userId,
+        gameId: gid,
+        userId: uid,
       },
     });
   }
-  deleteGameToSadByUser(gfd: number, userId: number): void {
-    this.httpClient.delete(environment.apiUrl + this.addtionalPath + '/sad', {
+  get(uid: number, path: string): Observable<GameInfo[]> {
+    return this.httpClient.get<GameInfo[]>(
+      environment.apiUrl + this.addtionalPath + path,
+      {
+        params: {
+          userId: uid,
+        },
+      },
+    );
+  }
+  post(gid: number, uid: number, path: string): void {
+    this.httpClient.post(environment.apiUrl + this.addtionalPath + path, {
       params: {
-        gameId: gfd,
-        userId: userId,
+        gameId: gid,
+        userId: uid,
       },
     });
   }
