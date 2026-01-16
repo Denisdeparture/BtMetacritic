@@ -4,15 +4,15 @@ import {
   ResolveFn,
   RouterStateSnapshot,
 } from '@angular/router';
-import { GameStorageService } from './services/game-storage-service';
+import { SectionStorageService } from './services/sections-service';
 import { GameInfo, Section, User } from './types';
-import { UserStorageService } from './services/user-storage-service';
+import { UserStorageService } from './services/user-service';
 
 export const sectionsResolver: ResolveFn<Section[]> = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
-  const storage = inject(GameStorageService);
+  const storage = inject(SectionStorageService);
 
   return storage.getSections(); // Получаем данные
 };
@@ -32,7 +32,7 @@ export const gameDataResolver: ResolveFn<GameInfo> = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
-  const storage = inject(GameStorageService);
+  const storage = inject(SectionStorageService);
 
   return storage.getSilksong('Test');
 };
