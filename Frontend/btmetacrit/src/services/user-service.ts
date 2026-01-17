@@ -36,6 +36,7 @@ export class UserService {
     return obsr;
   }
   addUser(user: User): void {
+    this.userStore.addUser(user);
     this.httpClient.post<User>(environment.apiUrl + this.additionalPath, user);
   }
   updateUser(id: number, newdata: User) {
@@ -44,6 +45,7 @@ export class UserService {
         id: id,
       },
     });
+    this.userStore.updateUser(newdata);
   }
   deleteUser(id: number) {
     this.httpClient.delete(environment.apiUrl + this.additionalPath, {
@@ -51,5 +53,6 @@ export class UserService {
         id: id,
       },
     });
+    this.userStore.deleteUser(id);
   }
 }

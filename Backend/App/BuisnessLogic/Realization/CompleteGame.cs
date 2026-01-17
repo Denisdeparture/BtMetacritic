@@ -5,44 +5,40 @@ using System.Text;
 using System.Threading.Tasks;
 using CodeGenerator.Data;
 using Data;
-using Data.Dto;
+using Data.Models.Dto;
 using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace UnitOfWorkUpgrade.Realization;
 
 // it is not singleton service
-public class CompleteGame(IWorker<UserDto> worker) : IWorker<GameDto>
+public class CompleteGame(IWorker userWorker) : IWorker
 {
     private int NowUserId { get; set; }
     public void SetUserId(int id) => NowUserId = id;
-    public async Task AddAsync(GameDto data)
+    public async Task AddAsync(object obj)
     {
-        var user = await GetUserInfo();
+        GameDto data = (GameDto)obj;
+
+        var user = await GetUserInfo() as UserDto ?? throw new NullReferenceException("It is not user type");
 
         user.GamesWhichLiked!.Add(data);
 
-        worker.UpdateAsync(NowUserId, user);
+        userWorker.UpdateAsync(NowUserId, user);
     }
     public async Task DeleteAsync(int gameid)
     {
-        var user = await GetUserInfo();
+        var user = await GetUserInfo() as UserDto ?? throw new NullReferenceException("It is not user type");
 
-        var game = await GetAsync(gameid) ?? throw new NullReferenceException("Game was null");
+        var game = await GetAsync(gameid) as GameDto ?? throw new NullReferenceException("Game was null");
 
         user.GamesWhichLiked!.Remove(game);
 
-        worker.UpdateAsync(NowUserId, user);
+        userWorker.UpdateAsync(NowUserId, user);
     }
-    public async Task<IList<GameDto>?> GetAllAsync()
+    public async Task<object?> GetAsync(int id)
     {
-        var user = await worker.GetAsync(NowUserId) ?? throw new NullReferenceException("Try delete game on undefinded user");
-
-        return user.GamesWhichLiked;
-    }
-    public async Task<GameDto?> GetAsync(int id)
-    {
-        var user = await worker.GetAsync(NowUserId) ?? throw new NullReferenceException("Try get game on undefinded user");
+        var user = await userWorker.GetAsync(NowUserId) as UserDto ?? throw new NullReferenceException("Try get game on undefinded user");
 
         return user.GamesWhichLiked!.Where(x => x.Id == id).FirstOrDefault();
     }
@@ -51,25 +47,29 @@ public class CompleteGame(IWorker<UserDto> worker) : IWorker<GameDto>
     /// </summary>
     /// <param name="userid"></param>
     /// <param name="newdata"></param>
-    public async void UpdateAsync(int userid, GameDto newdata)
+    public async void UpdateAsync(int userid, object obj)
     {
-        var user = await GetUserInfo();
+        GameDto newdata = obj as GameDto;
+
+        var user = await GetUserInfo() as UserDto ?? throw new NullReferenceException("It is not user type");
 
         user.GamesWhichLiked!.Add(newdata);
 
-        worker.UpdateAsync(userid, user);
+        userWorker.UpdateAsync(userid, user);
     }
-    private async Task<UserDto> GetUserInfo()
+    private async Task<object> GetUserInfo()
     {
-        var user = await worker.GetAsync(NowUserId) ?? throw new NullReferenceException("Try add game on undefinded user");
+        var user = await userWorker.GetAsync(NowUserId) as UserDto ?? throw new NullReferenceException("Try add game on undefinded user");
 
         if (user.GamesWhichLiked is null)
         {
             user.GamesWhichLiked = new List<GameDto>();
 
-            worker.UpdateAsync(NowUserId, user);
+            userWorker.UpdateAsync(NowUserId, user);
         }
 
         return user;
     }
+
+    Task<IList<object>?> IWorker.GetAllAsync() => throw new NotImplementedException();
 }

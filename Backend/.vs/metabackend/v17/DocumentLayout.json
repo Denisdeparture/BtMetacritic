@@ -5,6 +5,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{321A4AB7-D8CC-48EB-880D-CE0E2980844A}|App\\WebApi\\WebApi.csproj|d:\\btmetacritic\\backend\\app\\webapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{321A4AB7-D8CC-48EB-880D-CE0E2980844A}|App\\WebApi\\WebApi.csproj|solutionrelative:app\\webapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D102CE3-4692-D817-9901-91BD55231C1B}|App\\BuisnessLogic\\BuisnessLogic.csproj|d:\\btmetacritic\\backend\\app\\buisnesslogic\\models\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D102CE3-4692-D817-9901-91BD55231C1B}|App\\BuisnessLogic\\BuisnessLogic.csproj|solutionrelative:app\\buisnesslogic\\models\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,8 +18,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\BtMetacritic\\Backend\\App\\WebApi\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "App\\WebApi\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\BtMetacritic\\Backend\\App\\WebApi\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "App\\WebApi\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-17T14:05:20.264Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
@@ -46,15 +63,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "D:\\BtMetacritic\\Backend\\App\\WebApi\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "App\\WebApi\\Controllers\\AuthController.cs",
-              "ToolTip": "D:\\BtMetacritic\\Backend\\App\\WebApi\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "App\\WebApi\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAvAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "UserModel.cs",
+              "DocumentMoniker": "D:\\BtMetacritic\\Backend\\App\\BuisnessLogic\\Models\\UserModel.cs",
+              "RelativeDocumentMoniker": "App\\BuisnessLogic\\Models\\UserModel.cs",
+              "ToolTip": "D:\\BtMetacritic\\Backend\\App\\BuisnessLogic\\Models\\UserModel.cs",
+              "RelativeToolTip": "App\\BuisnessLogic\\Models\\UserModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-16T09:21:24.097Z",
+              "WhenOpened": "2026-01-17T10:40:18.496Z",
               "EditorCaption": ""
             }
           ]

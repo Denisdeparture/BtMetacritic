@@ -183,3 +183,10 @@ D:\BtMetacritic\Backend\App\UnitTests\obj\Debug\net9.0\refint\UnitTests.dll
 D:\BtMetacritic\Backend\App\UnitTests\obj\Debug\net9.0\UnitTests.pdb
 D:\BtMetacritic\Backend\App\UnitTests\obj\Debug\net9.0\UnitTests.genruntimeconfig.cache
 D:\BtMetacritic\Backend\App\UnitTests\obj\Debug\net9.0\ref\UnitTests.dll
+D:\BtMetacritic\Backend\App\UnitTests\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+D:\BtMetacritic\Backend\App\UnitTests\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\BtMetacritic\Backend\App\UnitTests\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+D:\BtMetacritic\Backend\App\UnitTests\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+D:\BtMetacritic\Backend\App\UnitTests\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+D:\BtMetacritic\Backend\App\UnitTests\bin\Debug\net9.0\GeneratorData.dll
+D:\BtMetacritic\Backend\App\UnitTests\bin\Debug\net9.0\GeneratorData.pdb

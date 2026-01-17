@@ -1,20 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using BuisnessLogic;
+using BuisnessLogic.Services;
+using CodeGenerator.Data;
+using Microsoft.AspNetCore.Mvc;
+using WebApi.Models;
 
 namespace WebApi.Controllers;
 [Route("auth")]
-public class AuthController : ControllerBase
+public class AuthController(RefreshTokenService retokenService, JwtManager jwtManager, UnitOfWork unitOfWork) : ControllerBase
 {
-    // Token Service watch on your old projects
     [Route("sign-in")]
     [HttpPost]
-    public IActionResult Login()
+    public async Task<IActionResult> Login([FromBody] LoginReguestModel model)
     {
+        // mapping to dto by using auto mapper
 
+        await unitOfWork.User.AddAsync();
     }
+    [Route("unsign-in")]
+    [HttpPost]
+    public IActionResult Logout() => throw new NotImplementedException();
     [Route("sign-up")]
-    [HttpGet]
+    [HttpPost]
     public IActionResult Register()
     {
-
+        throw new NotImplementedException();
     }
+
 }

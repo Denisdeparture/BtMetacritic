@@ -5,16 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using CodeGenerator.Data;
 using Data;
-using Data.Dto;
 using Data.Interfaces;
+using Data.Models.Dto;
 using Microsoft.EntityFrameworkCore;
 
 namespace UnitOfWorkUpgrade.Realization;
 
-public class CompleteUser(IDbContextFactory<MyAppContext> ctxFactory) : IWorker<UserDto>
+public class CompleteUser(IDbContextFactory<MyAppContext> ctxFactory) : IWorker
 {
-    public async Task AddAsync(UserDto data)
+    public async Task AddAsync(object obj)
     {
+
+        UserDto data = (UserDto)obj;
+
         using var ctx = await ctxFactory.CreateDbContextAsync();
 
         ctx.Users.Add(data);
@@ -27,29 +30,37 @@ public class CompleteUser(IDbContextFactory<MyAppContext> ctxFactory) : IWorker<
 
         var user = await GetAsync(id) ?? throw new NullReferenceException("User was null, when try delete operation");
 
-        ctx.Users.Remove(user);
+        ctx.Users.Remove((UserDto)user);
 
         await ctx.SaveChangesAsync();
        
     }
-    public async Task<UserDto?> GetAsync(int id)
+    public async Task<object?> GetAsync(int id)
     {
         using var ctx = await ctxFactory.CreateDbContextAsync();
 
         var users = await GetAllAsync();
 
-        var user = users.Where(x => x.Id == id).SingleOrDefault();
+        if(users is null)
+        {
+            return null;
+        }
+
+        var user = users.Select(x => (UserDto)x).Where(x => x.Id == id).SingleOrDefault();
 
         return user;
     }
-    public async Task<IList<UserDto>> GetAllAsync()
+    public async Task<IList<object>?> GetAllAsync()
     {
         using var ctx = await ctxFactory.CreateDbContextAsync();
 
-        return await ctx.Users.AsNoTracking().ToListAsync();
+        return await ctx.Users.Select(x => (object)x).AsNoTracking().ToListAsync();
     }
-    public async void UpdateAsync(int id, UserDto newdata)
+    public async void UpdateAsync(int id, object obj)
     {
+        UserDto newdata = (UserDto)obj;
+
+
         using var ctx = await ctxFactory.CreateDbContextAsync();
 
         var user = await GetAsync(id) ?? throw new NullReferenceException("User was null, when try update operation");

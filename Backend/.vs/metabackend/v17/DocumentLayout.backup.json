@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "D:\\BtMetacritic\\Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4D102CE3-4692-D817-9901-91BD55231C1B}|App\\BuisnessLogic\\BuisnessLogic.csproj|d:\\btmetacritic\\backend\\app\\buisnesslogic\\services\\trigramsearchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4D102CE3-4692-D817-9901-91BD55231C1B}|App\\BuisnessLogic\\BuisnessLogic.csproj|solutionrelative:app\\buisnesslogic\\services\\trigramsearchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4D102CE3-4692-D817-9901-91BD55231C1B}|App\\BuisnessLogic\\BuisnessLogic.csproj|d:\\btmetacritic\\backend\\app\\buisnesslogic\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D102CE3-4692-D817-9901-91BD55231C1B}|App\\BuisnessLogic\\BuisnessLogic.csproj|solutionrelative:app\\buisnesslogic\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D102CE3-4692-D817-9901-91BD55231C1B}|App\\BuisnessLogic\\BuisnessLogic.csproj|d:\\btmetacritic\\backend\\app\\buisnesslogic\\models\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D102CE3-4692-D817-9901-91BD55231C1B}|App\\BuisnessLogic\\BuisnessLogic.csproj|solutionrelative:app\\buisnesslogic\\models\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,8 +18,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UnitOfWork.cs",
+              "DocumentMoniker": "D:\\BtMetacritic\\Backend\\App\\BuisnessLogic\\UnitOfWork.cs",
+              "RelativeDocumentMoniker": "App\\BuisnessLogic\\UnitOfWork.cs",
+              "ToolTip": "D:\\BtMetacritic\\Backend\\App\\BuisnessLogic\\UnitOfWork.cs",
+              "RelativeToolTip": "App\\BuisnessLogic\\UnitOfWork.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-17T14:02:23.429Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
@@ -41,21 +58,21 @@
               "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "TrigramSearchService.cs",
-              "DocumentMoniker": "D:\\BtMetacritic\\Backend\\App\\BuisnessLogic\\Services\\TrigramSearchService.cs",
-              "RelativeDocumentMoniker": "App\\BuisnessLogic\\Services\\TrigramSearchService.cs",
-              "ToolTip": "D:\\BtMetacritic\\Backend\\App\\BuisnessLogic\\Services\\TrigramSearchService.cs",
-              "RelativeToolTip": "App\\BuisnessLogic\\Services\\TrigramSearchService.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAACwAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-13T13:22:28.208Z",
-              "EditorCaption": ""
-            },
-            {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserModel.cs",
+              "DocumentMoniker": "D:\\BtMetacritic\\Backend\\App\\BuisnessLogic\\Models\\UserModel.cs",
+              "RelativeDocumentMoniker": "App\\BuisnessLogic\\Models\\UserModel.cs",
+              "ToolTip": "D:\\BtMetacritic\\Backend\\App\\BuisnessLogic\\Models\\UserModel.cs",
+              "RelativeToolTip": "App\\BuisnessLogic\\Models\\UserModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-17T10:40:18.496Z",
+              "EditorCaption": ""
             }
           ]
         },

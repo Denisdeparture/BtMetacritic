@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGenerator", "App\CodeGe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "App\WebApi\WebApi.csproj", "{321A4AB7-D8CC-48EB-880D-CE0E2980844A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneratorData", "App\CodeGeneratorData\GeneratorData.csproj", "{60C4C79C-BAD4-5D7F-B53C-FE175FDF6601}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{321A4AB7-D8CC-48EB-880D-CE0E2980844A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{321A4AB7-D8CC-48EB-880D-CE0E2980844A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{321A4AB7-D8CC-48EB-880D-CE0E2980844A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60C4C79C-BAD4-5D7F-B53C-FE175FDF6601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60C4C79C-BAD4-5D7F-B53C-FE175FDF6601}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60C4C79C-BAD4-5D7F-B53C-FE175FDF6601}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60C4C79C-BAD4-5D7F-B53C-FE175FDF6601}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
