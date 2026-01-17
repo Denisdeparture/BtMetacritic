@@ -1,6 +1,8 @@
 using System.Text;
+using Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
@@ -22,6 +24,7 @@ public class Program
                                                  builder.Configuration.GetValue<string>("ClientHost")!)
                                                  .AllowAnyHeader()
                                                  .AllowAnyMethod()));
+        builder.Services.AddDbContextFactory<MyAppContext>(opts => opts.UseSqlite("TestDataBase").UseProjectables());
         builder.Services.AddAuthentication(opt =>
         {
             opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

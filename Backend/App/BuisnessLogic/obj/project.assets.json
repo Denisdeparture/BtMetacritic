@@ -2,6 +2,36 @@
   "version": 3,
   "targets": {
     "net9.0": {
+      "EntityFrameworkCore.Projectables/5.0.1": {
+        "type": "package",
+        "dependencies": {
+          "EntityFrameworkCore.Projectables.Abstractions": "5.0.1",
+          "Microsoft.EntityFrameworkCore": "8.0.0"
+        },
+        "compile": {
+          "lib/net8.0/EntityFrameworkCore.Projectables.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/EntityFrameworkCore.Projectables.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "EntityFrameworkCore.Projectables.Abstractions/5.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/EntityFrameworkCore.Projectables.Abstractions.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/EntityFrameworkCore.Projectables.Abstractions.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Cryptography.Internal/9.0.11": {
         "type": "package",
         "compile": {
@@ -871,6 +901,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "EntityFrameworkCore.Projectables": "5.0.1",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "9.0.11",
           "Microsoft.CodeAnalysis.Analyzers": "3.3.3",
           "Microsoft.CodeAnalysis.CSharp": "4.4.0",
@@ -903,6 +934,43 @@
     }
   },
   "libraries": {
+    "EntityFrameworkCore.Projectables/5.0.1": {
+      "sha512": "g0ofBHoiRIma/0ec3EZluvA2O03XA9ZBOkrXj2smVcgcMwLvNpN/0Z4qILZu9DptNJnqqh28ks8/kGsqAXH/oQ==",
+      "type": "package",
+      "path": "entityframeworkcore.projectables/5.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "entityframeworkcore.projectables.5.0.1.nupkg.sha512",
+        "entityframeworkcore.projectables.nuspec",
+        "lib/net10.0/EntityFrameworkCore.Projectables.dll",
+        "lib/net10.0/EntityFrameworkCore.Projectables.pdb",
+        "lib/net10.0/EntityFrameworkCore.Projectables.xml",
+        "lib/net8.0/EntityFrameworkCore.Projectables.dll",
+        "lib/net8.0/EntityFrameworkCore.Projectables.pdb",
+        "lib/net8.0/EntityFrameworkCore.Projectables.xml"
+      ]
+    },
+    "EntityFrameworkCore.Projectables.Abstractions/5.0.1": {
+      "sha512": "rE/6vHrILkXsWGh+8zyv8wNRspnWGc/kYlLvt50ukox574KVl2qH24xqEME3CioeIwf6g4LEA3kfzAlU9J9gsQ==",
+      "type": "package",
+      "path": "entityframeworkcore.projectables.abstractions/5.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "analyzers/dotnet/cs/EntityFrameworkCore.Projectables.Generator.dll",
+        "entityframeworkcore.projectables.abstractions.5.0.1.nupkg.sha512",
+        "entityframeworkcore.projectables.abstractions.nuspec",
+        "lib/net10.0/EntityFrameworkCore.Projectables.Abstractions.dll",
+        "lib/net10.0/EntityFrameworkCore.Projectables.Abstractions.pdb",
+        "lib/net10.0/EntityFrameworkCore.Projectables.Abstractions.xml",
+        "lib/net8.0/EntityFrameworkCore.Projectables.Abstractions.dll",
+        "lib/net8.0/EntityFrameworkCore.Projectables.Abstractions.pdb",
+        "lib/net8.0/EntityFrameworkCore.Projectables.Abstractions.xml"
+      ]
+    },
     "Microsoft.AspNetCore.Cryptography.Internal/9.0.11": {
       "sha512": "+599lmkdIaDHkpW4KI+r8u4Nz8eXVo0aZ+fEt4mQ/ibe0xCoSm3QNYCgdvKdTxp+jcH5X330vzu0xuYXjhZkWg==",
       "type": "package",

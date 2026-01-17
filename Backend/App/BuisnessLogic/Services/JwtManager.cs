@@ -1,6 +1,7 @@
 ﻿
 using BuisnessLogic.Models;
 using CodeGenerator.Data;
+using Data.Models.Dto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -14,7 +15,7 @@ namespace BuisnessLogic.Services;
 
 public class JwtManager(IConfiguration _configuration)
 {
-    public JwtSecurityToken CreateJwtTokenForUserAsync(UserModel user)
+    public JwtSecurityToken CreateJwtTokenForUser(UserDto user)
     {
         var jwt = new JwtSecurityToken(issuer: _configuration["JwtSettings:Issuer"],
         audience: _configuration["JwtSettings:Audience"],
@@ -24,12 +25,12 @@ public class JwtManager(IConfiguration _configuration)
         ); ;
         return jwt;
     }
-    private List<Claim> GetClaims(UserModel user)
+    private List<Claim> GetClaims(UserDto user)
     {
         List<Claim> claims = new List<Claim>()
         {
-            new Claim(ClaimTypes.Email, user.Info!.mail!),
-            new Claim(AppClaimsType.NickName, user.Info.firstname + " " + user.Info.lastname ?? string.Empty)
+            new Claim(ClaimTypes.Email, user.Email!),
+            new Claim(AppClaimsType.NickName, user.FirstName + " " + user.LastName ?? string.Empty)
         };
         return claims;
     }

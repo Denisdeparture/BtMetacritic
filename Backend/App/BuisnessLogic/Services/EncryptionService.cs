@@ -8,36 +8,41 @@ using System.Threading.Tasks;
 namespace BuisnessLogic.Services;
 public class EncryptionService
 {
-    public bool Compare(string password, string salt, string hashpassword)
+    private static bool AreHashesEqual(byte[] hash1, byte[] hash2)
     {
-        if (string.IsNullOrWhiteSpace(password) | string.IsNullOrWhiteSpace(salt))
+        int diff = hash1.Length ^ hash2.Length;
+        for (int i = 0; i < hash1.Length && i < hash2.Length; i++)
         {
-            throw new ArgumentNullException();
+            diff |= hash1[i] ^ hash2[i];
         }
-        var hash = GetSaltedHashedPassword(password, salt);
-        return hash.Equals(hashpassword);
+        return diff == 0;
     }
-    public (string hash, string salt) Salt(string password, uint length)
+    public (string hash, string salt) SaltAndHash(string password, uint length, int countop = 100_000)
     {
         if (string.IsNullOrWhiteSpace(password))
         {
             throw new ArgumentNullException(nameof(password));
         }
+        var salt = RandomNumberGenerator.GetBytes((int)length);
 
-        using var generator = RandomNumberGenerator.Create();
-        byte[] bytes = new byte[(int)length];
-        generator.GetBytes(bytes);
-        string salt = Convert.ToBase64String(bytes);
-        string saltedhashedPassword = GetSaltedHashedPassword(password, salt);
-        return (saltedhashedPassword, salt);
+        using var pbkdf = new Rfc2898DeriveBytes(password, salt, countop, HashAlgorithmName.SHA256);
+
+        var hash = pbkdf.GetBytes(32);
+
+        return (Convert.ToBase64String(hash), Convert.ToBase64String(salt));
     }
-    private string GetSaltedHashedPassword(string password, string salt)
+    public static bool VerifyPassword(string password, string hash, string salt)
     {
-        string saltedPassword = string.Concat(password, salt);
-        byte[] saltedPasswordBytes = Encoding.Unicode.GetBytes(saltedPassword);
-        SHA256 sha = SHA256.Create();
-        byte[] saltedPasswordHashBytes = sha.ComputeHash(saltedPasswordBytes);
-        string result = Convert.ToBase64String(saltedPasswordHashBytes);
-        return result;
+
+        byte[] saltB = Convert.FromBase64String(salt);
+
+        byte[] storedPasswordHash = Convert.FromBase64String(hash);
+
+        using var pbkdf2 = new Rfc2898DeriveBytes(password, saltB, 100_000, HashAlgorithmName.SHA256);
+
+        byte[] hashB = pbkdf2.GetBytes(32);
+
+        return AreHashesEqual(hashB, storedPasswordHash);
     }
+
 }
