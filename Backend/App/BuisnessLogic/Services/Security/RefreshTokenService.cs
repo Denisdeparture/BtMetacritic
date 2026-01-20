@@ -4,15 +4,16 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using BuisnessLogic.Interfaces.Security;
 using Data;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace BuisnessLogic.Services;
-public class RefreshTokenService(IDbContextFactory<MyAppContext> ctxFactory, IConfiguration _configuration)
+namespace BuisnessLogic.Services.Security;
+public class RefreshTokenService(IDbContextFactory<MyAppContext> ctxFactory, IConfiguration _configuration) : IRefresher
 {
-    public async Task<string> GenerateRefreshToken(int userId)
+    public async Task<string> GenerateRefreshTokenAsync(int userId)
     {
         using var ctx = await ctxFactory.CreateDbContextAsync();
 
@@ -36,14 +37,14 @@ public class RefreshTokenService(IDbContextFactory<MyAppContext> ctxFactory, ICo
         return refreshToken;
     }
 
-    public async Task<RefreshTokenModel?> GetRefreshToken(string refreshToken)
+    public async Task<RefreshTokenModel?> GetRefreshTokenAsync(string refreshToken)
     {
         using var ctx = await ctxFactory.CreateDbContextAsync();
 
         return ctx.Tokens.FirstOrDefault(rt => rt.RefreshToken == refreshToken);
     }
 
-    public async void RevokeRefreshToken(string refreshToken)
+    public async void RevokeRefreshTokenAsync(string refreshToken)
     {
         using var ctx = await ctxFactory.CreateDbContextAsync();
 

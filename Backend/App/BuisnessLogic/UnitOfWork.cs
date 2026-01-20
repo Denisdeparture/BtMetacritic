@@ -12,14 +12,10 @@ using UnitOfWorkUpgrade.Realization;
 namespace BuisnessLogic;
 
 
-public partial class UnitOfWork(CompleteUser first, CompleteGame second, IDbContextFactory<MyAppContext> ctxFactory) : IUnitOFWork
+public partial class UnitOfWork(IDbContextFactory<MyAppContext> ctxFactory) : IUnitOFWork
 {
-    [UseableParams([2])]
-#pragma warning disable IDE0044 // Добавить модификатор только для чтения
-    private IWorker UserService;
-#pragma warning restore IDE0044 // Добавить модификатор только для чтения
     [UseableParams([0])]
 #pragma warning disable IDE0044 // Добавить модификатор только для чтения
-    private IWorker GameService;
+    private IWorker UserService;
 #pragma warning restore IDE0044 // Добавить модификатор только для чтения
 }

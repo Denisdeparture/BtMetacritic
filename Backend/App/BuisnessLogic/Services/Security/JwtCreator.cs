@@ -4,15 +4,17 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BuisnessLogic.Interfaces;
 using BuisnessLogic.Models;
+using Data.Models.Dto;
 
-namespace BuisnessLogic.Services;
+namespace BuisnessLogic.Services.Security;
 
 public static class JwtCreator
 {
-    public static string CreateAccessToken(UserModel user, JwtManager manager)
+    public static string CreateAccessToken(UserDto user, IJwtManager manager)
     {
-        var jwt =  manager.CreateJwtTokenForUserAsync(user);
+        var jwt =  manager.CreateJwtTokenForUser(user);
         var token = new JwtSecurityTokenHandler().WriteToken(jwt);
         return token;
     }

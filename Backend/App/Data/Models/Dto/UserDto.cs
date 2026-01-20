@@ -12,14 +12,19 @@ public class UserDto : IdentityUser<int>
 {
     public string SaltForPassword { get; set; } = null!;
     public List<GameDto>? GamesWhichLiked { get; set; }
+    public List<GameDto>? GamesWhichViewed { get; set; }
 
-    public ICollection<RefreshTokenModel>? RefreshTokens { get; set; }
-
-    [Projectable]
-    public string? FirstName => NormalizedUserName?.Split(" ")[0];
+    public IList<RefreshTokenModel>? RefreshTokens { get; set; }
 
     [Projectable]
-    public string? LastName => NormalizedUserName?.Split(" ")[1];
+    public string FirstName => new string(NormalizedUserName!.TakeWhile(x => x != ' ').ToArray()); 
 
+    [Projectable]
+    public string LastName => new string(NormalizedUserName!.SkipWhile(x => x !=  ' ').Skip(1).ToArray());
+
+    public string? ImgPath { get; set; }
+
+    public string? Region {  get; set; }
+    public int Age { get; set; }
 
 }

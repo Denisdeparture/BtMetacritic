@@ -1,11 +1,13 @@
 using System.Text;
+using BuisnessLogic.Models;
 using Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using WebApi.Extensions;
+using WebApi.Mappers;
 
 namespace WebApi;
 
@@ -14,32 +16,40 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
         builder.Configuration.AddJsonFile("jwtSecurityKey.json"); // You should create this file with your jwt key for test
+
         builder.Services.AddEndpointsApiExplorer();
+
         builder.Services.AddSwaggerGen();
+
+        builder.Services.AddOptions<SearchOptions>().BindConfiguration(nameof(SearchOptions));
+
+
         builder.Services.AddOpenApi();
+
+        builder.Services.AddAutoMapper(typeof(GameMapperProfile), typeof(UserMapperProfile));
+
         builder.Services.AddControllers();
+
         builder.Services.AddCors(options => options.AddPolicy(name: "MyAllowSpecificOrigins",
                                       org => org.WithOrigins(
                                                  builder.Configuration.GetValue<string>("ClientHost")!)
                                                  .AllowAnyHeader()
                                                  .AllowAnyMethod()));
         builder.Services.AddDbContextFactory<MyAppContext>(opts => opts.UseSqlite("TestDataBase").UseProjectables());
-        builder.Services.AddAuthentication(opt =>
-        {
-            opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters()
-        {
-            RequireExpirationTime = true,
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-            ValidAudience = builder.Configuration["JwtSettings:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecurityKey"]!)), 
-            ValidateIssuerSigningKey = true,
-        }).AddBearerToken(IdentityConstants.BearerScheme);
+        builder.Services.AddAuth(builder.Configuration);
+
+        builder.Services.AddSteamApi();
+
+        builder.Services.AddEncrypt();
+
+        builder.Services.AddTokeniserService();
+
+        builder.Services.AddSearch();
+
+        builder.Services.AddUnitOfWork();
+
         var app = builder.Build();
 
         app.UseCors("MyAllowSpecificOrigins");

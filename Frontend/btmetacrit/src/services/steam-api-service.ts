@@ -25,10 +25,20 @@ export class SteamApiService {
   }
   getGame(id: number): Observable<GameInfo> {
     return this.httpClient.get<GameInfo>(
-      environment.apiUrl + this.addtionalPath + '/game',
+      environment.apiUrl + this.addtionalPath,
       {
         params: {
           id: id,
+        },
+      },
+    );
+  }
+  getGamesByName(name: string): Observable<GameInfo[]> {
+    return this.httpClient.get<GameInfo[]>(
+      environment.apiUrl + this.addtionalPath,
+      {
+        params: {
+          name: name,
         },
       },
     );

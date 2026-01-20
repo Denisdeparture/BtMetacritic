@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BuisnessLogic.Services;
+namespace BuisnessLogic.Services.Security;
 public class EncryptionService
 {
     private static bool AreHashesEqual(byte[] hash1, byte[] hash2)
@@ -31,7 +31,7 @@ public class EncryptionService
 
         return (Convert.ToBase64String(hash), Convert.ToBase64String(salt));
     }
-    public static bool VerifyPassword(string password, string hash, string salt)
+    public bool VerifyPassword(string password, string hash, string salt)
     {
 
         byte[] saltB = Convert.FromBase64String(salt);

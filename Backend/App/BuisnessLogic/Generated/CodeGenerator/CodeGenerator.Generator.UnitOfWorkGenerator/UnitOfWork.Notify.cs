@@ -19,16 +19,5 @@
                   
                 }
 
-                private IWorker? CompleteGame;
-                public IWorker Game
-                {
-                    get 
-                    {
-                       if (CompleteGame is null) CompleteGame = new CompleteGame(first);
-                       return CompleteGame;
-                    }
-                  
-                }
-
                       }
                     }

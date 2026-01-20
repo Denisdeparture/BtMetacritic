@@ -5,18 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Interfaces
+namespace Data.Interfaces;
+
+public interface IUserRepository
 {
-    public interface IUserRepository
-    {
-        public List<UserDto> GetUsers();
-        public UserDto GetUser(int id);
+    List<UserDto> GetUsers();
+    UserDto GetUser(int id);
 
-        public void AddUser(UserDto user);
+    void AddUser(UserDto user);
 
-        public void UpdateUser(int userId, UserDto newData);
+    void UpdateUser(int userId, UserDto newData);
 
-        public void DeleteUser(int userId); 
+    void DeleteUser(int userId); 
 
-    }
 }

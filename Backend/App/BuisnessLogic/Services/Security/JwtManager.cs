@@ -1,4 +1,5 @@
 ﻿
+using BuisnessLogic.Interfaces;
 using BuisnessLogic.Models;
 using CodeGenerator.Data;
 using Data.Models.Dto;
@@ -13,7 +14,7 @@ using System.Text;
 
 namespace BuisnessLogic.Services;
 
-public class JwtManager(IConfiguration _configuration)
+public class JwtManager(IConfiguration _configuration) : IJwtManager
 {
     public JwtSecurityToken CreateJwtTokenForUser(UserDto user)
     {

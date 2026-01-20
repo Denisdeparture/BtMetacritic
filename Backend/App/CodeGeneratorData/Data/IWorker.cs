@@ -8,8 +8,8 @@ namespace CodeGenerator.Data;
 
 public interface IWorker
 {
-    Task AddAsync(object data);
-    Task<object?> GetAsync(int id);
+    Task<object?> AddAsync(object data);
+    Task<object?> GetAsync<T>(string param, T value);
 
     Task<IList<object>?> GetAllAsync();
     void UpdateAsync(int id, object newdata);

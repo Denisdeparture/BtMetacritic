@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using BuisnessLogic;
+using BuisnessLogic.Interfaces;
 using BuisnessLogic.Services;
+using BuisnessLogic.Services.Security;
 using CodeGenerator.Data;
 using Data.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +11,11 @@ using WebApi.Models;
 
 namespace WebApi.Controllers;
 [Route("auth")]
-public class AuthController(RefreshTokenService retokenService, JwtManager jwtManager, UnitOfWork unitOfWork) : ControllerBase
+public class AuthController(RefreshTokenService retokenService,
+    IJwtManager jwtManager, 
+    UnitOfWork unitOfWork, 
+    EncryptionService encryption,
+    IMapper mapper) : ControllerBase
 {
     [Route("sign-in")]
     [HttpPost]
@@ -19,25 +25,31 @@ public class AuthController(RefreshTokenService retokenService, JwtManager jwtMa
         {
             return Forbid();
         }
-        var check = await IsExist(model.Email + "");
+        var check = await IsExist(model.Email, model.Password ?? "");
 
         if (!check.Item1)
         {
             return Unauthorized();
         }
 
-        var refreshtoken = retokenService.GenerateRefreshToken(check.Item2!.Id);
+        var refreshtoken = retokenService.GenerateRefreshTokenAsync(check.Item2!.Id);
 
         var accesstoken = jwtManager.CreateJwtTokenForUser(check.Item2); 
 
         return Ok((accesstoken, refreshtoken));
     }
     [Route("unsign-in")]
-    [HttpPost]
-    public IActionResult Logout() => throw new NotImplementedException();
+    [HttpDelete]
+    public IActionResult Logout([FromBody]string token)
+    {
+        retokenService.RevokeRefreshTokenAsync(token);
+
+        return Ok();
+
+    }
     [Route("sign-up")]
     [HttpPost]
-    public async Task<IActionResult> Register(RegisterRequestModel model)
+    public async Task<IActionResult> Register([FromBody]RegisterRequestModel model)
     {
         if (string.IsNullOrWhiteSpace(model.Email) | 
             string.IsNullOrWhiteSpace(model.Password))
@@ -45,37 +57,31 @@ public class AuthController(RefreshTokenService retokenService, JwtManager jwtMa
             return Forbid();
         }
 
-        UserDto user = new UserDto();
-
-        var mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<RegisterRequestModel, UserDto>()
-              .ForMember("Email", opt => opt.MapFrom(o => o.Email))
-              .ForMember("PasswordHash", opt => opt.MapFrom(src => src.Password))
-              .ForMember("NormalizedUserName", opt => opt.MapFrom(src => src.Name))
-              ));
-
         var usermap = mapper.Map<UserDto>(model);
 
-        await unitOfWork.User.AddAsync(user);
+        var schipherText = encryption.SaltAndHash(model.Password!, 64);
 
-        var check = await IsExist(model.Email);
-        //check logic of auth
-        if (!check.Item1)
+        usermap.PasswordHash = schipherText.hash;
+
+        usermap.SaltForPassword = schipherText.salt;
+
+        if (await unitOfWork.User.AddAsync(usermap) is not UserDto user)
         {
             return BadRequest();
         }
 
-        return OkWithTokens(check.Item2!);
+        return OkWithTokens(user);
        
     }
     private IActionResult OkWithTokens(UserDto user)
     {
-        var refreshtoken = retokenService.GenerateRefreshToken(user.Id);
+        var refreshtoken = retokenService.GenerateRefreshTokenAsync(user.Id);
 
-        var accesstoken = jwtManager.CreateJwtTokenForUser(user);
+        var accesstoken = JwtCreator.CreateAccessToken(user, jwtManager);
 
-        return Ok();
+        return Ok((refreshtoken, accesstoken));
     }
-    private async Task<(bool, UserDto?)> IsExist(string email)
+    private async Task<(bool, UserDto?)> IsExist(string email, string password)
     {
 
         var users = await unitOfWork.User.GetAllAsync();
@@ -86,6 +92,13 @@ public class AuthController(RefreshTokenService retokenService, JwtManager jwtMa
         }
         var user = users.Select(x => (UserDto)x).Where(x => x.Email == email).FirstOrDefault();
         if (user is null)
+        {
+            return (false, null);
+        }
+
+        var passwordVerify = encryption.VerifyPassword(password, user.PasswordHash!, user.SaltForPassword);
+
+        if (!passwordVerify)
         {
             return (false, null);
         }

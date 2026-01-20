@@ -13,7 +13,7 @@ namespace UnitOfWorkUpgrade.Realization;
 
 public class CompleteUser(IDbContextFactory<MyAppContext> ctxFactory) : IWorker
 {
-    public async Task AddAsync(object obj)
+    public async Task<object?> AddAsync(object obj)
     {
 
         UserDto data = (UserDto)obj;
@@ -23,19 +23,21 @@ public class CompleteUser(IDbContextFactory<MyAppContext> ctxFactory) : IWorker
         ctx.Users.Add(data);
 
         await ctx.SaveChangesAsync();
+
+        return data;
     }
     public async Task DeleteAsync(int id)
     {
         using var ctx = await ctxFactory.CreateDbContextAsync();
 
-        var user = await GetAsync(id) ?? throw new NullReferenceException("User was null, when try delete operation");
+        var user = await GetAsync<int>("Id",id) ?? throw new NullReferenceException("User was null, when try delete operation");
 
         ctx.Users.Remove((UserDto)user);
 
         await ctx.SaveChangesAsync();
        
     }
-    public async Task<object?> GetAsync(int id)
+    public async Task<object?> GetAsync<T>(string param,T value) 
     {
         using var ctx = await ctxFactory.CreateDbContextAsync();
 
@@ -46,7 +48,11 @@ public class CompleteUser(IDbContextFactory<MyAppContext> ctxFactory) : IWorker
             return null;
         }
 
-        var user = users.Select(x => (UserDto)x).Where(x => x.Id == id).SingleOrDefault();
+        var usersDto = users.Select(x => (UserDto)x);
+
+        var user = usersDto.Select(x => x.GetType().GetProperties().First(x => x.Name == param).GetValue(x)).Where(v => ((T)v).Equals(value));
+
+
 
         return user;
     }
@@ -63,7 +69,7 @@ public class CompleteUser(IDbContextFactory<MyAppContext> ctxFactory) : IWorker
 
         using var ctx = await ctxFactory.CreateDbContextAsync();
 
-        var user = await GetAsync(id) ?? throw new NullReferenceException("User was null, when try update operation");
+        var user = await GetAsync<int>("Id", id) ?? throw new NullReferenceException("User was null, when try update operation");
 
         foreach (var prop in user.GetType().GetFields())
         {

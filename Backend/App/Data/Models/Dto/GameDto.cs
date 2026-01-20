@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Models.Dto
-{
-    public class GameDto
-    {
-        public int Id { get; set; }
-        public string? Title { get; set; }
+namespace Data.Models.Dto;
 
-        public List<UserDto>? UserLikedIt { get; set; }
-    }
+public class GameDto
+{
+    public int Id { get; set; }
+    public string? Title { get; set; }
+
+    public IList<UserDto>? UserLikedIt { get; set; }
+    public IList<UserDto>? UserViewedIt { get; set; }
 }

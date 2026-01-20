@@ -25,11 +25,14 @@ public class MyAppContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
         modelBuilder.Entity<UserDto>()
             .HasMany(x => x.GamesWhichLiked)
             .WithMany(x => x.UserLikedIt)
-            .UsingEntity(j => j.ToTable("GamesAndUser"));
+            .UsingEntity(j => j.ToTable("GamesAndUserL"));
+        modelBuilder.Entity<UserDto>()
+         .HasMany(x => x.GamesWhichViewed)
+         .WithMany(x => x.UserViewedIt)
+         .UsingEntity(j => j.ToTable("GamesAndUserV"));
         modelBuilder.Entity<UserDto>().
             HasMany(x => x.RefreshTokens)
             .WithOne(x => x.User)

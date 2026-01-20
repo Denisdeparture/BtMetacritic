@@ -8,11 +8,11 @@ import { UserStore } from './stores/user-store';
 export class UserService {
   httpClient = inject(HttpClient);
   userStore = inject(UserStore);
-  additionalPath = '/about';
+  additionalPath = '/about/user';
 
   getUsers(): Observable<User[]> {
     const obsr = this.httpClient.get<User[]>(
-      environment.apiUrl + this.additionalPath + '/all',
+      environment.apiUrl + '/about' + '/all',
     );
     obsr.subscribe((users) => {
       for (const user of users) {
