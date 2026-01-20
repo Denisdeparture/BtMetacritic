@@ -3,20 +3,12 @@
   "WorkspaceRootPath": "D:\\BtMetacritic\\Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{321A4AB7-D8CC-48EB-880D-CE0E2980844A}|App\\WebApi\\WebApi.csproj|d:\\btmetacritic\\backend\\app\\webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{321A4AB7-D8CC-48EB-880D-CE0E2980844A}|App\\WebApi\\WebApi.csproj|solutionrelative:app\\webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{321A4AB7-D8CC-48EB-880D-CE0E2980844A}|App\\WebApi\\WebApi.csproj|d:\\btmetacritic\\backend\\app\\webapi\\controllers\\searchcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{321A4AB7-D8CC-48EB-880D-CE0E2980844A}|App\\WebApi\\WebApi.csproj|solutionrelative:app\\webapi\\controllers\\searchcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{321A4AB7-D8CC-48EB-880D-CE0E2980844A}|App\\WebApi\\WebApi.csproj|d:\\btmetacritic\\backend\\app\\webapi\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{321A4AB7-D8CC-48EB-880D-CE0E2980844A}|App\\WebApi\\WebApi.csproj|solutionrelative:app\\webapi\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{321A4AB7-D8CC-48EB-880D-CE0E2980844A}|App\\WebApi\\WebApi.csproj|d:\\btmetacritic\\backend\\app\\webapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{321A4AB7-D8CC-48EB-880D-CE0E2980844A}|App\\WebApi\\WebApi.csproj|solutionrelative:app\\webapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{321A4AB7-D8CC-48EB-880D-CE0E2980844A}|App\\WebApi\\WebApi.csproj|d:\\btmetacritic\\backend\\app\\webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{321A4AB7-D8CC-48EB-880D-CE0E2980844A}|App\\WebApi\\WebApi.csproj|solutionrelative:app\\webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -62,54 +54,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "SearchController.cs",
-              "DocumentMoniker": "D:\\BtMetacritic\\Backend\\App\\WebApi\\Controllers\\SearchController.cs",
-              "RelativeDocumentMoniker": "App\\WebApi\\Controllers\\SearchController.cs",
-              "ToolTip": "D:\\BtMetacritic\\Backend\\App\\WebApi\\Controllers\\SearchController.cs",
-              "RelativeToolTip": "App\\WebApi\\Controllers\\SearchController.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAACkAAABAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-20T11:10:15.188Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "UserController.cs",
               "DocumentMoniker": "D:\\BtMetacritic\\Backend\\App\\WebApi\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "App\\WebApi\\Controllers\\UserController.cs",
               "ToolTip": "D:\\BtMetacritic\\Backend\\App\\WebApi\\Controllers\\UserController.cs",
               "RelativeToolTip": "App\\WebApi\\Controllers\\UserController.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAA5wAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAYwDYAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-20T11:10:07.923Z",
+              "WhenOpened": "2026-01-20T17:10:05.449Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "D:\\BtMetacritic\\Backend\\App\\WebApi\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "App\\WebApi\\Controllers\\AuthController.cs",
-              "ToolTip": "D:\\BtMetacritic\\Backend\\App\\WebApi\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "App\\WebApi\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAAAiwFEAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-20T11:07:24.61Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\BtMetacritic\\Backend\\App\\WebApi\\Program.cs",
               "RelativeDocumentMoniker": "App\\WebApi\\Program.cs",
               "ToolTip": "D:\\BtMetacritic\\Backend\\App\\WebApi\\Program.cs",
               "RelativeToolTip": "App\\WebApi\\Program.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABUAAAAzAAAAAAAAAA==",
+              "ViewState": "AgIAABkAAAAAAAAAAAAYwCIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-20T10:39:46.729Z",
+              "WhenOpened": "2026-01-20T12:11:32.048Z",
               "EditorCaption": ""
             }
           ]

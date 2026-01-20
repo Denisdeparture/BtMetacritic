@@ -4,6 +4,7 @@ namespace WebApi.Models;
 
 public class UserModel
 {
+    public int Id { get; set; }
     public SimpleUserInfo Info { get; set; }         
     public string ImgPath { get; set; }                
 }

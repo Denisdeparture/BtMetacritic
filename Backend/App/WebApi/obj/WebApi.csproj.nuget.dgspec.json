@@ -311,6 +311,10 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "AspNet.Security.OAuth.Yandex": {
+              "target": "Package",
+              "version": "[9.4.1, )"
+            },
             "AutoMapper": {
               "target": "Package",
               "version": "[13.0.1, )"
@@ -330,6 +334,18 @@
             "Scalar.AspNetCore": {
               "target": "Package",
               "version": "[2.12.8, )"
+            },
+            "Serilog": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "Serilog.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "Serilog.Sinks.Console": {
+              "target": "Package",
+              "version": "[6.1.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

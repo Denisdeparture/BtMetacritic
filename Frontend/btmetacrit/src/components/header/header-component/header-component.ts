@@ -20,6 +20,8 @@ import { HintsService } from '../../../services/views/hints-service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TokenStore } from '../../../services/stores/token-store';
 import { Router } from '@angular/router';
+import { UserService } from '../../../services/user-service';
+import { LINKS } from '../../../app/app.routes';
 
 @Component({
   selector: 'app-header-component',
@@ -32,11 +34,12 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
   authPopUp? = new AuthPopUpComponent();
   router = inject(Router);
+  userService = inject(UserService);
   authStorage = inject(TokenStore);
   hintService = inject(HintsService);
 
   dynamicRenderer: DynamicComponentRenderer<AuthPopUpComponent> = inject(
-    DynamicComponentRenderer<AuthPopUpComponent>
+    DynamicComponentRenderer<AuthPopUpComponent>,
   );
 
   wasClick = false;
@@ -47,9 +50,10 @@ export class HeaderComponent {
     const token = this.authStorage.getCurrentAccessToken();
     // depend user service and give some info
     if (!token) {
-      this.router.navigate();
+      this.userService.getUser(token).subscribe((u) => {
+        this.router.navigate([LINKS.USER, u.id]);
+      });
     }
-
     if (this.wasClick) {
       return;
     }

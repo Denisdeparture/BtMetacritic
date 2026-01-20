@@ -14,6 +14,8 @@ public class MyAppContext : DbContext
     public DbSet<UserDto> Users => Set<UserDto>();
     public DbSet<GameDto> Games => Set<GameDto>();
 
+    public DbSet<OAuthProviderModel> OAuthProviders => Set<OAuthProviderModel>();
+
     public DbSet<RefreshTokenModel> Tokens => Set<RefreshTokenModel>();
     protected MyAppContext(DbContextOptions<MyAppContext> options) : base(options)
     {
@@ -38,5 +40,10 @@ public class MyAppContext : DbContext
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserId)
             .IsRequired();
+        modelBuilder.Entity<UserDto>().
+           HasMany(x => x.OAuthProviders)
+           .WithOne(x => x.User)
+           .HasForeignKey(x => x.UserId)
+           .IsRequired();
     }
 }

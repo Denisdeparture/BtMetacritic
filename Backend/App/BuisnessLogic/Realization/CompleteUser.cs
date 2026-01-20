@@ -56,7 +56,7 @@ public class CompleteUser(IDbContextFactory<MyAppContext> ctxFactory) : IWorker
 
         return user;
     }
-    public async Task<IList<object>?> GetAllAsync()
+    public async Task<IList<object>> GetAllAsync()
     {
         using var ctx = await ctxFactory.CreateDbContextAsync();
 

@@ -27,8 +27,9 @@ import { CaptionComponent } from '../../main/caption-component/caption-component
 import { SliderComponent } from '../../main/slider-component/slider-component';
 import { mapToSliderInfoById } from '../../common/helpers';
 import { KindOfSpinner } from '../../common/to-do-spinner/to-do-spinner';
-import { ToDoSpinnerService } from '../../../services/to-do-spinner-service';
 import { LikedGame, UserLikedGame } from '../user-liked-game/user-liked-game';
+import { HintsService } from '../../../services/views/hints-service';
+import { ToDoSpinnerService } from '../../../services/views/to-do-spinner-service';
 @Component({
   selector: 'app-user-page-component',
   providers: [ToDoSpinnerService],
@@ -51,6 +52,8 @@ export class UserPageComponent implements OnInit {
 
   rerender = inject(Renderer2);
 
+  hints = inject(HintsService);
+
   userAsync = this.route.data.pipe(map((data) => data['user'] as User));
 
   styles = {
@@ -66,12 +69,12 @@ export class UserPageComponent implements OnInit {
 
   readonly user = computed(() => this.userSignal());
 
-  readonly email = computed(() => this.user()?.info.mail + '');
+  readonly email = computed(() => this.user()?.info!.mail + '');
 
   readonly likedGames = computed(() => this.user()?.likeGames);
 
   readonly fname = computed(
-    () => this.user()?.info.firstname + ' ' + this.user()?.info.lastname
+    () => this.user()?.info!.firstname + ' ' + this.user()?.info!.lastname,
   );
 
   readonly liked = viewChildren(UserLikedGame);
@@ -79,9 +82,13 @@ export class UserPageComponent implements OnInit {
   readonly img = computed(() => this.user()?.imgPath);
 
   readonly userTypeMap = computed(
-    () => new Map(Object.entries(this.user()!.info))
+    () => new Map(Object.entries(this.user()!.info!)),
   );
   ngOnInit(): void {
+    this.hints.setCurrentHints([
+      { id: 0, title: 'user' },
+      { id: 1, title: 'saw it' },
+    ]);
     this.spinner.showSpinner('#427b8c', KindOfSpinner.Elipse);
     setTimeout(() => {
       // RxJs ver
@@ -109,7 +116,6 @@ export class UserPageComponent implements OnInit {
   changeLikes(event: [boolean, ElementRef]): void {
     if (!event[0]) {
       this.rerender.setStyle(event[1].nativeElement, 'display', 'none');
-      // add user.deleteLikedGame()
     }
   }
   createSection(): Section[] {

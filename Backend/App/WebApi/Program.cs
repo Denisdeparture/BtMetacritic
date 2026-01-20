@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using Serilog;
 using WebApi.Extensions;
 using WebApi.Mappers;
 
@@ -15,10 +16,21 @@ public class Program
 {
     public static void Main(string[] args)
     {
+        Log.Logger = new LoggerConfiguration()
+                            .Enrich.FromLogContext()
+                            .WriteTo.Console()
+                            .CreateLogger();
+
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Configuration.AddJsonFile("jwtSecurityKey.json"); // You should create this file with your jwt key for test
+        builder.Logging.AddSerilog();
 
+        builder.Logging.SetMinimumLevel(LogLevel.Debug);
+
+        builder.Host.UseSerilog();
+
+        builder.Configuration.AddJsonFile("jwtSecurityKey.json"); // You should create this file with your jwt key for test
+       
         builder.Services.AddEndpointsApiExplorer();
 
         builder.Services.AddSwaggerGen();
@@ -38,6 +50,7 @@ public class Program
                                                  .AllowAnyHeader()
                                                  .AllowAnyMethod()));
         builder.Services.AddDbContextFactory<MyAppContext>(opts => opts.UseSqlite("TestDataBase").UseProjectables());
+
         builder.Services.AddAuth(builder.Configuration);
 
         builder.Services.AddSteamApi();

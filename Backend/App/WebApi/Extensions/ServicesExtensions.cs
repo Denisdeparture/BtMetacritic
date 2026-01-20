@@ -6,8 +6,11 @@ using BuisnessLogic.Models.SteamApi;
 using BuisnessLogic.Services;
 using BuisnessLogic.Services.Security;
 using CodeGenerator.Data;
+using Data;
+using Data.Models.Dto;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
 namespace WebApi.Extensions;
@@ -19,7 +22,8 @@ public static class ServicesExtensions
     public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddTransient<IJwtManager, JwtManager>();
-
+        
+       
         services.AddAuthentication(opt =>
         {
             opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -34,7 +38,13 @@ public static class ServicesExtensions
             ValidAudience = configuration["JwtSettings:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:SecurityKey"]!)),
             ValidateIssuerSigningKey = true,
-        }).AddBearerToken(IdentityConstants.BearerScheme);
+        }).AddBearerToken(IdentityConstants.BearerScheme)
+        .AddYandex(opt =>
+        {
+            opt.CallbackPath = configuration["YandexOAuth2.0:CallbackPath"];
+            opt.ClientId = configuration["YandexOAuth2.0:ClientId"]!;
+            opt.ClientSecret = configuration["YandexOAuth2.0:ClientSecret"]!;
+        });
 
         return services;
     }

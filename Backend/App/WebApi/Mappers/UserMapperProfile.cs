@@ -18,7 +18,14 @@ public class UserMapperProfile : Profile
              .ForMember("FirstName", opt => opt.MapFrom(src => src.Info.Firstname))
              .ForMember("LastName", opt => opt.MapFrom(src => src.Info.Lastname))
              .ForMember("Age", opt => opt.MapFrom(src => src.Info.Age))
-             .ForMember("Email", opt => opt.MapFrom(src => src.Info.Mail)
+             .ForMember("Email", opt => opt.MapFrom(src => src.Info.Mail))
+             .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id)
              );
+        CreateMap<UserDto, UserModel>()
+           .ForMember(x => x.Info.Mail, opt => opt.MapFrom(src => src.Email))
+           .ForMember(x => x.Info.Firstname, opt => opt.MapFrom(src => src.FirstName))
+           .ForMember(x => x.Info.Lastname, opt => opt.MapFrom(src => src.LastName))
+           .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id)
+           );
     }
 }

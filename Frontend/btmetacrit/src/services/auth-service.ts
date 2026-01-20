@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { YandexOAuthConfig } from '../authConfigs/yandex-oauth-config';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment.development';
 import {
@@ -24,6 +24,29 @@ export class AuthService {
       environment.apiUrl + '/sign-in',
       info,
     );
+  }
+  oAuthlogin(): void {
+    this.oAuthService.initLoginFlow();
+  }
+  processOAuth(provider: string): void {
+    from(this.oAuthService.loadDiscoveryDocumentAndTryLogin()).subscribe(() => {
+      const claims = this.oAuthService.getIdentityClaims();
+
+      const mail = claims['email'];
+      if (!this.oAuthService.hasValidIdToken()) return undefined;
+
+      const idToken = this.oAuthService.getIdToken();
+
+      var req = this.httpClient.post(environment.apiUrl + '/oauth', undefined, {
+        params: {
+          idToken: idToken,
+          provider: provider,
+          email: mail,
+        },
+      });
+
+      req.subscribe();
+    });
   }
   setTokens(tokens: UserLoginResponce): void {
     this.tokenStorage.setTokens(tokens);

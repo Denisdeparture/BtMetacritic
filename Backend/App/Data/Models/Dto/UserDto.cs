@@ -16,6 +16,8 @@ public class UserDto : IdentityUser<int>
 
     public IList<RefreshTokenModel>? RefreshTokens { get; set; }
 
+    public IList<OAuthProviderModel>? OAuthProviders { get; set; }
+
     [Projectable]
     public string FirstName => new string(NormalizedUserName!.TakeWhile(x => x != ' ').ToArray()); 
 

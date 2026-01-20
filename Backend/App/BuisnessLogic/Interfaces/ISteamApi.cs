@@ -10,7 +10,7 @@ namespace BuisnessLogic.Interfaces;
 
 public interface ISteamApi
 {
-    public Task<GameInfoModel> GetGameByIdAsync(string id);
-    public Task<IList<GameItemModel>> GetGameByNameAsync(string name, int maxCount = 1, string country = "en");
+    Task<GameInfoModel> GetGameByIdAsync(string id);
+    Task<IList<GameItemModel>> GetGameByNameAsync(string name, int maxCount = 1, string country = "en");
 
 }

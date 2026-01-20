@@ -21,12 +21,12 @@ export class UserService {
     });
     return obsr;
   }
-  getUser(id: number): Observable<User> {
+  getUser(token: string): Observable<User> {
     const obsr = this.httpClient.get<User>(
       environment.apiUrl + this.additionalPath,
       {
         params: {
-          id: id,
+          token: token,
         },
       },
     );
