@@ -5,7 +5,7 @@ import { Hint } from '../types';
 import { UserPageComponent } from '../components/user/user-page-component/user-page-component';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, RouterLink],
+  imports: [RouterOutlet, HeaderComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

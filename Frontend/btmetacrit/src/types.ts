@@ -22,7 +22,7 @@ export type Section = {
 };
 export type Caption = {
   title: string;
-  link: string;
+  // link: string;
 };
 //header types
 export type Hint = {
@@ -34,28 +34,33 @@ export type Hint = {
 };
 // steam api
 // Original Name is Data
+export type GameInfoItem = {
+  id: number;
+  name: string;
+};
 export type GameInfo = {
   id: number;
-  type: string;
+  type?: string;
   name: string;
-  metacritic: Metacritic;
-  is_free: boolean;
+  metacritic?: Metacritic | null;
+  is_free?: boolean;
   dlc?: number[];
   detailed_description?: string;
   about_the_game?: string;
-  short_description: string;
-  supported_languages: string;
-  header_image: string;
-  capsule_image: string;
-  developers: string[];
-  publishers: string[];
-  platforms: Platforms;
-  price_overview: Price[];
-  categories: Category[];
-  genres: Genre[];
-  screenshots: Screenshot[];
-  release_date: ReleaseDate;
-  ratings: Ratings;
+  short_description?: string;
+  supported_languages?: string;
+  header_image?: string;
+  capsule_image?: string;
+  developers?: string[];
+  steam_appid: number;
+  publishers?: string[];
+  platforms?: Platforms;
+  price_overview?: Price[];
+  categories?: Category[];
+  genres?: Genre[];
+  screenshots?: Screenshot[];
+  release_date?: ReleaseDate;
+  ratings?: Ratings;
 };
 export type Price = {
   final_formatted: string;
@@ -77,7 +82,7 @@ export type Genre = {
   description: string;
 };
 export type Metacritic = {
-  score: number;
+  score?: number;
 };
 
 export type Screenshot = {

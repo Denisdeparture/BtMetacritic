@@ -7,7 +7,9 @@ import { UserStore } from './stores/user-store';
 @Injectable({ providedIn: 'root' })
 export class UserService {
   httpClient = inject(HttpClient);
+
   userStore = inject(UserStore);
+
   additionalPath = '/about/user';
 
   getUsers(): Observable<User[]> {

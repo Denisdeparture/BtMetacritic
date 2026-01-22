@@ -6,33 +6,43 @@ import {
 } from '@angular/router';
 import { SectionStorageService } from './services/sections-service';
 import { GameInfo, Section, User } from './types';
-import { UserStorageService } from './services/user-service';
+import { UserService } from './services/user-service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Observable } from 'rxjs';
 
-export const sectionsResolver: ResolveFn<Section[]> = (
+export const mainResolver: ResolveFn<Section[]> = (
   route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
+  state: RouterStateSnapshot,
 ) => {
   const storage = inject(SectionStorageService);
 
-  return storage.getSections(); // Получаем данные
-};
-export const userDataResolver: ResolveFn<User> = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-) => {
-  const storage = inject(UserStorageService);
+  const sections = storage.getRandomSections();
 
-  if (route.queryParams['id']) {
-    console.log('Id was null');
+  return sections;
+};
+export const searchResolver: ResolveFn<Section[]> = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot,
+) => {
+  const storage = inject(SectionStorageService);
+
+  const name = route.root.queryParams['name'];
+
+  if (name == undefined) {
+    console.log('Name is null');
+
+    return storage.getRandomSections();
   }
 
-  return storage.getUser(route.queryParams['id']);
-};
-export const gameDataResolver: ResolveFn<GameInfo> = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-) => {
-  const storage = inject(SectionStorageService);
+  const sects: Section[] = [];
 
-  return storage.getSilksong('Test');
+  storage.getSearchSections(name).subscribe((obsr2) => {
+    obsr2.subscribe((list) => {
+      sects.push(...list);
+    });
+  });
+
+  console.log(sects);
+
+  return sects;
 };

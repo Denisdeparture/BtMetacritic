@@ -7,23 +7,24 @@
   <div class="tooltip__title">
     <h4>{{ info().title }}</h4>
   </div>
-  @for(screen of info().imagesLinks; track screen.id) { @if(screen.id ===
-  activeIndex()){
-  <img
-    @developImg
-    [style.width.px]="width()"
-    [style.height.px]="height()"
-    class="tooltip__img"
-    [src]="screen.path_full"
-    alt="#"
-  />
-  } }
+  @for (screen of info().imagesLinks; track screen.id) {
+    @if (screen.id === activeIndex()) {
+      <img
+        @developImg
+        [style.width.px]="width()"
+        [style.height.px]="height()"
+        class="tooltip__img"
+        [src]="screen.path_full"
+        alt="#"
+      />
+    }
+  }
 
   <div class="add-info">
-    @for(genre of info().genres; track genre.id){
-    <p class="tooltip__genre">{{ genre.description }}</p>
+    @for (genre of info().genres; track genre.id) {
+      <p class="tooltip__genre">{{ genre.description }}</p>
     }
-    <p class="tooltip__date">{{ info().dateRealese | date : "dd/MM/yyyy" }}</p>
+    <p class="tooltip__date">{{ info().dateRealese }}</p>
   </div>
   <div class="tooltip__description">
     <p

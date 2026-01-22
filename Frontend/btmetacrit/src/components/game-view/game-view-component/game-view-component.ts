@@ -17,6 +17,7 @@ import { GameViewFullInfoComponent } from '../game-view-full-info-component/game
 import { CaptionComponent } from '../../main/caption-component/caption-component';
 import { GameViewFullDescriptionComponent } from '../game-view-full-description-component/game-view-full-description-component';
 import { HintsService } from '../../../services/views/hints-service';
+import { SteamApiService } from '../../../services/steam-api-service';
 
 @Component({
   selector: 'app-game-view-component',
@@ -36,14 +37,21 @@ export class GameViewComponent implements OnInit {
 
   hints = inject(HintsService);
 
-  gameinfoAsync = this.route.data.pipe(map((data) => data['game'] as GameInfo));
+  steamApi = inject(SteamApiService);
+
+  params = toSignal(this.route.params);
+
+  gameinfoAsync = this.steamApi.getGame(this.params()!['id']);
 
   readonly gameSignal = toSignal(this.gameinfoAsync);
 
   readonly game = computed(() => this.gameSignal());
 
   readonly images = computed(() => {
-    return recalcImg(this.game()!.header_image, this.game()!.screenshots);
+    return recalcImg(
+      this.game()!.header_image ?? '',
+      this.game()!.screenshots ?? [],
+    );
   });
 
   readonly indexForImg = signal<number>(0);

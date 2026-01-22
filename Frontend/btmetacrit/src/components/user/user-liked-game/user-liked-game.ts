@@ -25,13 +25,13 @@ export class UserLikedGame {
   readonly game = input.required<LikedGame>();
 
   readonly price = computed(() =>
-    this.takePriceInDollars(this.game().price_overview)
+    this.takePriceInDollars(this.game().price_overview ?? []),
   );
 
   readonly isLikes = output<[boolean, ElementRef]>();
 
   recalculateImg(): Screenshot[] {
-    return recalcImg(this.game().header_image, this.game().screenshots);
+    return recalcImg(this.game().header_image!, this.game().screenshots ?? []);
   }
   takePriceInDollars(prices: Price[]): string | undefined {
     return prices.find((x) => x.final_formatted.includes('$'))?.final_formatted;

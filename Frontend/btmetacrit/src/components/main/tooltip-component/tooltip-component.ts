@@ -20,7 +20,7 @@ import { develop } from '../../common/animations';
 @Component({
   animations: [develop],
   selector: 'app-tooltip-component',
-  imports: [TextLengthDirective, DatePipe],
+  imports: [TextLengthDirective],
   templateUrl: './tooltip-component.html',
   styleUrl: './tooltip-component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -89,8 +89,8 @@ export class TooltipComponent implements OnInit {
 export type TooltipInfo = {
   title: string;
   imagesLinks: Screenshot[];
-  dateRealese: Date;
-  genres: Genre[];
+  dateRealese: string;
+  genres?: Genre[];
   linkForMoreInfo: string;
-  description: string;
+  description?: string;
 };

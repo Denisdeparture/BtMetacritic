@@ -1,35 +1,68 @@
-import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { DestroyRef, inject, Injectable } from '@angular/core';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { GameInfo, Section } from '../types';
 import { HttpClient } from '@angular/common/http';
-import { GameStore } from './stores/game-store';
+import { GameStore } from './stores/game-user-store';
+import { SteamApiService } from './steam-api-service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({ providedIn: 'root' })
 export class SectionStorageService {
   private storage = new BehaviorSubject<Section[]>([]);
 
+  private strs = [
+    'Section test',
+    'Section must liked',
+    'Section must viewed',
+    'Section games',
+    'Section for pc',
+  ];
+
   httpClient = inject(HttpClient);
 
-  gameStore = inject(GameStore);
+  destroy = inject(DestroyRef);
 
-  constructor() {
-    for (let i = 0; i < 2; i += 1) {
-      this.addSection({
-        id: i,
-        caption: {
-          title: 'Test',
-          link: './test',
-        },
-        games: [],
-      });
-    }
-  }
+  steamApi = inject(SteamApiService);
+
   takeUp(sections: Section[]): void {
     this.storage.next(sections);
   }
+  getSearchSections(name: string): Observable<Observable<Section[]>> {
+    return this.steamApi.getGamesByName(name).pipe(
+      map((list) => {
+        return this.steamApi.getGamesByIds(list.map((x) => x.id)).pipe(
+          takeUntilDestroyed(this.destroy),
+          map((list2) => {
+            const sects: Section[] = [];
+            sects.push({
+              id: 0,
+              caption: {
+                title: 'Search result',
+              },
+              games: list2!,
+            });
 
-  getSections(): Observable<Section[]> {
-    return this.storage.asObservable();
+            return sects;
+          }),
+        );
+      }),
+    );
+  }
+  getRandomSections(): Section[] {
+    this.steamApi.takeFirstGames(5).subscribe((list) => {
+      let counter = 0;
+      for (const sect of this.strs) {
+        this.addSection({
+          id: counter,
+          caption: {
+            title: sect,
+          },
+          games: list,
+        });
+        counter += 1;
+      }
+    });
+    return this.storage.value;
   }
 
   addSection(sect: Section): void {

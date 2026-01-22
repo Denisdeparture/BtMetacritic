@@ -53,7 +53,7 @@ export class SliderComponent implements OnInit, AfterContentInit {
       this.map().length,
       this.isRight,
       this.centerIndex,
-      this.gameGroup()
+      this.gameGroup(),
     );
   }
   recalculateToMap(): SliderGroup<SliderGameObject>[] {

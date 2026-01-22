@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  CUSTOM_ELEMENTS_SCHEMA,
   inject,
   input,
   OnInit,
@@ -18,14 +19,17 @@ import { mapToSliderInfoById } from '../../common/helpers';
 import { KindOfSpinner } from '../../common/to-do-spinner/to-do-spinner';
 import { ToDoSpinnerService } from '../../../services/views/to-do-spinner-service';
 import { HintsService } from '../../../services/views/hints-service';
+import { AsyncPipe, CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-main-page-component',
   providers: [ToDoSpinnerService],
-  imports: [CaptionComponent, SliderComponent],
+  standalone: true,
+  imports: [CaptionComponent, SliderComponent, CommonModule],
   templateUrl: './main-page-component.html',
   styleUrl: './main-page-component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class MainPageComponent implements OnInit {
   spinner = inject(ToDoSpinnerService);
@@ -40,11 +44,11 @@ export class MainPageComponent implements OnInit {
 
   readonly sectionsSignal = toSignal(this.sectionsAsync);
 
-  readonly sections = computed(() => this.sectionsSignal());
-
+  readonly sections = computed(() => this.sectionsSignal()!);
+  log(): void {
+    console.log('Is null');
+  }
   ngOnInit(): void {
-    this.createHints();
-    this.sectionsAsync.subscribe((d) => console.log(d));
     this.spinner.showSpinner('#427b8c', KindOfSpinner.Elipse);
     setTimeout(() => {
       // RxJs ver
@@ -52,6 +56,7 @@ export class MainPageComponent implements OnInit {
         this.spinner.destroySpinner();
       });
     });
+    //this.createHints();
   }
 
   mapToSlider(id: number): SliderGameObject[] {

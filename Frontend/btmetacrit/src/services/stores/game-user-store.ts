@@ -26,5 +26,5 @@ export const GameStore = signalStore(
       id -= 1;
       patchState(state, removeEntity(id), addEntity(newValue));
     },
-  }))
+  })),
 );

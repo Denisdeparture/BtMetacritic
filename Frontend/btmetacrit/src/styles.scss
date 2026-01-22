@@ -1,30 +1,18 @@
-@use '@angular/material' as mat;
-@import url('mixin.scss');
-@import url('https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css');
-:root{
-  --color-basic: #938F86;
-  --color-basic_dark: #78705F;
-  --color-for_good_rating: #0BFF38;
-  --color-for_bad_rating: #D8000C;
-  --color-for_middle_rating: #FFC659;
+@import url("mixin.scss");
+@import url("https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css");
+:root {
+  --color-basic: #938f86;
+  --color-basic_dark: #78705f;
+  --color-for_good_rating: #0bff38;
+  --color-for_bad_rating: #d8000c;
+  --color-for_middle_rating: #ffc659;
   --color-for_font_light: #ffffff;
   --color-for_font_dark: black;
   --color-for_button_auth: black;
-  --color-for_general_button: 'rgba(175, 143, 72, 0.24)';
-  --font-for_general_button: 'Inter'
-  --font-general: 'Roboto'
-}
-html {
-  @include mat.theme((
-    color: (
-      primary: mat.$cyan-palette,
-      tertiary: mat.$orange-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+  --color-for_general_button: "rgba(175, 143, 72, 0.24)";
+  --font-for_general_button: "Inter" --font-general: "Roboto";
 }
 body {
   color-scheme: light;
@@ -33,5 +21,11 @@ body {
   font: var(--mat-sys-body-medium);
   margin: 0;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

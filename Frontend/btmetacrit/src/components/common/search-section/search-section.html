@@ -1,0 +1,9 @@
+@for (sect of searchSectionSignal(); track sect.id) {
+  <div class="slider">
+    <app-slider-component
+      [maxLengthCell]="2"
+      [orientation]="'center'"
+      [objects]="mapToSlider(sect.id)"
+    />
+  </div>
+}

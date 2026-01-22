@@ -1,48 +1,48 @@
 import { Routes } from '@angular/router';
-import {
-  gameDataResolver,
-  sectionsResolver,
-  userDataResolver,
-} from '../resolvers';
+import { mainResolver, searchResolver } from '../resolvers';
 export const LINKS = {
   MAIN: 'main',
   USER: 'user',
   GAME: 'game',
+  SEARCH: 'search',
 };
 export const routes: Routes = [
-
   {
     path: LINKS.USER + '/:id',
     loadComponent: () =>
       import('../components/user/user-page-component/user-page-component').then(
-        (c) => c.UserPageComponent
+        (c) => c.UserPageComponent,
       ),
-    resolve: {
-      user: userDataResolver,
-    },
   },
   {
     path: LINKS.GAME + '/:id',
     loadComponent: () =>
-      import(
-        '../components/game-view/game-view-component/game-view-component'
-      ).then((c) => c.GameViewComponent),
-    resolve: {
-      game: gameDataResolver,
-    },
+      import('../components/game-view/game-view-component/game-view-component').then(
+        (c) => c.GameViewComponent,
+      ),
   },
   {
     path: LINKS.MAIN,
     loadComponent: () =>
-      import(
-        '../components/main//main-page-component/main-page-component'
-      ).then((c) => c.MainPageComponent),
+      import('../components/main//main-page-component/main-page-component').then(
+        (c) => c.MainPageComponent,
+      ),
     resolve: {
-      sections: sectionsResolver,
+      sections: mainResolver,
     },
   },
-    {
+  {
+    path: LINKS.SEARCH,
+    loadComponent: () =>
+      import('../components/common/search-section/search-section').then(
+        (c) => c.SearchSection,
+      ),
+    resolve: {
+      sections: searchResolver,
+    },
+  },
+  {
     path: '**',
-    redirectTo: LINKS.MAIN
+    redirectTo: LINKS.MAIN,
   },
 ];

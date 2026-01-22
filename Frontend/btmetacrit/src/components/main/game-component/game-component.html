@@ -2,7 +2,7 @@
   <img
     alt="#"
     [height]="imageSize()[0]"
-    [src]="imageLink()"
+    [ngSrc]="this.game()?.header_image ?? ''"
     [width]="imageSize()[1]"
   />
 </div>
@@ -13,11 +13,11 @@
   <h4 class="container-info-title">{{ title() }}</h4>
   <app-button-likes-component />
 </div>
-@if(istdisplay()){
-<app-tooltip-component
-  [horizontalOffset]="-200"
-  [imagechangeinterval]="2000"
-  [info]="mapToTooltip()"
-  [verticalOffset]="-100"
-/>
+@if (istdisplay()) {
+  <app-tooltip-component
+    [horizontalOffset]="-100"
+    [imagechangeinterval]="2000"
+    [info]="mapToTooltip()"
+    [verticalOffset]="-100"
+  />
 }
