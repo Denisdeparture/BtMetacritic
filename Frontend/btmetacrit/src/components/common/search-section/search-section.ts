@@ -1,4 +1,13 @@
-import { Component, computed, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  computed,
+  DestroyRef,
+  HostListener,
+  inject,
+  OnInit,
+  Renderer2,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { Section, SliderGameObject } from '../../../types';
@@ -14,10 +23,14 @@ import { SteamApiService } from '../../../services/steam-api-service';
   templateUrl: './search-section.html',
   styleUrl: './search-section.scss',
 })
-export class SearchSection {
+export class SearchSection implements OnInit {
   route = inject(ActivatedRoute);
 
   destroyer = inject(DestroyRef);
+
+  changeDetector = inject(ChangeDetectorRef);
+
+  sectionsService = inject(SectionStorageService);
 
   steamApi = inject(SteamApiService);
 
@@ -29,8 +42,12 @@ export class SearchSection {
 
   readonly searchSectionSignal = computed(() => this.sectionsSignal()!);
 
-  sectionsService = inject(SectionStorageService);
-
+  ngOnInit(): void {
+    console.log(this.searchSectionSignal());
+    console.log(this.route.params);
+    this.changeDetector.detectChanges();
+    this.changeDetector.markForCheck();
+  }
   mapToSlider(id: number): SliderGameObject[] {
     const map = mapToSliderInfoById(id, this.searchSectionSignal());
 

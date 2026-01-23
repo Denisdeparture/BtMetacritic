@@ -30,16 +30,17 @@ export class UserService {
         params: {
           token: token,
         },
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
       },
     );
     obsr.subscribe((user) => {
+      console.log(user);
       this.userStore.addUser(user);
     });
     return obsr;
-  }
-  addUser(user: User): void {
-    this.userStore.addUser(user);
-    this.httpClient.post<User>(environment.apiUrl + this.additionalPath, user);
   }
   updateUser(id: number, newdata: User) {
     this.httpClient.patch(environment.apiUrl + this.additionalPath, newdata, {

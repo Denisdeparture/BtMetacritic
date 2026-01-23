@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using CodeGenerator.Data;
@@ -22,7 +24,7 @@ public class CompleteUser(IDbContextFactory<MyAppContext> ctxFactory) : IWorker
 
         ctx.Users.Add(data);
 
-        await ctx.SaveChangesAsync();
+        ctx.SaveChanges();
 
         return data;
     }
@@ -30,20 +32,41 @@ public class CompleteUser(IDbContextFactory<MyAppContext> ctxFactory) : IWorker
     {
         using var ctx = await ctxFactory.CreateDbContextAsync();
 
-        var user = await GetAsync<int>("Id",id) ?? throw new NullReferenceException("User was null, when try delete operation");
+        var user = await GetAsync<UserDto, int>(x => x.Id,id) as UserDto ?? throw new NullReferenceException("User was null, when try delete operation");
 
-        ctx.Users.Remove((UserDto)user);
+        ctx.Users.Remove(user);
 
         await ctx.SaveChangesAsync();
        
     }
-    public async Task<object?> GetAsync<T>(string param,T value) 
+    // Прямо как в automapper :)
+    public async Task<object> GetAsync<T, Property>(Expression<Func<T, Property>> param,object obj) 
+    {
+        using var ctx = await ctxFactory.CreateDbContextAsync();
+
+
+        if (param.Body is MemberExpression memberExpr)
+        {
+            var memberInfo = memberExpr.Member;
+            if (memberInfo is PropertyInfo propInfo)
+            {
+                var users = ctx.Users.ToList();
+
+                var user = users.Where(x => x.GetType().GetProperty(memberInfo.Name)!.GetValue(x)!.Equals(obj)).SingleOrDefault();
+
+                return user;
+            }
+        }
+        return null;
+
+    }
+    public async Task<object?> GetAsync<T>(string param, T value)
     {
         using var ctx = await ctxFactory.CreateDbContextAsync();
 
         var users = await GetAllAsync();
 
-        if(users is null)
+        if (users is null)
         {
             return null;
         }
@@ -69,14 +92,28 @@ public class CompleteUser(IDbContextFactory<MyAppContext> ctxFactory) : IWorker
 
         using var ctx = await ctxFactory.CreateDbContextAsync();
 
-        var user = await GetAsync<int>("Id", id) ?? throw new NullReferenceException("User was null, when try update operation");
+        var user = await GetAsync<UserDto, int>(x => x.Id, id) as UserDto ?? throw new NullReferenceException("User was null, when try update operation");
 
-        foreach (var prop in user.GetType().GetFields())
+        foreach (var prop in user.GetType().GetProperties())
         {
-            var propWithReq = newdata.GetType().GetFields().Where(x => x.Name == prop.Name).SingleOrDefault();
+            var propWithReq = newdata.GetType().GetProperties().Where(x => x.Name == prop.Name).SingleOrDefault();
+
+            if (propWithReq!.GetValue(newdata) is null)
+            {
+                continue;
+            }
+
+            if( prop.SetMethod is null)
+            {
+                continue;
+            }
 
             prop.SetValue(user, propWithReq!.GetValue(newdata));
         }
+
+        Console.WriteLine(user.Region);
+
+        ctx.Users.Update(user);
 
         ctx.SaveChanges();
     }

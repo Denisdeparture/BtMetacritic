@@ -1,4 +1,4 @@
-import { inject } from '@angular/core';
+import { ChangeDetectorRef, inject } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   ResolveFn,
@@ -9,6 +9,7 @@ import { GameInfo, Section, User } from './types';
 import { UserService } from './services/user-service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
+import { UserStore } from './services/stores/user-store';
 
 export const mainResolver: ResolveFn<Section[]> = (
   route: ActivatedRouteSnapshot,
@@ -16,9 +17,12 @@ export const mainResolver: ResolveFn<Section[]> = (
 ) => {
   const storage = inject(SectionStorageService);
 
-  const sections = storage.getRandomSections();
+  const sects: Section[] = [];
 
-  return sections;
+  storage.getRandomSections().subscribe((list) => {
+    sects.push(...list);
+  });
+  return sects;
 };
 export const searchResolver: ResolveFn<Section[]> = (
   route: ActivatedRouteSnapshot,
@@ -28,13 +32,16 @@ export const searchResolver: ResolveFn<Section[]> = (
 
   const name = route.root.queryParams['name'];
 
+  const sects: Section[] = [];
+
   if (name == undefined) {
     console.log('Name is null');
+    storage.getRandomSections().subscribe((list) => {
+      sects.push(...list);
+    });
 
-    return storage.getRandomSections();
+    return sects;
   }
-
-  const sects: Section[] = [];
 
   storage.getSearchSections(name).subscribe((obsr2) => {
     obsr2.subscribe((list) => {
@@ -42,7 +49,18 @@ export const searchResolver: ResolveFn<Section[]> = (
     });
   });
 
-  console.log(sects);
-
   return sects;
+};
+
+export const userResolver: ResolveFn<User> = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot,
+) => {
+  const userStore = inject(UserStore);
+
+  const id = route.root.queryParams['id'];
+
+  const user = userStore.getUser();
+
+  return user;
 };

@@ -2,7 +2,6 @@
                     using System.ComponentModel;
                     using CodeGenerator.Data;
                     using UnitOfWorkUpgrade.Realization;
-                    using UnitOfWorkUpgrade.Services;
                     namespace BuisnessLogic
                     {
                       partial class UnitOfWork

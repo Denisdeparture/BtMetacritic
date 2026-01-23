@@ -5,9 +5,13 @@ using BuisnessLogic.Interfaces;
 using BuisnessLogic.Models;
 using BuisnessLogic.Models.SteamApi;
 using BuisnessLogic.Models.SteamApi.Group;
+using BuisnessLogic.Realization;
 using BuisnessLogic.Services;
+using Data.Interfaces;
 using Data.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using WebApi.Extensions;
 
 namespace WebApi.Controllers;
@@ -18,37 +22,86 @@ public class SearchController(
     UnitOfWork worker, 
     IFavoriteService favoriteService, 
     TrigramSearchService searchService,
-    IMapper mapper, ILogger logger) : ControllerBase
+    IGameRepository repository,
+    IMapper mapper, ILogger<SearchController> logger) : ControllerBase
 {
     [HttpGet]
+    [Route("infoById")]
     public async Task<IActionResult> GetGame([FromQuery] int id)
     {
         try
         {
+            logger.LogDebug("Process getting game");
+
             var game = await steamApi.GetGameByIdAsync(id.ToString());
 
             return Ok(game);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace);
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
+
+
+            return StatusCode(500);
+        }
+    }
+    [HttpGet]
+    [Route("infoByIds")]
+    public async Task<IActionResult> GetGame([FromQuery] int[] ids)
+    {
+        try
+        {
+            logger.LogDebug("Process getting games");
+
+            var games = new List<GameInfoModel>();
+            
+
+            foreach (int id in ids)
+            {
+
+                var game =  await steamApi.GetGameByIdAsync(id.ToString());
+
+                if(game is null)
+                {
+                    logger.LogTrace("Game with id {Id} was null", id);
+
+                    continue;
+                }
+
+                games.Add(game);
+            }
+
+            return Ok(games);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
+
 
             return StatusCode(500);
         }
     }
 
     [HttpGet]
+    [Route("infoByName")]
     public async Task<IActionResult> GetGame([FromQuery] string name)
     {
         try
         {
+            logger.LogDebug("Process getting game");
+
             var results = await searchService.GetSimilarResult(name);
 
-            return Ok(results);
+            if(results is null || results.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(results.ToArray());
         }
         catch (Exception ex)
         {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace);
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
 
             return StatusCode(500);
         }
@@ -61,42 +114,60 @@ public class SearchController(
         {
             var firstes = await favoriteService.GetFavoritesFromUser(count);
 
-            return Ok(firstes);
+            if (firstes is null)
+            {
+                logger.LogDebug("Not found favorites");
+            }
+
+            var games = await steamApi.GetInfoAboutGames(firstes.ToList());
+
+            return Ok(games.ToArray());
         }
         catch (Exception ex)
         {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace);
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
 
             return StatusCode(500);
         }
     }
 
     [HttpGet]
+    [Authorize]
     [Route("liked")]
     public async Task<IActionResult> GetLiked([FromQuery] int userId) => await GetFromUserWith(x => x.GamesWhichLiked, userId);
+    [Authorize]
     [HttpPost]
     [Route("liked")]
-    public async Task<IActionResult> AddLiked([FromQuery] int userId, [FromBody] GameInfoModel info) => await AddFromUserWith(x => x.GamesWhichLiked, userId, info, KindOfGames.Liked);
+    public async Task<IActionResult> AddLiked([FromQuery] int userId, [FromBody] GameItemModel info) => await AddFromUserWith( userId, info, KindOfGames.Liked);
     [HttpDelete]
+    [Authorize]
+
     [Route("liked")]
-    public async Task<IActionResult> DeleteLiked([FromQuery] int userId, int gameId) => await DeleteFromUserWith(x => x.GamesWhichLiked, userId, gameId, KindOfGames.Liked);
+    public async Task<IActionResult> DeleteLiked([FromQuery] int userId, int gameId) => await DeleteFromUserWith( userId, gameId, KindOfGames.Liked);
     [HttpGet]
+    [Authorize]
+
     [Route("viewed")]
     public async Task<IActionResult> GetViewed([FromQuery] int userId) => await GetFromUserWith(x => x.GamesWhichViewed, userId);
     [HttpPost]
-    [Route("viewed")]
-    public async Task<IActionResult> AddViewed([FromQuery] int userId, [FromBody] GameInfoModel info) => await AddFromUserWith(x => x.GamesWhichViewed, userId, info, KindOfGames.Liked);
-    [HttpDelete]
-    [Route("viewed")]
-    public async Task<IActionResult> DeleteViewed([FromQuery] int userId, int gameId) => await DeleteFromUserWith(x => x.GamesWhichViewed, userId, gameId, KindOfGames.Viewed);
+    [Authorize]
 
+    [Route("viewed")]
+    public async Task<IActionResult> AddViewed([FromQuery] int userId, [FromBody] GameItemModel info) => await AddFromUserWith( userId, info, KindOfGames.Liked);
+    [HttpDelete]
+    [Authorize]
+
+    [Route("viewed")]
+    public async Task<IActionResult> DeleteViewed([FromQuery] int userId, int gameId) => await DeleteFromUserWith( userId, gameId, KindOfGames.Viewed);
+
+    [NonAction]
     private async Task<IActionResult> GetFromUserWith(Func<UserDto, IList<GameDto>?> func, int userId)
     {
         try
         {
             logger.LogDebug("Try get Game info with user {User}", userId);
 
-            var obj = await worker.User.GetAsync<int>("Id", userId);
+            var obj = await worker.User.GetAsync<UserDto,int>(x => x.Id, userId);
 
 
             if (obj is not UserDto user)
@@ -117,19 +188,21 @@ public class SearchController(
         }
         catch (Exception ex)
         {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace);
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
+
 
             return StatusCode(500);
         }
     }
-    private async Task<IActionResult> AddFromUserWith(Func<UserDto, IList<GameDto>?> func, int userId, GameInfoModel info, KindOfGames kindOfGames)
+    [NonAction]
+    private async Task<IActionResult> AddFromUserWith(int userId, GameItemModel info, KindOfGames kindOfGames)
     {
         try
         {
             logger.LogDebug("Try Add Game info with user {User} on {Kind} array games", userId, kindOfGames);
 
 
-            var obj = await worker.User.GetAsync<int>("Id", userId);
+            var obj = await worker.User.GetAsync<UserDto,int>(x => x.Id, userId);
 
             if (obj is not UserDto user)
             {
@@ -137,41 +210,39 @@ public class SearchController(
 
                 return NotFound();
             }
-
-            var games = func(user);
-
-            games ??= new List<GameDto>();
-
             var dto = mapper.Map<GameDto>(info);
-
-            games.Add(dto);
 
             if (kindOfGames == KindOfGames.Liked)
             {
-
-
-                user.GamesWhichLiked = games.ToList();
+                user.GamesWhichLiked!.Add(dto);
             }
-            else
+
+            if (kindOfGames == KindOfGames.Viewed)
             {
-                user.GamesWhichViewed = games.ToList();
+                user.GamesWhichViewed!.Add(dto);;
             }
+            var task = repository.AddUserToGame(user, info.id, kindOfGames);
+
+            task.Wait();
 
             worker.User.UpdateAsync(userId, user);
 
-            logger.LogInformation("Sucesss uadd");
+            logger.LogInformation("Sucesss user add");
 
 
             return Ok();
         }
         catch(Exception ex)
         {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace);
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
+
 
             return StatusCode(500);
         }
     }
-    private async Task<IActionResult> DeleteFromUserWith(Func<UserDto, IList<GameDto>?> func, int userId, int gameId, KindOfGames kind)
+    [NonAction]
+
+    private async Task<IActionResult> DeleteFromUserWith(int userId, int gameId, KindOfGames kind)
     {
         try
         {
@@ -179,7 +250,7 @@ public class SearchController(
             logger.LogDebug("Try Delete Game {Game} info with user {User} on {Kind} array games", gameId, userId, kind);
 
 
-            var obj = await worker.User.GetAsync<int>("Id", userId);
+            var obj = await worker.User.GetAsync<UserDto, int>(x => x.Id, userId);
 
             if (obj is not UserDto user)
             {
@@ -187,47 +258,18 @@ public class SearchController(
 
                 return NotFound();
             }
-
-            var games = func(user);
-
-            if (games is null)
-            {
-                logger.LogDebug("Why games were null?!");
-
-
-                return BadRequest();
-            }
-
-
-            var game = games.Where(x => x.Id == gameId).FirstOrDefault();
-
-            if (game is null)
-            {
-                logger.LogDebug("Not found game with gameId {GI}", gameId);
-
-                return NotFound();
-            }
-
+       
             if (kind == KindOfGames.Liked)
             {
-                if (user.GamesWhichLiked is null)
-                {
-                    logger.LogDebug("User games {kind} array was null", kind);
-
-                    return BadRequest();
-                }
-                user.GamesWhichLiked.RemoveAll(x => x.Id == gameId);
+                user.GamesWhichLiked!.RemoveAll(x => x.Id == gameId);
             }
             else
             {
-                if (user.GamesWhichViewed is null)
-                {
-                    logger.LogDebug("User games {kind} array was null", kind);
-
-                    return BadRequest();
-                }
-                user.GamesWhichViewed.RemoveAll(x => x.Id == gameId);
+                user.GamesWhichViewed!.RemoveAll(x => x.Id == gameId);
             }
+
+            await repository.DeleteUserToGame(user, gameId, kind);
+
 
             worker.User.UpdateAsync(userId, user);
 
@@ -237,7 +279,8 @@ public class SearchController(
         }
         catch (Exception ex)
         {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace);
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
+
 
             return StatusCode(500);
         }
@@ -245,8 +288,4 @@ public class SearchController(
     }
 
 }
-public enum KindOfGames 
-{
-    Viewed,
-    Liked
-}
+

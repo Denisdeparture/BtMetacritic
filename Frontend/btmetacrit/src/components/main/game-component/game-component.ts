@@ -45,7 +45,13 @@ export class GameComponent {
     this.istdisplay.set(false);
   }
   rating(): number {
+    if (this.game()) {
+      return 0;
+    }
+
     const meta = this.game().metacritic;
+
+    console.log(meta);
 
     if (meta == undefined) {
       return 0;

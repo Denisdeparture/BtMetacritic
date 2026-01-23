@@ -8,25 +8,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({ providedIn: 'root' })
 export class SectionStorageService {
-  private storage = new BehaviorSubject<Section[]>([]);
-
-  private strs = [
-    'Section test',
-    'Section must liked',
-    'Section must viewed',
-    'Section games',
-    'Section for pc',
-  ];
-
   httpClient = inject(HttpClient);
 
   destroy = inject(DestroyRef);
 
   steamApi = inject(SteamApiService);
 
-  takeUp(sections: Section[]): void {
-    this.storage.next(sections);
-  }
   getSearchSections(name: string): Observable<Observable<Section[]>> {
     return this.steamApi.getGamesByName(name).pipe(
       map((list) => {
@@ -48,28 +35,22 @@ export class SectionStorageService {
       }),
     );
   }
-  getRandomSections(): Section[] {
-    this.steamApi.takeFirstGames(5).subscribe((list) => {
-      let counter = 0;
-      for (const sect of this.strs) {
-        this.addSection({
+  getRandomSections(): Observable<Section[]> {
+    return this.steamApi.takeFirstGames(5).pipe(
+      map((list) => {
+        const sects: Section[] = [];
+        let counter = 0;
+        sects.push({
           id: counter,
           caption: {
-            title: sect,
+            title: 'Popular games',
           },
           games: list,
         });
-        counter += 1;
-      }
-    });
-    return this.storage.value;
-  }
+        counter++;
 
-  addSection(sect: Section): void {
-    const sections = this.storage.getValue();
-
-    sections.push(sect);
-
-    this.takeUp(sections);
+        return sects;
+      }),
+    );
   }
 }

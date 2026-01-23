@@ -16,12 +16,14 @@ export class AuthService {
   oAuthService = inject(OAuthService);
   httpClient = inject(HttpClient);
   tokenStorage = inject(TokenStore);
+  additionalPath = '/auth';
+
   constructor() {
     this.oAuthService.configure(YandexOAuthConfig);
   }
   login(info: UserLoginRequest): Observable<UserLoginResponce> {
     return this.httpClient.post<UserLoginResponce>(
-      environment.apiUrl + '/sign-in',
+      environment.apiUrl + this.additionalPath + '/sign-in',
       info,
     );
   }
@@ -37,13 +39,17 @@ export class AuthService {
 
       const idToken = this.oAuthService.getIdToken();
 
-      var req = this.httpClient.post(environment.apiUrl + '/oauth', undefined, {
-        params: {
-          idToken: idToken,
-          provider: provider,
-          email: mail,
+      var req = this.httpClient.post(
+        environment.apiUrl + this.additionalPath + '/oauth',
+        undefined,
+        {
+          params: {
+            idToken: idToken,
+            provider: provider,
+            email: mail,
+          },
         },
-      });
+      );
 
       req.subscribe();
     });
@@ -54,8 +60,10 @@ export class AuthService {
   clearTokens(): void {
     this.tokenStorage.clearTokens();
   }
-  register(info: UserRegisterRequest): Observable<any> {
-    return this.httpClient.post<any>(environment.apiUrl + '/sign-up', info);
+  register(info: UserRegisterRequest): Observable<UserLoginResponce> {
+    const path = environment.apiUrl + this.additionalPath + '/sign-up';
+
+    return this.httpClient.post<UserLoginResponce>(path, info);
   }
   getOAuthProviders(): OAuth2Type[] {
     return [

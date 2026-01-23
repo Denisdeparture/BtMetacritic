@@ -12,7 +12,6 @@ public class GeneratorWriter(GeneratorLogic _generator)
                     using System.ComponentModel;
                     using CodeGenerator.Data;
                     using UnitOfWorkUpgrade.Realization;
-                    using UnitOfWorkUpgrade.Services;
                     namespace {typeSymbol.ContainingNamespace}
                     {{
                       partial class {typeSymbol.Name}

@@ -63,6 +63,7 @@ export class AuthFormComponent {
     return result;
   }
   click() {
+    console.log('Emit change');
     this.submitChange.emit();
   }
 }

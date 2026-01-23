@@ -10,6 +10,8 @@ namespace BuisnessLogic.Services;
 public class SteamApi(HttpClient httpClient) : ISteamApi
 {
     private readonly string steamUrl = "https://store.steampowered.com/api";
+
+    // id
     public async Task<GameInfoModel> GetGameByIdAsync(string id)
     {
         var urib = new UriBuilder($"{steamUrl}/appdetails");
@@ -29,10 +31,11 @@ public class SteamApi(HttpClient httpClient) : ISteamApi
             throw new Exception("Status wasn`t success");
         }
 
-        var model = await json.Content.ReadFromJsonAsync<GameInfoModel>() ?? throw new NullReferenceException("Model with api was null");
+        var model = await json.Content.ReadFromJsonAsync<Dictionary<string , DataGameInfo>>() ?? throw new NullReferenceException("Model with api was null");
 
-        return model;
+        return model.FirstOrDefault().Value.data;
     }
+    // name
     public async Task<IList<GameItemModel>> GetGameByNameAsync(string name, int maxCount = 1, string country = "en")
     {
         var urib = new UriBuilder($"{steamUrl}/storesearch");

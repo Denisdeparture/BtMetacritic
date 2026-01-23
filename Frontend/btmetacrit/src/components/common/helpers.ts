@@ -60,7 +60,6 @@ export function recalcToMap<T extends SliderObject>(
     console.log(objects);
     return map;
   }
-  console.log(objs);
   const length = objs.length + 1;
 
   let count = 0;

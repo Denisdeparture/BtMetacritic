@@ -327,9 +327,17 @@
               "target": "Package",
               "version": "[9.0.12, )"
             },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[9.0.12, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.9, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.4, )"
             },
             "Scalar.AspNetCore": {
               "target": "Package",
@@ -340,6 +348,10 @@
               "version": "[4.3.0, )"
             },
             "Serilog.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "Serilog.Settings.Configuration": {
               "target": "Package",
               "version": "[10.0.0, )"
             },

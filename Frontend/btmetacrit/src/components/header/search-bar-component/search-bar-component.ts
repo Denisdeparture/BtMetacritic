@@ -40,6 +40,8 @@ export class SearchBarComponent {
 
   route = inject(Router);
 
+  changeDetect = inject(ChangeDetectorRef);
+
   readonly label = viewChild<ElementRef>('searcher');
 
   value = '';
@@ -48,15 +50,18 @@ export class SearchBarComponent {
 
   validationForm = new FormControl('', [Validators.required]);
 
-  @HostListener('document:keydown.enter', ['$event'])
-  enter(event: any): void {
-    this.submitInput();
-  }
+  // @HostListener('document:keydown.enter', ['$event'])
+  // enter(event: any): void {
+  //   this.submitInput();
+  // }
   clickOnInput(): void {
     this.rerender.setStyle(this.label()?.nativeElement, 'opacity', 0);
   }
   submitInput(): void {
     this.rerender.setStyle(this.label()?.nativeElement, 'opacity', 1);
+
+    this.changeDetect.markForCheck();
+    this.changeDetect.detectChanges();
 
     const nav: NavigationExtras = {
       queryParams: {

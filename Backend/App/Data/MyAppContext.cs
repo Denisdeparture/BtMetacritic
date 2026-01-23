@@ -17,7 +17,7 @@ public class MyAppContext : DbContext
     public DbSet<OAuthProviderModel> OAuthProviders => Set<OAuthProviderModel>();
 
     public DbSet<RefreshTokenModel> Tokens => Set<RefreshTokenModel>();
-    protected MyAppContext(DbContextOptions<MyAppContext> options) : base(options)
+    public MyAppContext(DbContextOptions<MyAppContext> options) : base(options)
     {
         if (!Database.EnsureCreated())
         {
@@ -45,5 +45,8 @@ public class MyAppContext : DbContext
            .WithOne(x => x.User)
            .HasForeignKey(x => x.UserId)
            .IsRequired();
+        modelBuilder.Entity<GameDto>().
+            Property(x => x.Id)
+            .ValueGeneratedNever();
     }
 }

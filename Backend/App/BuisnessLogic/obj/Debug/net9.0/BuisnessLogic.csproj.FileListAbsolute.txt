@@ -96,3 +96,5 @@ D:\BtMetacritic\Backend\App\BuisnessLogic\bin\Debug\net9.0\runtimes\win-x64\nati
 D:\BtMetacritic\Backend\App\BuisnessLogic\bin\Debug\net9.0\runtimes\win-x86\native\e_sqlite3.dll
 D:\BtMetacritic\Backend\App\BuisnessLogic\bin\Debug\net9.0\GeneratorData.dll
 D:\BtMetacritic\Backend\App\BuisnessLogic\bin\Debug\net9.0\GeneratorData.pdb
+D:\BtMetacritic\Backend\App\BuisnessLogic\bin\Debug\net9.0\EntityFrameworkCore.Projectables.dll
+D:\BtMetacritic\Backend\App\BuisnessLogic\bin\Debug\net9.0\EntityFrameworkCore.Projectables.Abstractions.dll

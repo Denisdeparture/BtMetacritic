@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { mainResolver, searchResolver } from '../resolvers';
+import { mainResolver, searchResolver, userResolver } from '../resolvers';
 export const LINKS = {
   MAIN: 'main',
   USER: 'user',
@@ -8,18 +8,21 @@ export const LINKS = {
 };
 export const routes: Routes = [
   {
-    path: LINKS.USER + '/:id',
-    loadComponent: () =>
-      import('../components/user/user-page-component/user-page-component').then(
-        (c) => c.UserPageComponent,
-      ),
-  },
-  {
     path: LINKS.GAME + '/:id',
     loadComponent: () =>
       import('../components/game-view/game-view-component/game-view-component').then(
         (c) => c.GameViewComponent,
       ),
+  },
+  {
+    path: LINKS.USER,
+    loadComponent: () =>
+      import('../components/user/user-page-component/user-page-component').then(
+        (c) => c.UserPageComponent,
+      ),
+    resolve: {
+      user: userResolver,
+    },
   },
   {
     path: LINKS.MAIN,

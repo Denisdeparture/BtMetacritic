@@ -1,4 +1,10 @@
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import {
+  getState,
+  patchState,
+  signalStore,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
 import { User } from '../../types';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { addEntity, removeEntity, withEntities } from '@ngrx/signals/entities';
@@ -18,8 +24,8 @@ export const UserStore = signalStore(
     deleteUser: (id: number): void => {
       patchState(state, initialState);
     },
-    getUserId: (): number => {
-      return state.id();
+    getUser: (): User => {
+      return getState(state);
     },
     updateUser: (newValue: User): void => {
       patchState(state, newValue);

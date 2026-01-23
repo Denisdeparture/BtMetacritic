@@ -91,7 +91,6 @@ export class UserPageComponent implements OnInit {
     ]);
     this.spinner.showSpinner('#427b8c', KindOfSpinner.Elipse);
     setTimeout(() => {
-      // RxJs ver
       this.userAsync.pipe(delay(200)).subscribe(() => {
         this.spinner.destroySpinner();
       });

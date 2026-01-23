@@ -16,12 +16,13 @@ using WebApi.Models;
 
 namespace WebApi.Controllers;
 [Route("auth")]
+[ApiController]
 public class AuthController(IRefresher retokenService,
     IJwtManager jwtManager, 
     UnitOfWork unitOfWork, 
     EncryptionService encryption,
     IMapper mapper,
-    ILogger logger) : ControllerBase
+    ILogger<AuthController> logger) : ControllerBase
 {
     [Route("sign-in")]
     [HttpPost]
@@ -41,16 +42,12 @@ public class AuthController(IRefresher retokenService,
                 return Unauthorized();
             }
 
-            var refreshtoken = retokenService.GenerateRefreshTokenAsync(check.Item2!.Id);
-
-            var accesstoken = jwtManager.CreateJwtTokenForUser(check.Item2);
-
-            logger.LogDebug("After end operation we get accsess token {Token} and refresh token {Token2}", accesstoken, refreshtoken);
-            return Ok((accesstoken, refreshtoken));
+            return await OkWithTokens(check.Item2!);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace);
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
+
 
             return StatusCode(500);
         }
@@ -69,7 +66,8 @@ public class AuthController(IRefresher retokenService,
         }
         catch (Exception ex)
         {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace);
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
+
 
             return StatusCode(500);
         }
@@ -81,7 +79,7 @@ public class AuthController(IRefresher retokenService,
     {
         try
         {
-            logger.LogDebug("Requested registation for user {Email} with password {Password} and name {Name}", model.Email, model.Password, model.Name);
+            logger.LogInformation("Requested registation for user {Email} with password {Password} and name {Name}", model.Email, model.Password, model.Name);
 
             if (string.IsNullOrWhiteSpace(model.Email) |
                 string.IsNullOrWhiteSpace(model.Password))
@@ -92,9 +90,11 @@ public class AuthController(IRefresher retokenService,
 
             var usermap = mapper.Map<UserDto>(model);
 
+            Console.WriteLine(usermap);
+
             var isExist = await IsExist(model.Email, model.Password);
 
-            if (isExist.Item1)
+            if (isExist.Item1 == true)
             {
                 logger.LogDebug("Requested registation for user {Email} with password {Password} and name {Name} was cancelled becuse user already exist", model.Email, model.Password, model.Name);
                 return BadRequest();
@@ -107,18 +107,27 @@ public class AuthController(IRefresher retokenService,
 
             logger.LogDebug("Encrypt we get {Hash} and {Salt}", schipherText.hash, schipherText.salt);
 
+            var obj = await unitOfWork.User.AddAsync(usermap);
 
-            if (await unitOfWork.User.AddAsync(usermap) is not UserDto user)
+#pragma warning disable IDE0019 // Используйте сопоставление шаблонов
+            var user = obj as UserDto;
+#pragma warning restore IDE0019 // Используйте сопоставление шаблонов
+
+            if (user is null)
             {
                 logger.LogDebug("Add user operation was cancelled with email {Email} and {Password}", model.Email, model.Password);
+
                 return BadRequest();
             }
 
-            return OkWithTokens(user);
+            var res = await OkWithTokens(user);
+
+            return res;
         }
         catch (Exception ex)
         {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace);
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
+
 
             return StatusCode(500);
         }
@@ -147,7 +156,8 @@ public class AuthController(IRefresher retokenService,
         }
         catch(Exception ex)
         {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace);
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
+
 
             return StatusCode(500);
         }
@@ -166,11 +176,12 @@ public class AuthController(IRefresher retokenService,
 
             var user = await retokenService.FindOrCreateUserByProviderId(model);
 
-            return OkWithTokens(user);
+            return await OkWithTokens(user);
         }
         catch(Exception ex)
         {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace);
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
+
 
             return StatusCode(500);
         }
@@ -204,34 +215,44 @@ public class AuthController(IRefresher retokenService,
         }
         catch (Exception ex)
         {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace);
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
+
 
             return StatusCode(500);
         }
     }
-    private IActionResult OkWithTokens(UserDto user)
+    [NonAction]
+    private async Task<IActionResult> OkWithTokens(UserDto user)
     {
         try
         {
             logger.LogDebug("Creating tokens for user {Name} with email {Email}", user.FirstName, user.Email);
 
-            var refreshtoken = retokenService.GenerateRefreshTokenAsync(user.Id);
+            var refreshtoken = await retokenService.GenerateRefreshTokenAsync(user.Id);
 
             var accesstoken = JwtCreator.CreateAccessToken(user, jwtManager);
 
             logger.LogDebug("Creating tokens was success");
 
-            return Ok((refreshtoken, accesstoken));
+            var tr = new TokenResponce()
+            {
+                accessToken = accesstoken,
+                refreshToken = refreshtoken
+
+            };
+
+            return Ok(tr);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace);
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
+
 
             return StatusCode(500);
         }
     }
-    
 
+    [NonAction]
     private async Task<(bool, UserDto?)> IsExist(string email, string password)
     {
         logger.LogDebug("Check existing user with email {Email}", email);

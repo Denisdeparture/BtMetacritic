@@ -5,13 +5,14 @@ using BuisnessLogic;
 using BuisnessLogic.Models;
 using CodeGenerator.Data;
 using Data.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 
 namespace WebApi.Controllers;
-[Route("about/user")]
+[Route("about")]
 [ApiController]
-public class UserController(UnitOfWork unitOfWork, IMapper mapper, ILogger logger) : ControllerBase
+public class UserController(UnitOfWork unitOfWork, IMapper mapper, ILogger<UserController> logger) : ControllerBase
 {
     [HttpGet("all")]
     public async Task<IActionResult> GetAll()
@@ -26,18 +27,20 @@ public class UserController(UnitOfWork unitOfWork, IMapper mapper, ILogger logge
         }
         catch(Exception ex)
         {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace);
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
+
 
             return StatusCode(500);
         }
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetInfo([FromQuery] string token)
+    [Route("user")]
+    public async Task<IActionResult> GetInfo()
     {
         try
         {
-            logger.LogDebug("Try get info with token {Token}", token);
+            logger.LogDebug("Try get info with token");
 
             var claim = User.FindFirst(ClaimTypes.Email);
 
@@ -46,22 +49,32 @@ public class UserController(UnitOfWork unitOfWork, IMapper mapper, ILogger logge
                 return NotFound();
             }
 
-            var obj = await unitOfWork.User.GetAsync<string>("Email", claim.Value);
+            var obj = await unitOfWork.User.GetAsync<UserDto, string?>(x => x.Email, claim.Value);
 
-            var user = obj as UserDto;
+            var user = (UserDto)obj ?? throw new NullReferenceException("User was null");
 
-            var map = mapper.Map<UserModel>(user);
+            var info = mapper.Map<SimpleUserInfo>(user);
+
+            var map = new UserModel()
+            {
+                Id = user.Id,
+
+                Info = info,
+            };
 
             return Ok(map);
         }
         catch(Exception ex)
         {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace);
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
+
 
             return StatusCode(500);
         }
     }
     [HttpPatch]
+    [Authorize]
+    [Route("user")]
     public async Task<IActionResult> UpdateUser([FromQuery] int id , [FromBody] UserModel newData)
     {
         try
@@ -71,7 +84,10 @@ public class UserController(UnitOfWork unitOfWork, IMapper mapper, ILogger logge
 
             var usermap = mapper.Map<UserDto>(newData);
 
-            var oldUser = await unitOfWork.User.GetAsync("Id", id);
+#pragma warning disable IDE0019 // Используйте сопоставление шаблонов
+            var oldUser = await unitOfWork.User.GetAsync<UserDto, int>(x => x.Id, id) as UserDto;
+#pragma warning restore IDE0019 // Используйте сопоставление шаблонов
+
 
             if (oldUser is null)
             {
@@ -80,21 +96,36 @@ public class UserController(UnitOfWork unitOfWork, IMapper mapper, ILogger logge
                 return Unauthorized();
             }
 
+            usermap.Id = oldUser.Id;
+
             unitOfWork.User.UpdateAsync(id, usermap);
 
             logger.LogInformation("Success update");
 
-            return Ok(usermap);
+            var info = mapper.Map<SimpleUserInfo>(newData);
+
+            var map = new UserModel()
+            {
+                Id = oldUser.Id,
+
+                Info = info,
+            };
+
+            return Ok(map);
+
         }
         catch (Exception ex)
         {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace);
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
+
 
             return StatusCode(500);
         }
 
     }
     [HttpPatch]
+    [Authorize]
+    [Route("user/v2")]
     public async Task<IActionResult> UpdateUser([FromQuery] string email, [FromBody] UserModel newData)
     {
         try
@@ -106,6 +137,8 @@ public class UserController(UnitOfWork unitOfWork, IMapper mapper, ILogger logge
 
             var obj = await unitOfWork.User.GetAsync("Email", email);
 
+
+
             if (obj is not UserDto oldUser)
             {
                 logger.LogDebug("Old user with email {Email} wasn t found ", email);
@@ -113,25 +146,43 @@ public class UserController(UnitOfWork unitOfWork, IMapper mapper, ILogger logge
                 return Unauthorized();
             }
 
+            usermap.Id = oldUser.Id;
+
+
             unitOfWork.User.UpdateAsync(oldUser.Id, usermap);
+
             logger.LogInformation("Success update");
 
-            return Ok(usermap);
+            var info = mapper.Map<SimpleUserInfo>(newData);
+
+            var map = new UserModel()
+            {
+                Id = oldUser.Id,
+
+                Info = info,
+            };
+
+            return Ok(map);
         }
         catch(Exception ex)
         {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace);
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
+
 
             return StatusCode(500);
         }
 
     }
     [HttpDelete]
+    [Authorize]
+    [Route("user")]
     public async Task<IActionResult> DeleteUser([FromQuery] int id)
     {
         try
         {
-            var oldUser = await unitOfWork.User.GetAsync("Id", id);
+#pragma warning disable IDE0019 // Используйте сопоставление шаблонов
+            var oldUser = await unitOfWork.User.GetAsync<UserDto, int>(x => x.Id, id) as UserDto;
+#pragma warning restore IDE0019 // Используйте сопоставление шаблонов
 
             if (oldUser is null)
             {
@@ -140,7 +191,7 @@ public class UserController(UnitOfWork unitOfWork, IMapper mapper, ILogger logge
                 return Unauthorized();
             }
 
-            await unitOfWork.User.DeleteAsync(id);
+            await unitOfWork.User.DeleteAsync(oldUser.Id);
 
             logger.LogInformation("Success delete");
 
@@ -148,7 +199,8 @@ public class UserController(UnitOfWork unitOfWork, IMapper mapper, ILogger logge
         }
         catch (Exception ex)
         {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace);
+            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
+
 
             return StatusCode(500);
         }

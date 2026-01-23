@@ -21,9 +21,10 @@ import { show } from '../../common/animations';
 import { AuthService } from '../../../services/auth-service';
 import { complexPasswordValidator } from '../../../validators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { LINKS } from '../../../app/app.routes';
 import { OAuth2Type } from '../../../types';
+import { UserService } from '../../../services/user-service';
 
 @Component({
   animations: [show],
@@ -43,6 +44,8 @@ export class AuthPopUpComponent implements AfterViewInit {
   rerender = inject(Renderer2);
 
   authService = inject(AuthService);
+
+  userService = inject(UserService);
 
   destroyRef = inject(DestroyRef);
 
@@ -155,6 +158,7 @@ export class AuthPopUpComponent implements AfterViewInit {
     this.destroySignal.emit();
   }
   clickOnButton(): void {
+    console.log('Was click');
     const form = this.authForm()!;
     const isLogin = form.name() === this.authentitication;
 
@@ -162,7 +166,10 @@ export class AuthPopUpComponent implements AfterViewInit {
 
     const password = form.authArray().find((x) => x.name === 'password');
 
-    if (!email || !password) return;
+    if (!email || !password) {
+      console.log('email and password was null');
+      return;
+    }
 
     if (isLogin) {
       this.authService
@@ -172,16 +179,39 @@ export class AuthPopUpComponent implements AfterViewInit {
         })
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((x) => {
+          console.log(x);
+
           this.authService.setTokens(x);
-          this.router.navigate([LINKS.MAIN]);
+
+          const user = this.userService.getUser(x.accessToken);
+
+          user.subscribe((x) => {
+            this.router.navigate([LINKS.USER, x.id]);
+          });
         });
     } else {
       const name = form.authArray().find((x) => x.name === 'name');
-      if (!name) return;
-      this.authService.register({
+      if (!name) {
+        console.log('Name was null');
+        return;
+      }
+      const reg = this.authService.register({
         email: email.formControl.value,
         password: password.formControl.value,
         name: name.formControl.value,
+      });
+      reg.subscribe((x) => {
+        console.log(x);
+
+        this.authService.setTokens(x);
+
+        const user = this.userService.getUser(x.accessToken);
+
+        user.subscribe((x) => {
+          this.router.navigate([LINKS.USER]);
+
+          this.closePopUp();
+        });
       });
     }
   }

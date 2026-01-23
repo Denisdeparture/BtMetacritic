@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,12 +12,14 @@ namespace Data.Models.Dto;
 public class UserDto : IdentityUser<int>
 {
     public string SaltForPassword { get; set; } = null!;
-    public List<GameDto>? GamesWhichLiked { get; set; }
-    public List<GameDto>? GamesWhichViewed { get; set; }
-
-    public IList<RefreshTokenModel>? RefreshTokens { get; set; }
-
-    public IList<OAuthProviderModel>? OAuthProviders { get; set; }
+    [Timestamp]
+    public List<GameDto>? GamesWhichLiked { get; set; } = new List<GameDto>();
+    [Timestamp]
+    public List<GameDto>? GamesWhichViewed { get; set; } = new List<GameDto>();
+    [Timestamp]
+    public IList<RefreshTokenModel>? RefreshTokens { get; set; } = new List<RefreshTokenModel>();
+    [Timestamp]
+    public IList<OAuthProviderModel>? OAuthProviders { get; set; } = new List<OAuthProviderModel>();
 
     [Projectable]
     public string FirstName => new string(NormalizedUserName!.TakeWhile(x => x != ' ').ToArray()); 

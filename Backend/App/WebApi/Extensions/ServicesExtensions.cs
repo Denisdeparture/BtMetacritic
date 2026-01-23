@@ -22,8 +22,9 @@ public static class ServicesExtensions
     public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddTransient<IJwtManager, JwtManager>();
-        
-       
+
+        var value = configuration.GetSection("JwtSettings").GetValue<string>("Issuer");
+
         services.AddAuthentication(opt =>
         {
             opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -34,16 +35,16 @@ public static class ServicesExtensions
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
-            ValidIssuer = configuration["JwtSettings:Issuer"],
-            ValidAudience = configuration["JwtSettings:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:SecurityKey"]!)),
+            ValidIssuer = configuration.GetSection("JwtSettings").GetValue<string>("Issuer"),
+            ValidAudience = configuration.GetSection("JwtSettings").GetValue<string>("Audience"),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("JwtSettings").GetValue<string>("SecurityKey")!)),
             ValidateIssuerSigningKey = true,
         }).AddBearerToken(IdentityConstants.BearerScheme)
         .AddYandex(opt =>
         {
-            opt.CallbackPath = configuration["YandexOAuth2.0:CallbackPath"];
-            opt.ClientId = configuration["YandexOAuth2.0:ClientId"]!;
-            opt.ClientSecret = configuration["YandexOAuth2.0:ClientSecret"]!;
+            opt.CallbackPath = configuration.GetSection("YandexOAuth2.0").GetValue<string>("CallbackPath");
+            opt.ClientId = configuration.GetSection("YandexOAuth2.0").GetValue<string>("ClientId")!;
+            opt.ClientSecret = configuration.GetSection( "YandexOAuth2.0").GetValue<string>("ClientSecret")!;
         });
 
         return services;
@@ -52,5 +53,8 @@ public static class ServicesExtensions
     public static IServiceCollection AddSearch(this IServiceCollection services)  => services.AddTransient<TrigramSearchService>();
     public static IServiceCollection AddTokeniserService(this IServiceCollection services) => services.AddTransient<IRefresher, RefreshTokenService>();
     public static IServiceCollection AddUnitOfWork(this IServiceCollection services) => services.AddSingleton<UnitOfWork>();
+
+    public static IServiceCollection AddFavoriteService(this IServiceCollection services) => services.AddTransient<IFavoriteService, FavoriteService>();
+
 
 }

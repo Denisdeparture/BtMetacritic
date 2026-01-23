@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,9 @@ public class GameDto
 {
     public int Id { get; set; }
     public string? Title { get; set; }
+    [Timestamp]
 
-    public IList<UserDto>? UserLikedIt { get; set; }
-    public IList<UserDto>? UserViewedIt { get; set; }
+    public IList<UserDto>? UserLikedIt { get; set; } = new List<UserDto>();
+    [Timestamp]
+    public IList<UserDto>? UserViewedIt { get; set; } = new List<UserDto>();
 }

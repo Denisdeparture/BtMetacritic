@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   computed,
   CUSTOM_ELEMENTS_SCHEMA,
@@ -38,6 +39,8 @@ export class MainPageComponent implements OnInit {
 
   route = inject(ActivatedRoute);
 
+  changeDetector = inject(ChangeDetectorRef);
+
   sectionsAsync = this.route.data.pipe(
     map((data) => data['sections'] as Section[]),
   );
@@ -45,10 +48,9 @@ export class MainPageComponent implements OnInit {
   readonly sectionsSignal = toSignal(this.sectionsAsync);
 
   readonly sections = computed(() => this.sectionsSignal()!);
-  log(): void {
-    console.log('Is null');
-  }
+
   ngOnInit(): void {
+    console.log(this.sections());
     this.spinner.showSpinner('#427b8c', KindOfSpinner.Elipse);
     setTimeout(() => {
       // RxJs ver
@@ -56,7 +58,7 @@ export class MainPageComponent implements OnInit {
         this.spinner.destroySpinner();
       });
     });
-    //this.createHints();
+    this.createHints();
   }
 
   mapToSlider(id: number): SliderGameObject[] {

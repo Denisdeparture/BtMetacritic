@@ -18,6 +18,13 @@ public class TrigramSearchService(ISteamApi steamApi, IOptions<SearchOptions>? o
     {
         var trigramms = GetTrigramms(searchName);
 
+        var middleResult = await steamApi.GetGameByNameAsync(searchName);
+
+        if(middleResult is not null && middleResult.Count > 0)
+        {
+            return middleResult.ToList();
+        }
+
         var listPotentialNames = await CompareTrigramms(trigramms);
 
         return listPotentialNames.Select(x => x.name).ToList();

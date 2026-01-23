@@ -1,14 +1,16 @@
 <div class="blocks">
-  @for (sect of sections(); track sect.id) {
-    <app-caption-component class="caption" [isHasLink]="false"
-      ><p #title>{{ sect.caption!.title }}</p></app-caption-component
-    >
-    <div class="slider">
-      <app-slider-component
-        [maxLengthCell]="sect.games?.length!"
-        [orientation]="'start'"
-        [objects]="mapToSlider(sect.id)"
-      />
-    </div>
+  @if (sections()) {
+    @for (sect of sections(); track sect.id) {
+      <app-caption-component class="caption" [isHasLink]="false"
+        ><p #title>{{ sect.caption!.title }}</p></app-caption-component
+      >
+      <div class="slider">
+        <app-slider-component
+          [maxLengthCell]="sect.games?.length!"
+          [orientation]="'start'"
+          [objects]="mapToSlider(sect.id)"
+        />
+      </div>
+    }
   }
 </div>

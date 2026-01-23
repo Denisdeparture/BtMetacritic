@@ -6,26 +6,7 @@ namespace WebApi.Mappers;
 
 public class UserMapperProfile : Profile
 {
-    public UserMapperProfile()
-    {
-        CreateMap<RegisterRequestModel, UserDto>()
+    public UserMapperProfile() => CreateMap<RegisterRequestModel, UserDto>()
               .ForMember(x => x.Email, opt => opt.MapFrom(o => o.Email))
               .ForMember(x => x.NormalizedUserName, opt => opt.MapFrom(src => src.Name));
-
-        CreateMap<UserModel, UserDto>()
-             .ForMember("ImgPath", opt => opt.MapFrom(src => src.ImgPath))
-             .ForMember("Region", opt => opt.MapFrom(src => src.Info.Region))
-             .ForMember("FirstName", opt => opt.MapFrom(src => src.Info.Firstname))
-             .ForMember("LastName", opt => opt.MapFrom(src => src.Info.Lastname))
-             .ForMember("Age", opt => opt.MapFrom(src => src.Info.Age))
-             .ForMember("Email", opt => opt.MapFrom(src => src.Info.Mail))
-             .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id)
-             );
-        CreateMap<UserDto, UserModel>()
-           .ForMember(x => x.Info.Mail, opt => opt.MapFrom(src => src.Email))
-           .ForMember(x => x.Info.Firstname, opt => opt.MapFrom(src => src.FirstName))
-           .ForMember(x => x.Info.Lastname, opt => opt.MapFrom(src => src.LastName))
-           .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id)
-           );
-    }
 }
