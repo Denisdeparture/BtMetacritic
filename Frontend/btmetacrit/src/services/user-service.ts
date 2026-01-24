@@ -27,11 +27,7 @@ export class UserService {
     const obsr = this.httpClient.get<User>(
       environment.apiUrl + this.additionalPath,
       {
-        params: {
-          token: token,
-        },
         headers: {
-          Accept: 'application/json',
           Authorization: 'Bearer ' + token,
         },
       },
@@ -42,20 +38,27 @@ export class UserService {
     });
     return obsr;
   }
-  updateUser(id: number, newdata: User) {
-    this.httpClient.patch(environment.apiUrl + this.additionalPath, newdata, {
-      params: {
-        id: id,
-      },
-    });
-    this.userStore.updateUser(newdata);
+  updateUser(token: string, newdata: User) {
+    console.log(token);
+    this.httpClient
+      .patch(environment.apiUrl + this.additionalPath, newdata, {
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      })
+      .subscribe((x) => {
+        this.userStore.updateUser(newdata);
+      });
   }
-  deleteUser(id: number) {
-    this.httpClient.delete(environment.apiUrl + this.additionalPath, {
-      params: {
-        id: id,
-      },
-    });
-    this.userStore.deleteUser(id);
+  deleteUser(token: string) {
+    this.httpClient
+      .delete(environment.apiUrl + this.additionalPath, {
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      })
+      .subscribe((x) => {
+        this.userStore.deleteUser();
+      });
   }
 }

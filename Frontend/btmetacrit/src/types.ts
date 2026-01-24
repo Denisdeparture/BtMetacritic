@@ -3,16 +3,14 @@ export type User = {
   id: number;
   info?: SimpleUserInfo;
   imgPath?: string;
-  likeGames?: GameInfo[];
-  recentSeeGames?: GameInfo[];
 };
 // it for user input component
 export type SimpleUserInfo = {
   location: string;
   firstname: string;
   lastname: string;
-  age: number;
-  mail: string;
+  age: string;
+  email: string;
 };
 
 export type Section = {
@@ -22,9 +20,7 @@ export type Section = {
 };
 export type Caption = {
   title: string;
-  // link: string;
 };
-//header types
 export type Hint = {
   id: number;
 

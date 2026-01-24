@@ -89,15 +89,13 @@ public class RefreshTokenService(IDbContextFactory<MyAppContext> ctxFactory, ICo
             {
                 Provider = model.Provider,
                 JwtId = model.JwtId,
-                //User = user,
-                //UserId = user.Id,
+                User = user,
+                UserId = user.Id,
             });
         }
         else
         {
             provider.JwtId = model.JwtId;
-            //User = user,
-            //UserId = user.Id,
             ctx.OAuthProviders.Update(provider);
             ctx.SaveChanges();
         }

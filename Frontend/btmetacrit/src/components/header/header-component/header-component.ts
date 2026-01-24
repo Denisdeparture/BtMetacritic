@@ -48,11 +48,11 @@ export class HeaderComponent {
 
   onClick(): void {
     const token = this.authStorage.getCurrentAccessToken();
-    // depend user service and give some info
-    if (!token) {
+    if (token != undefined && token != null && token.trim() != '') {
       this.userService.getUser(token).subscribe((u) => {
-        this.router.navigate([LINKS.USER, u.id]);
+        this.router.navigate([LINKS.USER]);
       });
+      return;
     }
     if (this.wasClick) {
       return;

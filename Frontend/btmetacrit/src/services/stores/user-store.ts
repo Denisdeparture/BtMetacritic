@@ -7,11 +7,11 @@ import {
 } from '@ngrx/signals';
 import { User } from '../../types';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
-import { addEntity, removeEntity, withEntities } from '@ngrx/signals/entities';
-import { Signal } from '@angular/core';
 
 const initialState: User = {
   id: 0,
+  info: undefined,
+  imgPath: '',
 };
 export const UserStore = signalStore(
   { providedIn: 'root' },
@@ -21,7 +21,7 @@ export const UserStore = signalStore(
     addUser: (user: User): void => {
       patchState(state, user);
     },
-    deleteUser: (id: number): void => {
+    deleteUser: (): void => {
       patchState(state, initialState);
     },
     getUser: (): User => {

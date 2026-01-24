@@ -179,14 +179,14 @@ export class AuthPopUpComponent implements AfterViewInit {
         })
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((x) => {
-          console.log(x);
-
           this.authService.setTokens(x);
 
           const user = this.userService.getUser(x.accessToken);
 
           user.subscribe((x) => {
-            this.router.navigate([LINKS.USER, x.id]);
+            this.router.navigate([LINKS.USER]);
+
+            this.closePopUp();
           });
         });
     } else {

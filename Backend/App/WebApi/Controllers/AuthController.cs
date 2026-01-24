@@ -10,6 +10,7 @@ using BuisnessLogic.Services.Security;
 using CodeGenerator.Data;
 using Data.Models.Dto;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
@@ -53,8 +54,9 @@ public class AuthController(IRefresher retokenService,
         }
     }
     [Route("unsign-in")]
+    [Authorize]
     [HttpDelete]
-    public IActionResult Logout([FromBody]string token)
+    public IActionResult Logout([FromQuery]string token)
     {
         try
         {

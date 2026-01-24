@@ -2,7 +2,7 @@
   <img
     alt="#"
     [height]="imageSize()[0]"
-    [ngSrc]="this.game()?.header_image ?? ''"
+    [ngSrc]="headerImage()"
     [width]="imageSize()[1]"
   />
 </div>
@@ -11,7 +11,7 @@
     <p>{{ rating() }}</p>
   </div>
   <h4 class="container-info-title">{{ title() }}</h4>
-  <app-button-likes-component />
+  <app-button-likes-component (likeChange)="changeLike($event)" />
 </div>
 @if (istdisplay()) {
   <app-tooltip-component

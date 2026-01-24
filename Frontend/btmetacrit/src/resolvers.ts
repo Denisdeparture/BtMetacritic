@@ -10,6 +10,7 @@ import { UserService } from './services/user-service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
 import { UserStore } from './services/stores/user-store';
+import { TokenStore } from './services/stores/token-store';
 
 export const mainResolver: ResolveFn<Section[]> = (
   route: ActivatedRouteSnapshot,
@@ -56,11 +57,11 @@ export const userResolver: ResolveFn<User> = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot,
 ) => {
-  const userStore = inject(UserStore);
+  const userStore = inject(UserService);
 
-  const id = route.root.queryParams['id'];
+  const tokenStore = inject(TokenStore);
 
-  const user = userStore.getUser();
+  const user = userStore.getUser(tokenStore.accessToken());
 
   return user;
 };

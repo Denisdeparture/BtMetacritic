@@ -17,6 +17,9 @@ import { calculateColor, recalcImg } from '../../common/helpers';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LINKS } from '../../../app/app.routes';
 import { AsyncPipe, NgOptimizedImage } from '@angular/common';
+import { SteamApiService } from '../../../services/steam-api-service';
+import { UserService } from '../../../services/user-service';
+import { TokenStore } from '../../../services/stores/token-store';
 
 @Component({
   selector: 'app-game-component',
@@ -27,12 +30,15 @@ import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 })
 export class GameComponent {
   router = inject(Router);
-
+  steamService = inject(SteamApiService);
+  tokenStore = inject(TokenStore);
   route = inject(ActivatedRoute);
   readonly istdisplay = signal<boolean>(false);
   readonly game = input.required<GameInfo>();
   readonly title = computed<string>(() => this.game().name);
   readonly imageSize = input<[string, string]>(['110', '200']);
+
+  readonly headerImage = computed(() => this.game()?.header_image ?? '');
 
   readonly colorRating = computed(() => this.calculateColor());
   @HostListener('click') click(): void {
@@ -43,6 +49,20 @@ export class GameComponent {
   }
   @HostListener('mouseleave') tooltipHide(): void {
     this.istdisplay.set(false);
+  }
+  changeLike(event: boolean): void {
+    const token = this.tokenStore.getCurrentAccessToken();
+
+    if (token == undefined || token == null || token == '') {
+      return;
+    }
+    if (event == true) {
+      console.log('Emit');
+      this.steamService.addGameToLikedByUser(
+        { id: this.game().steam_appid, name: this.title() },
+        token,
+      );
+    }
   }
   rating(): number {
     if (this.game()) {

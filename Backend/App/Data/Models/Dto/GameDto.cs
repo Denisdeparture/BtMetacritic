@@ -11,9 +11,9 @@ public class GameDto
 {
     public int Id { get; set; }
     public string? Title { get; set; }
-    [Timestamp]
+    //[Timestamp]
 
     public IList<UserDto>? UserLikedIt { get; set; } = new List<UserDto>();
-    [Timestamp]
+    //[Timestamp]
     public IList<UserDto>? UserViewedIt { get; set; } = new List<UserDto>();
 }

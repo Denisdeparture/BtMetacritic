@@ -1,17 +1,16 @@
 <div class="left">
-    <img alt="#" class="user_img" height="50" width="70" [src]="imgPath()"/>
-    <div class="info">
+  <img alt="#" class="user_img" height="50" width="70" [src]="imgPath()" />
+  <div class="info">
     <h4 class="info_name">
-        {{fullName()}}
+      {{ fullName() }}
     </h4>
     <p class="info_gmail">
-        {{mail()}}
+      {{ mail() }}
     </p>
-    </div>
+  </div>
 </div>
 <div class="right">
-    <button class="right_button_close" type="button">
-        <i class="fa-solid fa-x"></i>
-    </button>
+  <button class="right_button_close" type="button" (click)="close()">
+    <i class="fa-solid fa-x"></i>
+  </button>
 </div>
-

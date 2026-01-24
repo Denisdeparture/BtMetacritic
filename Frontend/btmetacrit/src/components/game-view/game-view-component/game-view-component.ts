@@ -18,6 +18,7 @@ import { CaptionComponent } from '../../main/caption-component/caption-component
 import { GameViewFullDescriptionComponent } from '../game-view-full-description-component/game-view-full-description-component';
 import { HintsService } from '../../../services/views/hints-service';
 import { SteamApiService } from '../../../services/steam-api-service';
+import { TokenStore } from '../../../services/stores/token-store';
 
 @Component({
   selector: 'app-game-view-component',
@@ -36,6 +37,10 @@ export class GameViewComponent implements OnInit {
   route = inject(ActivatedRoute);
 
   hints = inject(HintsService);
+
+  tokenService = inject(TokenStore);
+
+  steamService = inject(SteamApiService);
 
   steamApi = inject(SteamApiService);
 
@@ -60,6 +65,18 @@ export class GameViewComponent implements OnInit {
       { id: 0, title: 'main' },
       { id: 1, title: 'description' },
     ]);
+    const token = this.tokenService.getCurrentAccessToken();
+
+    if (token == undefined || token == null || token == '') {
+      return;
+    }
+    this.steamService.addGameToViewByUser(
+      {
+        id: this.game()?.steam_appid!,
+        name: this.game()?.name!,
+      },
+      token,
+    );
   }
   changeImage(event: number): void {
     this.indexForImg.set(event);

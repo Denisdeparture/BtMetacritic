@@ -10,11 +10,11 @@ namespace Data.Interfaces;
 public interface IGameRepository
 {
 
-    Task AddUserToGame(UserDto user, int gameId, KindOfGames kindOfGames);
+    Task AddUserToGame(UserDto user, GameDto itemModel, KindOfGames kindOfGames);
 
-    Task DeleteUserToGame(UserDto user, int gameId, KindOfGames kindOfGames);
+    Task DeleteUserToGame(UserDto user, GameDto itemModel, KindOfGames kindOfGames);
 
-    Task<GameDto?> GetGameAsync(int gameId);
+    Task<GameDto?> GetGameAsync(GameDto gameItem);
 
 }
 public enum KindOfGames

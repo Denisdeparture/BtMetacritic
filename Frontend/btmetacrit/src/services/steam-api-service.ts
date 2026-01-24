@@ -70,49 +70,74 @@ export class SteamApiService {
         }),
       );
   }
-  getLikedGameByUser(userId: number): Observable<GameInfo[]> {
-    return this.get(userId, '/liked');
+  getLikedGameByUser(token: string): Observable<GameInfo[]> {
+    return this.get('/liked', token);
   }
-  getViewGameByUser(userId: number): Observable<GameInfo[]> {
-    return this.get(userId, '/viewed');
+  getViewGameByUser(token: string): Observable<GameInfo[]> {
+    return this.get('/viewed', token);
   }
-  addGameToLikedByUser(gf: GameInfo, userId: number): void {
-    this.post(gf.id, userId, '/liked');
+  addGameToLikedByUser(
+    game: Pick<GameInfo, 'id' | 'name'>,
+    token: string,
+  ): void {
+    this.post(game, '/liked', token);
   }
-  addGameToViewByUser(gf: GameInfo, userId: number): void {
-    this.post(gf.id, userId, '/viewed');
+  addGameToViewByUser(
+    game: Pick<GameInfo, 'id' | 'name'>,
+    token: string,
+  ): void {
+    this.post(game, '/viewed', token);
   }
-  deleteGameToLikedByUser(gfd: number, userId: number): void {
-    this.delete(gfd, userId, '/liked');
+  deleteGameToLikedByUser(
+    game: Pick<GameInfo, 'id' | 'name'>,
+    token: string,
+  ): void {
+    this.delete(game, '/liked', token);
   }
-  deleteGameToViewByUser(gfd: number, userId: number): void {
-    this.delete(gfd, userId, '/viewed');
+  deleteGameToViewByUser(
+    game: Pick<GameInfo, 'id' | 'name'>,
+    token: string,
+  ): void {
+    this.delete(game, '/viewed', token);
   }
 
-  delete(gid: number, uid: number, path: string): void {
-    this.httpClient.delete(environment.apiUrl + this.addtionalPath + path, {
-      params: {
-        gameId: gid,
-        userId: uid,
-      },
-    });
+  delete(
+    game: Pick<GameInfo, 'id' | 'name'>,
+    path: string,
+    token: string,
+  ): void {
+    this.httpClient
+      .delete(environment.apiUrl + this.addtionalPath + path, {
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+        params: {
+          id: game.id,
+          name: game.name,
+        },
+      })
+      .subscribe();
   }
-  get(uid: number, path: string): Observable<GameInfo[]> {
+  get(path: string, token: string): Observable<GameInfo[]> {
     return this.httpClient.get<GameInfo[]>(
       environment.apiUrl + this.addtionalPath + path,
       {
-        params: {
-          userId: uid,
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + token,
         },
       },
     );
   }
-  post(gid: number, uid: number, path: string): void {
-    this.httpClient.post(environment.apiUrl + this.addtionalPath + path, {
-      params: {
-        gameId: gid,
-        userId: uid,
-      },
-    });
+  post(game: Pick<GameInfo, 'id' | 'name'>, path: string, token: string): void {
+    this.httpClient
+      .post(environment.apiUrl + this.addtionalPath + path, game, {
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+      })
+      .subscribe();
   }
 }

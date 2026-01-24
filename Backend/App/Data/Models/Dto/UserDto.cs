@@ -12,13 +12,10 @@ namespace Data.Models.Dto;
 public class UserDto : IdentityUser<int>
 {
     public string SaltForPassword { get; set; } = null!;
-    [Timestamp]
-    public List<GameDto>? GamesWhichLiked { get; set; } = new List<GameDto>();
-    [Timestamp]
-    public List<GameDto>? GamesWhichViewed { get; set; } = new List<GameDto>();
-    [Timestamp]
+    public IList<GameDto>? GamesWhichLiked { get; set; } = new List<GameDto>();
+    public IList<GameDto>? GamesWhichViewed { get; set; } = new List<GameDto>();
     public IList<RefreshTokenModel>? RefreshTokens { get; set; } = new List<RefreshTokenModel>();
-    [Timestamp]
+    //[Timestamp]
     public IList<OAuthProviderModel>? OAuthProviders { get; set; } = new List<OAuthProviderModel>();
 
     [Projectable]

@@ -50,7 +50,7 @@ public class CompleteUser(IDbContextFactory<MyAppContext> ctxFactory) : IWorker
             var memberInfo = memberExpr.Member;
             if (memberInfo is PropertyInfo propInfo)
             {
-                var users = ctx.Users.ToList();
+                var users = ctx.Users.Include(x => x.GamesWhichLiked).Include(x => x.GamesWhichViewed).ToList();
 
                 var user = users.Where(x => x.GetType().GetProperty(memberInfo.Name)!.GetValue(x)!.Equals(obj)).SingleOrDefault();
 

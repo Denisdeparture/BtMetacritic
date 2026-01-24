@@ -35,6 +35,7 @@ public class UserController(UnitOfWork unitOfWork, IMapper mapper, ILogger<UserC
     }
 
     [HttpGet]
+    [Authorize]
     [Route("user")]
     public async Task<IActionResult> GetInfo()
     {
@@ -57,9 +58,9 @@ public class UserController(UnitOfWork unitOfWork, IMapper mapper, ILogger<UserC
 
             var map = new UserModel()
             {
-                Id = user.Id,
+                id = user.Id,
 
-                Info = info,
+                info = info,
             };
 
             return Ok(map);
@@ -75,40 +76,42 @@ public class UserController(UnitOfWork unitOfWork, IMapper mapper, ILogger<UserC
     [HttpPatch]
     [Authorize]
     [Route("user")]
-    public async Task<IActionResult> UpdateUser([FromQuery] int id , [FromBody] UserModel newData)
+    public async Task<IActionResult> UpdateUser([FromBody] UserModel newData)
     {
         try
         {
-            logger.LogDebug("Try update user with {Id} and new data {Data}", id, string.Join(Environment.NewLine,
+            var email = User.FindFirst(ClaimTypes.Email).Value;
+
+            logger.LogDebug("Try update user with {Id} and new data {Data}", email, string.Join(Environment.NewLine,
                 newData.GetType().GetProperties().Select(x => x.Name + ":" + (x.GetValue(newData) ?? "").ToString())));
 
             var usermap = mapper.Map<UserDto>(newData);
 
 #pragma warning disable IDE0019 // Используйте сопоставление шаблонов
-            var oldUser = await unitOfWork.User.GetAsync<UserDto, int>(x => x.Id, id) as UserDto;
+            var oldUser = await unitOfWork.User.GetAsync<UserDto, string>(x => x.Email, email) as UserDto;
 #pragma warning restore IDE0019 // Используйте сопоставление шаблонов
 
 
             if (oldUser is null)
             {
-                logger.LogDebug("Old user with id {Id} wasn t found ", id);
+                logger.LogDebug("Old user with id {Id} wasn t found ", email);
 
                 return Unauthorized();
             }
 
             usermap.Id = oldUser.Id;
 
-            unitOfWork.User.UpdateAsync(id, usermap);
+            unitOfWork.User.UpdateAsync(oldUser.Id, usermap);
 
             logger.LogInformation("Success update");
 
-            var info = mapper.Map<SimpleUserInfo>(newData);
+            var info = mapper.Map<SimpleUserInfo>(usermap);
 
             var map = new UserModel()
             {
-                Id = oldUser.Id,
+                id = oldUser.Id,
 
-                Info = info,
+                info = info,
             };
 
             return Ok(map);
@@ -123,70 +126,22 @@ public class UserController(UnitOfWork unitOfWork, IMapper mapper, ILogger<UserC
         }
 
     }
-    [HttpPatch]
-    [Authorize]
-    [Route("user/v2")]
-    public async Task<IActionResult> UpdateUser([FromQuery] string email, [FromBody] UserModel newData)
-    {
-        try
-        {
-            logger.LogDebug("Try update user with {Email} and new data {Data}", email,
-                string.Join(Environment.NewLine, newData.GetType().GetProperties().Select(x => x.Name + ":" + (x.GetValue(newData) ?? "").ToString())));
-
-            var usermap = mapper.Map<UserDto>(newData);
-
-            var obj = await unitOfWork.User.GetAsync("Email", email);
-
-
-
-            if (obj is not UserDto oldUser)
-            {
-                logger.LogDebug("Old user with email {Email} wasn t found ", email);
-
-                return Unauthorized();
-            }
-
-            usermap.Id = oldUser.Id;
-
-
-            unitOfWork.User.UpdateAsync(oldUser.Id, usermap);
-
-            logger.LogInformation("Success update");
-
-            var info = mapper.Map<SimpleUserInfo>(newData);
-
-            var map = new UserModel()
-            {
-                Id = oldUser.Id,
-
-                Info = info,
-            };
-
-            return Ok(map);
-        }
-        catch(Exception ex)
-        {
-            logger.LogError(ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Source);
-
-
-            return StatusCode(500);
-        }
-
-    }
     [HttpDelete]
     [Authorize]
     [Route("user")]
-    public async Task<IActionResult> DeleteUser([FromQuery] int id)
+    public async Task<IActionResult> DeleteUser()
     {
         try
         {
+            var email = User.FindFirst(ClaimTypes.Email).Value;
+
 #pragma warning disable IDE0019 // Используйте сопоставление шаблонов
-            var oldUser = await unitOfWork.User.GetAsync<UserDto, int>(x => x.Id, id) as UserDto;
+            var oldUser = await unitOfWork.User.GetAsync<UserDto, string>(x => x.Email, email) as UserDto;
 #pragma warning restore IDE0019 // Используйте сопоставление шаблонов
 
             if (oldUser is null)
             {
-                logger.LogDebug("Old user with id {Id} wasn t found ", id);
+                logger.LogDebug("Old user with id {Id} wasn t found ", email);
 
                 return Unauthorized();
             }

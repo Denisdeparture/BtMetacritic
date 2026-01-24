@@ -27,6 +27,23 @@ export class AuthService {
       info,
     );
   }
+  logout(refreshToken: string, token: string) {
+    this.httpClient
+      .delete<UserLoginResponce>(
+        environment.apiUrl + this.additionalPath + '/unsign-in',
+        {
+          params: {
+            token: refreshToken,
+          },
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
+        },
+      )
+      .subscribe((x) => {
+        this.tokenStorage.clearTokens();
+      });
+  }
   oAuthlogin(): void {
     this.oAuthService.initLoginFlow();
   }

@@ -13,15 +13,12 @@
   <div class="user-info">
     @for (item of userTypeMap(); track item[0]) {
       <app-user-info-input-component
-        [baseParam]="item[0]"
+        [baseParam]="convertToParam(item[0])"
         [type]="getType(item[0])"
         [value]="item[1]"
       />
     }
   </div>
-  <app-button-component class="app_button" [styles]="styles" [type]="'button'"
-    ><p #title>Save Changes</p></app-button-component
-  >
 </section>
 <section class="saw it">
   <app-caption-component

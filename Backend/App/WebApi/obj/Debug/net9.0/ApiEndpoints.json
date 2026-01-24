@@ -222,13 +222,7 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "userId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -239,11 +233,6 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [
-      {
-        "Name": "userId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
       {
         "Name": "info",
         "Type": "BuisnessLogic.Models.SteamApi.Group.GameItemModel",
@@ -261,14 +250,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "userId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "gameId",
-        "Type": "System.Int32",
-        "IsRequired": false
+        "Name": "info",
+        "Type": "BuisnessLogic.Models.SteamApi.Group.GameItemModel",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -296,13 +280,7 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "userId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -313,11 +291,6 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [
-      {
-        "Name": "userId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
       {
         "Name": "info",
         "Type": "BuisnessLogic.Models.SteamApi.Group.GameItemModel",
@@ -335,14 +308,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "userId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "gameId",
-        "Type": "System.Int32",
-        "IsRequired": false
+        "Name": "info",
+        "Type": "BuisnessLogic.Models.SteamApi.Group.GameItemModel",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
