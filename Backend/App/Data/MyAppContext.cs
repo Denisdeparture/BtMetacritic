@@ -1,4 +1,5 @@
-﻿using Data.Dto;
+﻿using Data.Models;
+using Data.Models.Dto;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,11 @@ public class MyAppContext : DbContext
 {
     public DbSet<UserDto> Users => Set<UserDto>();
     public DbSet<GameDto> Games => Set<GameDto>();
-    protected MyAppContext(DbContextOptions<MyAppContext> options) : base(options)
+
+    public DbSet<OAuthProviderModel> OAuthProviders => Set<OAuthProviderModel>();
+
+    public DbSet<RefreshTokenModel> Tokens => Set<RefreshTokenModel>();
+    public MyAppContext(DbContextOptions<MyAppContext> options) : base(options)
     {
         if (!Database.EnsureCreated())
         {
@@ -22,11 +27,26 @@ public class MyAppContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
         modelBuilder.Entity<UserDto>()
             .HasMany(x => x.GamesWhichLiked)
             .WithMany(x => x.UserLikedIt)
-            .UsingEntity(j => j.ToTable("GamesAndUser"));
-
+            .UsingEntity(j => j.ToTable("GamesAndUserL"));
+        modelBuilder.Entity<UserDto>()
+         .HasMany(x => x.GamesWhichViewed)
+         .WithMany(x => x.UserViewedIt)
+         .UsingEntity(j => j.ToTable("GamesAndUserV"));
+        modelBuilder.Entity<UserDto>().
+            HasMany(x => x.RefreshTokens)
+            .WithOne(x => x.User)
+            .HasForeignKey(x => x.UserId)
+            .IsRequired();
+        modelBuilder.Entity<UserDto>().
+           HasMany(x => x.OAuthProviders)
+           .WithOne(x => x.User)
+           .HasForeignKey(x => x.UserId)
+           .IsRequired();
+        modelBuilder.Entity<GameDto>().
+            Property(x => x.Id)
+            .ValueGeneratedNever();
     }
 }

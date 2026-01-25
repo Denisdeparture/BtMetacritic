@@ -9,7 +9,7 @@ import {
 
 export function mapToSliderInfoById(
   idSection: number,
-  sections: Section[]
+  sections: Section[],
 ): SliderGameObject[] {
   const games = sections![idSection].games;
   const list: SliderGameObject[] = [];
@@ -32,7 +32,7 @@ export function takeANormal(name: string): string {
 }
 export function recalcImg(
   addLink: string,
-  screens: Screenshot[]
+  screens: Screenshot[],
 ): Screenshot[] {
   const array: Screenshot[] = [];
   array.push({
@@ -50,16 +50,16 @@ export function recalcImg(
 }
 export function recalcToMap<T extends SliderObject>(
   objects: T[],
-  maxLength: number
-) : SliderGroup<T>[] {
+  maxLength: number,
+): SliderGroup<T>[] {
   const map: SliderGroup<T>[] = [];
 
   const objs = objects;
 
   if (!objs) {
+    console.log(objects);
     return map;
   }
-
   const length = objs.length + 1;
 
   let count = 0;
@@ -80,13 +80,13 @@ export function recalcToMap<T extends SliderObject>(
   return map;
 }
 export function calculateColor(rating: number): string {
-    let color = 'ffffff';
-    if (rating < 39) {
-      color = RATINGS_COLORS.BAD;
-    } else if (rating! > 39 && rating! < 80) {
-      color = RATINGS_COLORS.MIDDLE;
-    } else if (rating! > 80) {
-      color = RATINGS_COLORS.GOOD;
-    }
-    return color;
+  let color = 'ffffff';
+  if (rating < 39) {
+    color = RATINGS_COLORS.BAD;
+  } else if (rating! > 39 && rating! < 80) {
+    color = RATINGS_COLORS.MIDDLE;
+  } else if (rating! > 80) {
+    color = RATINGS_COLORS.GOOD;
   }
+  return color;
+}

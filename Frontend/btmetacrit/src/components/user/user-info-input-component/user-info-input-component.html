@@ -1,7 +1,14 @@
 <div class="container">
-    <label class="name_field" for="f_input">{{takeANormal(baseParam()!.toString())}}</label>
+  <label class="name_field" for="f_input">{{
+    takeANormal(baseParam()!.toString())
+  }}</label>
 
-    <input class="input_field" id="f_input" [placeholder]="value()" [type]="type()" [(ngModel)]="model" >
+  <input
+    class="input_field"
+    id="f_input"
+    (change)="saveChnages()"
+    [type]="type()"
+    [placeholder]="value()"
+    [(ngModel)]="param"
+  />
 </div>
-
-

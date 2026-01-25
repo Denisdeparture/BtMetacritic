@@ -14,48 +14,47 @@ using System.Diagnostics;
 using CodeGenerator.Data;
 using CodeGenerator.ProxyClasses;
 
-namespace CodeGenerator.Generator
+namespace CodeGenerator.Generator;
+
+[Generator(LanguageNames.CSharp)]
+public class UnitOfWorkGenerator : ISourceGenerator
 {
-    [Generator(LanguageNames.CSharp)]
-    public class UnitOfWorkGenerator : ISourceGenerator
+    public void Execute(GeneratorExecutionContext context)
     {
-        public void Execute(GeneratorExecutionContext context)
+        var serviceForTypedConstant = new Paimon();
+
+        var serviceForAttributeData = new AttributeDataDeluxe();
+
+        var logic = new GeneratorLogic(serviceForTypedConstant, serviceForAttributeData);
+
+        var generator = new GeneratorWriter(logic);
+
+        var comp = context.Compilation;
+
+        var uowType = comp.GetTypeByMetadataName(typeof(IUnitOFWork).FullName!);
+
+        foreach (var syntaxTree in comp.SyntaxTrees)
         {
-            var serviceForTypedConstant = new Paimon();
+            var semanticModel = comp.GetSemanticModel(syntaxTree);
 
-            var serviceForAttributeData = new AttributeDataDeluxe();
+            var immutableHashSet = syntaxTree.GetRoot()
+            .DescendantNodesAndSelf()
+                .OfType<ClassDeclarationSyntax>()
+                .Select(x => semanticModel.GetDeclaredSymbol(x))
+            .OfType<ITypeSymbol>()
+                .Where(x => x.Interfaces.Contains(uowType!))
+            .ToImmutableHashSet();
 
-            var logic = new GeneratorLogic(serviceForTypedConstant, serviceForAttributeData);
-
-            var generator = new GeneratorWriter(logic);
-
-            var comp = context.Compilation;
-
-            var uowType = comp.GetTypeByMetadataName(typeof(IUnitOFWork).FullName!);
-
-            foreach (var syntaxTree in comp.SyntaxTrees)
+            foreach (var typeSymbol in immutableHashSet)
             {
-                var semanticModel = comp.GetSemanticModel(syntaxTree);
+                var source = generator.GetPatternOfNewClasses(typeSymbol);
 
-                var immutableHashSet = syntaxTree.GetRoot()
-                .DescendantNodesAndSelf()
-                    .OfType<ClassDeclarationSyntax>()
-                    .Select(x => semanticModel.GetDeclaredSymbol(x))
-                .OfType<ITypeSymbol>()
-                    .Where(x => x.Interfaces.Contains(uowType!))
-                .ToImmutableHashSet();
-
-                foreach (var typeSymbol in immutableHashSet)
-                {
-                    var source = generator.GetPatternOfNewClasses(typeSymbol);
-
-                    context.AddSource($"{typeSymbol.Name}.Notify.cs", source);
-                }
+                context.AddSource($"{typeSymbol.Name}.Notify.cs", source);
             }
         }
-        public void Initialize(GeneratorInitializationContext context)
-        {
-        }
-
     }
+    public void Initialize(GeneratorInitializationContext context)
+    {
+    }
+
 }

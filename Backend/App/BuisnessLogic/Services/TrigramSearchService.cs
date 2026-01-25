@@ -10,13 +10,20 @@ using System.Threading.Tasks;
 
 namespace BuisnessLogic.Services;
 
-public class TrigramSearchService(ISteamApi steamApi, IOptions<TrigrammOptions>? options = null )
+public class TrigramSearchService(ISteamApi steamApi, IOptions<SearchOptions>? options = null ) : IAlgorithmSearch<GameItemModel>
 {
-    private TrigrammOptions? settings { get; set; } = options?.Value;
+    private SearchOptions? settings { get; set; } = options?.Value;
 
     public async Task<List<GameItemModel>> GetSimilarResult(string searchName)
     {
         var trigramms = GetTrigramms(searchName);
+
+        var middleResult = await steamApi.GetGameByNameAsync(searchName);
+
+        if(middleResult is not null && middleResult.Count > 0)
+        {
+            return middleResult.ToList();
+        }
 
         var listPotentialNames = await CompareTrigramms(trigramms);
 
@@ -30,7 +37,7 @@ public class TrigramSearchService(ISteamApi steamApi, IOptions<TrigrammOptions>?
 
         if(options is null)
         {
-            settings = TrigrammOptions.GetBasicModel();
+            settings = SearchOptions.GetBasicModel();
         }
 
         var result = new List<string>();

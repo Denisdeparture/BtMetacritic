@@ -1,0 +1,5 @@
+{
+  "JwtSettings": {
+    "SecurityKey": "https://localhost-JWT.05252125689478080880857"
+  }
+ }

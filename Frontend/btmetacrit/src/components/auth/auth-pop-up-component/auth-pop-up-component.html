@@ -1,35 +1,59 @@
 <div @show class="container">
-    <div class="container-up">
-        <div class="title">
-        <img alt="#" height="30"  priority="" src='../../../assets/img/logoSiteMetacrit.png' width="40">
-        <h3>metacrit</h3>
+  <div class="container-up">
+    <div class="title">
+      <img
+        alt="#"
+        height="30"
+        priority=""
+        src="../../../assets/img/logoSiteMetacrit.png"
+        width="40"
+      />
+      <h3>metacrit</h3>
     </div>
     <div class="container-up_button">
-        <button class="close_button" type="button" (click)="closePopUp()"><i class="fa-solid fa-x"></i></button>
+      <button class="close_button" type="button" (click)="closePopUp()">
+        <i class="fa-solid fa-x"></i>
+      </button>
     </div>
-    </div>
-<ul class="oauth2_list">
+  </div>
+  <ul class="oauth2_list">
     @for (button of OAuth2Buttons; track button) {
-        <li class="oauth2_list_item">
-            <app-o-auth-2-button-component  [logoLink]="button.logoLink" [provider]="button.provider"/>
-        </li>
+    <li class="oauth2_list_item">
+      <app-o-auth-2-button-component
+        [logoLink]="button.logoLink"
+        [provider]="button.provider"
+      />
+    </li>
     }
-</ul>
-<div class="radio">
+  </ul>
+  <div class="radio">
     <label #login class="radio_group_item_login">
-    <input name="radio_group_item" type="radio" [value]="authentitication" [(ngModel)]="option" (change)="clickOnRadioButton($event)"/>
-    Login
+      <input
+        name="radio_group_item"
+        type="radio"
+        [value]="authentitication"
+        [(ngModel)]="option"
+        (change)="clickOnRadioButton($event)"
+      />
+      Login
     </label>
     <label #reg class="radio_group_item_reg">
-    <input  ame="radio_group_item" type="radio" [value]="registration" [(ngModel)]="option" (change)="clickOnRadioButton($event)"/>
-    Register
+      <input
+        ame="radio_group_item"
+        type="radio"
+        [value]="registration"
+        [(ngModel)]="option"
+        (change)="clickOnRadioButton($event)"
+      />
+      Register
     </label>
-</div>
-<div class="description">
+  </div>
+  <div class="description">
     <p>Let`s go to create a free account on BT metacritic</p>
+  </div>
+  <app-auth-form-component
+    class="auth_form"
+    [name]="option()"
+    (submitChange)="clickOnButton()"
+  />
 </div>
-<app-auth-form-component class="auth_form" [name]="option()"/>
-</div>
-
-
-

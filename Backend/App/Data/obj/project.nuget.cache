@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "9W/b93BYHpY=",
+  "dgSpecHash": "zLD/GOv19OI=",
   "success": true,
   "projectFilePath": "D:\\BtMetacritic\\Backend\\App\\Data\\Data.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\entityframeworkcore.projectables\\5.0.1\\entityframeworkcore.projectables.5.0.1.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\entityframeworkcore.projectables.abstractions\\5.0.1\\entityframeworkcore.projectables.abstractions.5.0.1.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\9.0.11\\microsoft.aspnetcore.cryptography.internal.9.0.11.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\9.0.11\\microsoft.aspnetcore.cryptography.keyderivation.9.0.11.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\9.0.11\\microsoft.aspnetcore.identity.entityframeworkcore.9.0.11.nupkg.sha512",

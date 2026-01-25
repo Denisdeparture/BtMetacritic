@@ -1,0 +1,22 @@
+﻿
+                    using System.ComponentModel;
+                    using CodeGenerator.Data;
+                    using UnitOfWorkUpgrade.Realization;
+                    namespace BuisnessLogic
+                    {
+                      partial class UnitOfWork
+                      {
+                        
+                private IWorker? CompleteUser;
+                public IWorker User
+                {
+                    get 
+                    {
+                       if (CompleteUser is null) CompleteUser = new CompleteUser(ctxFactory);
+                       return CompleteUser;
+                    }
+                  
+                }
+
+                      }
+                    }

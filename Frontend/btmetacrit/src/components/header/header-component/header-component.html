@@ -1,14 +1,16 @@
 <div class="right-part">
-    <app-search-bar-component/>
-    <div class="right-part-hints">
-    @for(item of allHints(); track item){
-        <app-title-hints-component [listHints]="item.roots" [title]="item.title"/>
+  <app-search-bar-component />
+  <div class="right-part-hints">
+    @for (item of allHints(); track item) {
+      <app-title-hints-component
+        [listHints]="item.roots"
+        [title]="item.title"
+      />
     }
-    </div>
+  </div>
 </div>
 <div class="left-part">
-    <button class="left-part__button-auth" type="button" (click)="onClick()">
-        <i class="fa-solid fa-user"></i>
-    </button>
+  <button class="left-part__button-auth" type="button" (click)="onClick()">
+    <i class="fa-solid fa-user"></i>
+  </button>
 </div>
-

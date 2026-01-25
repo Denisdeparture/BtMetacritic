@@ -13,12 +13,13 @@ import {
   GameInfo,
   Price,
   Section,
+  SimpleUserInfo,
   SliderGameObject,
   SliderObject,
   User,
 } from '../../../types';
 import { ActivatedRoute } from '@angular/router';
-import { delay, map } from 'rxjs';
+import { delay, map, Observable } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { UserInfoComponent } from '../user-info-component/user-info-component';
 import { UserInfoInputComponent } from '../user-info-input-component/user-info-input-component';
@@ -27,15 +28,17 @@ import { CaptionComponent } from '../../main/caption-component/caption-component
 import { SliderComponent } from '../../main/slider-component/slider-component';
 import { mapToSliderInfoById } from '../../common/helpers';
 import { KindOfSpinner } from '../../common/to-do-spinner/to-do-spinner';
-import { ToDoSpinnerService } from '../../../services/to-do-spinner-service';
 import { LikedGame, UserLikedGame } from '../user-liked-game/user-liked-game';
+import { HintsService } from '../../../services/views/hints-service';
+import { ToDoSpinnerService } from '../../../services/views/to-do-spinner-service';
+import { SteamApiService } from '../../../services/steam-api-service';
+import { TokenStore } from '../../../services/stores/token-store';
 @Component({
   selector: 'app-user-page-component',
   providers: [ToDoSpinnerService],
   imports: [
     UserInfoComponent,
     UserInfoInputComponent,
-    ButtonComponent,
     CaptionComponent,
     SliderComponent,
     UserLikedGame,
@@ -49,7 +52,13 @@ export class UserPageComponent implements OnInit {
 
   spinner = inject(ToDoSpinnerService);
 
+  searchService = inject(SteamApiService);
+
+  tokenStorage = inject(TokenStore);
+
   rerender = inject(Renderer2);
+
+  hints = inject(HintsService);
 
   userAsync = this.route.data.pipe(map((data) => data['user'] as User));
 
@@ -64,14 +73,37 @@ export class UserPageComponent implements OnInit {
 
   readonly userSignal = toSignal(this.userAsync);
 
+  readonly recentSeeGames = toSignal(this.getViewsGames());
+
+  readonly likedGames = toSignal(this.getLikesGames());
+
   readonly user = computed(() => this.userSignal());
 
-  readonly email = computed(() => this.user()?.info.mail + '');
+  readonly info = computed(() => this.user()?.info);
 
-  readonly likedGames = computed(() => this.user()?.likeGames);
+  readonly email = computed(() => this.info()?.email ?? '' + '');
+
+  getLikesGames(): Observable<GameInfo[]> {
+    const games = this.searchService.getLikedGameByUser(
+      this.tokenStorage.accessToken(),
+    );
+    games.subscribe((x) => {
+      console.log(x);
+    });
+
+    return games;
+  }
+  getViewsGames(): Observable<GameInfo[]> {
+    const games = this.searchService.getViewGameByUser(
+      this.tokenStorage.accessToken(),
+    );
+    games.subscribe();
+
+    return games;
+  }
 
   readonly fname = computed(
-    () => this.user()?.info.firstname + ' ' + this.user()?.info.lastname
+    () => (this.info()?.firstname ?? '') + ' ' + (this.info()?.lastname ?? ''),
   );
 
   readonly liked = viewChildren(UserLikedGame);
@@ -79,21 +111,22 @@ export class UserPageComponent implements OnInit {
   readonly img = computed(() => this.user()?.imgPath);
 
   readonly userTypeMap = computed(
-    () => new Map(Object.entries(this.user()!.info))
+    () => new Map<string, string>(Object.entries(this.user()!.info!)),
   );
+  convertToParam(param: string): keyof SimpleUserInfo {
+    return param as keyof SimpleUserInfo;
+  }
   ngOnInit(): void {
+    this.hints.setCurrentHints([
+      { id: 0, title: 'user' },
+      { id: 1, title: 'saw it' },
+    ]);
     this.spinner.showSpinner('#427b8c', KindOfSpinner.Elipse);
     setTimeout(() => {
-      // RxJs ver
       this.userAsync.pipe(delay(200)).subscribe(() => {
         this.spinner.destroySpinner();
       });
     });
-  }
-  save(): void {
-    for (const ui of this.userInputs()) {
-      ui.saveChnages();
-    }
   }
   getType(obj: any): any {
     return typeof obj;
@@ -109,13 +142,12 @@ export class UserPageComponent implements OnInit {
   changeLikes(event: [boolean, ElementRef]): void {
     if (!event[0]) {
       this.rerender.setStyle(event[1].nativeElement, 'display', 'none');
-      // add user.deleteLikedGame()
     }
   }
   createSection(): Section[] {
     const customUserSection: Section = {
       id: 0,
-      games: this.user()!.recentSeeGames,
+      games: this.recentSeeGames(),
     };
     return [customUserSection]; // one section
   }

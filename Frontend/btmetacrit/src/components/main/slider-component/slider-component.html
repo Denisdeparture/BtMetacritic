@@ -1,11 +1,11 @@
 <div class="slider">
-  @if(centerIndex() !== 0) {
-  <app-slider-button-component
-    side="LEFT"
-    [rotate]="0"
-    [offset]="-1"
-    (slideChange)="calculateTransform($event)"
-  ></app-slider-button-component>
+  @if (centerIndex() !== 0) {
+    <app-slider-button-component
+      side="LEFT"
+      [rotate]="0"
+      [offset]="-1"
+      (slideChange)="calculateTransform($event)"
+    ></app-slider-button-component>
   }
   <div class="box">
     <app-game-group-component
@@ -14,12 +14,14 @@
       [sliderGroups]="map()"
     />
   </div>
-  @if(centerIndex() !== map().length && objects()!.length !== maxLengthCell()){
-  <app-slider-button-component
-    side="RIGHT"
-    [rotate]="180"
-    [offset]="1"
-    (slideChange)="calculateTransform($event)"
-  ></app-slider-button-component>
+  @if (
+    centerIndex() !== map().length && objects()!.length !== maxLengthCell()
+  ) {
+    <app-slider-button-component
+      side="RIGHT"
+      [rotate]="180"
+      [offset]="1"
+      (slideChange)="calculateTransform($event)"
+    ></app-slider-button-component>
   }
 </div>

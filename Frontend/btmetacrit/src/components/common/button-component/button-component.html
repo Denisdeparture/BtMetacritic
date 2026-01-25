@@ -1,3 +1,8 @@
-<button class="app_button" [ngStyle]="styles()" [type]="type()">
-    <ng-content/>
+<button
+  class="app_button"
+  (click)="actionChange()"
+  [ngStyle]="styles()"
+  [type]="type()"
+>
+  <ng-content />
 </button>

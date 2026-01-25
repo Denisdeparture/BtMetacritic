@@ -1,38 +1,67 @@
-import { inject } from '@angular/core';
+import { ChangeDetectorRef, inject } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   ResolveFn,
   RouterStateSnapshot,
 } from '@angular/router';
-import { GameStorageService } from './services/game-storage-service';
+import { SectionStorageService } from './services/sections-service';
 import { GameInfo, Section, User } from './types';
-import { UserStorageService } from './services/user-storage-service';
+import { UserService } from './services/user-service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Observable } from 'rxjs';
+import { UserStore } from './services/stores/user-store';
+import { TokenStore } from './services/stores/token-store';
 
-export const sectionsResolver: ResolveFn<Section[]> = (
+export const mainResolver: ResolveFn<Section[]> = (
   route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
+  state: RouterStateSnapshot,
 ) => {
-  const storage = inject(GameStorageService);
+  const storage = inject(SectionStorageService);
 
-  return storage.getSections(); // Получаем данные
+  const sects: Section[] = [];
+
+  storage.getRandomSections().subscribe((list) => {
+    sects.push(...list);
+  });
+  return sects;
 };
-export const userDataResolver: ResolveFn<User> = (
+export const searchResolver: ResolveFn<Section[]> = (
   route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
+  state: RouterStateSnapshot,
 ) => {
-  const storage = inject(UserStorageService);
+  const storage = inject(SectionStorageService);
 
-  if (route.queryParams['id']) {
-    console.log('Id was null');
+  const name = route.root.queryParams['name'];
+
+  const sects: Section[] = [];
+
+  if (name == undefined) {
+    console.log('Name is null');
+    storage.getRandomSections().subscribe((list) => {
+      sects.push(...list);
+    });
+
+    return sects;
   }
 
-  return storage.getUser(route.queryParams['id']);
-};
-export const gameDataResolver: ResolveFn<GameInfo> = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-) => {
-  const storage = inject(GameStorageService);
+  storage.getSearchSections(name).subscribe((obsr2) => {
+    obsr2.subscribe((list) => {
+      sects.push(...list);
+    });
+  });
 
-  return storage.getSilksong('Test');
+  return sects;
+};
+
+export const userResolver: ResolveFn<User> = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot,
+) => {
+  const userStore = inject(UserService);
+
+  const tokenStore = inject(TokenStore);
+
+  const user = userStore.getUser(tokenStore.accessToken());
+
+  return user;
 };

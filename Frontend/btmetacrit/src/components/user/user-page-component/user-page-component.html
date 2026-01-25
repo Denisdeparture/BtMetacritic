@@ -11,17 +11,14 @@
     ><p #title>About User</p></app-caption-component
   >
   <div class="user-info">
-    @for(item of userTypeMap(); track item[0]){
-    <app-user-info-input-component
-      [baseParam]="item[0]"
-      [type]="getType(item[0])"
-      [value]="item[1]"
-    />
+    @for (item of userTypeMap(); track item[0]) {
+      <app-user-info-input-component
+        [baseParam]="convertToParam(item[0])"
+        [type]="getType(item[0])"
+        [value]="item[1]"
+      />
     }
   </div>
-  <app-button-component class="app_button" [styles]="styles" [type]="'button'"
-    ><p #title>Save Changes</p></app-button-component
-  >
 </section>
 <section class="saw it">
   <app-caption-component
@@ -44,8 +41,8 @@
     ><p #title>You like it</p></app-caption-component
   >
   <div class="liked_list">
-    @for(ligame of likedGames(); track ligame){
-    <app-user-liked-game [game]="ligame" (isLikes)="changeLikes($event)" />
+    @for (ligame of likedGames(); track ligame) {
+      <app-user-liked-game [game]="ligame" (isLikes)="changeLikes($event)" />
     }
   </div>
 </section>

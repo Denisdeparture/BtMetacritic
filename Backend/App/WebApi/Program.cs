@@ -1,44 +1,102 @@
+using System.Text;
+using System.Text.Json.Serialization;
+using BuisnessLogic.Models;
+using BuisnessLogic.Realization;
+using Data;
+using Data.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Serialization;
 using Scalar.AspNetCore;
-using Microsoft.AspNetCore.OpenApi;
-using Swashbuckle.AspNetCore;
-using Microsoft.Extensions.DependencyInjection;
+using Serilog;
+using WebApi.Extensions;
+using WebApi.Mappers;
+
 namespace WebApi;
 
 public class Program
 {
     public static void Main(string[] args)
     {
-       
+        Log.Logger = new LoggerConfiguration()
+                            .Enrich.FromLogContext()
+                            .WriteTo.Console()
+                            .CreateLogger();
+
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Logging.AddSerilog();
+
+        builder.Logging.SetMinimumLevel(LogLevel.Debug);
+
+        builder.Host.UseSerilog();
+
+        builder.Configuration.AddJsonFile("jwtSecurityKey.json"); // You should create this file with your jwt key for test
+       
         builder.Services.AddEndpointsApiExplorer();
+
+        builder.Services.AddHttpClient();
+
         builder.Services.AddSwaggerGen();
 
+        builder.Services.AddOptions<SearchOptions>().BindConfiguration(nameof(SearchOptions));
+
+        builder.Services.AddTransient<IGameRepository, UserGameRepository>();
+
         builder.Services.AddOpenApi();
-        builder.Services.AddControllers();
+
+        builder.Services.AddAutoMapper(typeof(GameMapperProfile), typeof(UserMapperProfile), typeof(UserInfoMapperProfile), typeof(UserDtoMapperProfile));
+
+        builder.Services.AddControllers()
+            .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+
         builder.Services.AddCors(options => options.AddPolicy(name: "MyAllowSpecificOrigins",
                                       org => org.WithOrigins(
                                                  builder.Configuration.GetValue<string>("ClientHost")!)
                                                  .AllowAnyHeader()
                                                  .AllowAnyMethod()));
+        builder.Services.AddDbContextFactory<MyAppContext>(opts => opts.UseSqlite($"Data source={Environment.CurrentDirectory}\\dbmain.db;").UseProjectables());
+
+        builder.Services.AddAuth(builder.Configuration);
+
+        builder.Services.AddSteamApi();
+
+        builder.Services.AddEncrypt();
+
+        builder.Services.AddFavoriteService();
+
+
+        builder.Services.AddTokeniserService();
+
+        builder.Services.AddSearch();
+
+        builder.Services.AddUnitOfWork();
+
         var app = builder.Build();
 
-        app.UseCors("MyAllowSpecificOrigins");
-
+        app.MapControllers();
+        app.UseRouting();
+        
         if (app.Environment.IsDevelopment())
         {
+            app.MapGet("/", (context) => context.Response.WriteAsync("Hello world!"));
+
+            app.UseDeveloperExceptionPage();
+
             app.MapOpenApi();
-            app.UseSwagger(opt => opt.RouteTemplate = "openapi/{documentName}.json");
+
             app.MapScalarApiReference(opt =>
             {
                 opt.Title = "Test bt metacriitc infrastructure";
-                opt.Theme = ScalarTheme.Mars;
+                opt.Theme = ScalarTheme.Moon;
                 opt.DefaultHttpClient = new(ScalarTarget.Http, ScalarClient.Http11);
             });
         }
+        app.UseAuthorization();
         app.UseHttpsRedirection();
-        app.UseRouting();
-        app.MapControllers();
+        app.UseCors("MyAllowSpecificOrigins");
         app.Run();
     }
 }

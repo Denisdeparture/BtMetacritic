@@ -1,63 +1,68 @@
+using BuisnessLogic.Interfaces;
 using BuisnessLogic.Models.SteamApi;
 using BuisnessLogic.Models.SteamApi.Group;
 using CodeGenerator.Attributes;
 using System;
 using System.Net.Http.Json;
 using System.Web;
-namespace BuisnessLogic.Services
+namespace BuisnessLogic.Services;
+
+public class SteamApi(HttpClient httpClient) : ISteamApi
 {
-    public class SteamApi(HttpClient httpClient)
+    private readonly string steamUrl = "https://store.steampowered.com/api";
+
+    // id
+    public async Task<GameInfoModel> GetGameByIdAsync(string id)
     {
-        private string steamUrl = "https://store.steampowered.com/api";
-        public async Task<GameInfoModel> GetGameByIdAsync(string id)
+        var urib = new UriBuilder($"{steamUrl}/appdetails");
+
+        var query = HttpUtility.ParseQueryString(urib.Query);
+
+        query["appids"] = id;
+
+        urib.Query = query.ToString();
+
+        string requestUri = urib.ToString();
+
+        var json = await httpClient.GetAsync(requestUri);
+
+        if (!json.IsSuccessStatusCode)
         {
-            var urib = new UriBuilder($"{steamUrl}/appdetails");
-
-            var query = HttpUtility.ParseQueryString(urib.Query);
-
-            query["appids"] = id;
-
-            urib.Query = query.ToString();
-
-            string requestUri = urib.ToString();
-
-            var json = await httpClient.GetAsync(requestUri);
-
-            if (!json.IsSuccessStatusCode) throw new Exception("Status wasn`t success");
-
-            var model = await json.Content.ReadFromJsonAsync<GameInfoModel>();
-
-            if (model is null) throw new NullReferenceException("Model with api was null");
-
-            return model;
+            throw new Exception("Status wasn`t success");
         }
-        public async Task<IList<GameItemModel>> GetGameByNameAsync(string name, int maxCount = 1, string country = "en")
+
+        var model = await json.Content.ReadFromJsonAsync<Dictionary<string , DataGameInfo>>() ?? throw new NullReferenceException("Model with api was null");
+
+        return model.FirstOrDefault().Value.data;
+    }
+    // name
+    public async Task<IList<GameItemModel>> GetGameByNameAsync(string name, int maxCount = 1, string country = "en")
+    {
+        var urib = new UriBuilder($"{steamUrl}/storesearch");
+
+        var query = HttpUtility.ParseQueryString(urib.Query);
+
+        query["term"] = name;
+
+        query["max_results"] = maxCount.ToString();
+        query["l"] = country;
+        query["cc"] = country.ToUpper();
+
+        urib.Query = query.ToString();
+
+        string requestUri = urib.ToString();
+
+        var json = await httpClient.GetAsync(requestUri);
+
+        if (!json.IsSuccessStatusCode)
         {
-            var urib = new UriBuilder($"{steamUrl}/storesearch");
-
-            var query = HttpUtility.ParseQueryString(urib.Query);
-
-            query["term"] = name;
-
-            query["max_results"] = maxCount.ToString();
-            query["l"] = country;
-            query["cc"] = country.ToUpper();
-
-            urib.Query = query.ToString();
-
-            string requestUri = urib.ToString();
-
-            var json = await httpClient.GetAsync(requestUri);
-
-            if (!json.IsSuccessStatusCode) throw new Exception("Status wasn`t success");
-
-            var model = await json.Content.ReadFromJsonAsync<GameItemsModel>();
-
-            if (model is null) throw new NullReferenceException("Model with api was null");
-
-            return model.items;
-
+            throw new Exception("Status wasn`t success");
         }
+
+        var model = await json.Content.ReadFromJsonAsync<GameItemsModel>() ?? throw new NullReferenceException("Model with api was null");
+
+        return model.items;
+
     }
 
 }

@@ -1,17 +1,17 @@
-:host{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-
+:host {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 10%;
 }
-.slider{
-    display: flex;
-    background-color: rgba(228, 224, 216, 0.51);
+.slider {
+  display: flex;
+  background-color: rgba(228, 224, 216, 0.51);
 }
 
 .box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
 }

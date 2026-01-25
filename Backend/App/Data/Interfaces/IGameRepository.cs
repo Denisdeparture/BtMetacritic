@@ -1,18 +1,24 @@
-﻿using Data.Dto;
+﻿using Data.Models.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Interfaces
+namespace Data.Interfaces;
+
+public interface IGameRepository
 {
-    public interface IGameRepository
-    {
-        public List<GameDto> GetLikedGamesOnUser(int userId);
 
-        public void AddGameToLikedUser(GameDto game, int userId);
+    Task AddUserToGame(UserDto user, GameDto itemModel, KindOfGames kindOfGames);
 
-        public void DeleteGameToLikedUser(int userId, int gameId);
-    }
+    Task DeleteUserToGame(UserDto user, GameDto itemModel, KindOfGames kindOfGames);
+
+    Task<GameDto?> GetGameAsync(GameDto gameItem);
+
+}
+public enum KindOfGames
+{
+    Viewed,
+    Liked
 }

@@ -1,18 +1,16 @@
 //main types
 export type User = {
   id: number;
-  info: SimpleUserInfo;
-  imgPath: string;
-  likeGames: GameInfo[];
-  recentSeeGames: GameInfo[];
+  info?: SimpleUserInfo;
+  imgPath?: string;
 };
 // it for user input component
 export type SimpleUserInfo = {
   location: string;
   firstname: string;
   lastname: string;
-  age: number;
-  mail: string;
+  age: string;
+  email: string;
 };
 
 export type Section = {
@@ -22,9 +20,7 @@ export type Section = {
 };
 export type Caption = {
   title: string;
-  link: string;
 };
-//header types
 export type Hint = {
   id: number;
 
@@ -34,28 +30,33 @@ export type Hint = {
 };
 // steam api
 // Original Name is Data
-export type GameInfo = {
-  id: number,
-  type: string;
+export type GameInfoItem = {
+  id: number;
   name: string;
-  metacritic: Metacritic;
-  is_free: boolean;
+};
+export type GameInfo = {
+  id: number;
+  type?: string;
+  name: string;
+  metacritic?: Metacritic | null;
+  is_free?: boolean;
   dlc?: number[];
   detailed_description?: string;
   about_the_game?: string;
-  short_description: string;
-  supported_languages: string;
-  header_image: string;
-  capsule_image: string;
-  developers: string[];
-  publishers: string[];
-  platforms: Platforms;
-  price_overview: Price[];
-  categories: Category[];
-  genres: Genre[];
-  screenshots: Screenshot[];
-  release_date: ReleaseDate;
-  ratings: Ratings;
+  short_description?: string;
+  supported_languages?: string;
+  header_image?: string;
+  capsule_image?: string;
+  developers?: string[];
+  steam_appid: number;
+  publishers?: string[];
+  platforms?: Platforms;
+  price_overview?: Price[];
+  categories?: Category[];
+  genres?: Genre[];
+  screenshots?: Screenshot[];
+  release_date?: ReleaseDate;
+  ratings?: Ratings;
 };
 export type Price = {
   final_formatted: string;
@@ -77,7 +78,7 @@ export type Genre = {
   description: string;
 };
 export type Metacritic = {
-  score: number;
+  score?: number;
 };
 
 export type Screenshot = {
@@ -149,4 +150,20 @@ export const RATINGS_COLORS = {
   GOOD: '#0BFF38',
   BAD: '#D8000C',
   MIDDLE: '#FFC659',
+};
+// auth
+export type UserLoginRequest = {
+  email: string;
+  password: string;
+};
+export type UserLoginResponce = {
+  accessToken: string;
+  refreshToken: string;
+};
+export type UserRegisterRequest = UserLoginRequest & {
+  name: string;
+};
+export type OAuth2Type = {
+  provider: string;
+  logoLink: string;
 };

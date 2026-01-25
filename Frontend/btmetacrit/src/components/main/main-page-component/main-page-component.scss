@@ -1,0 +1,22 @@
+@import "../../../mixin.scss";
+:host {
+  width: 100%;
+  background-image: url("../../../assets/img/store_steam.png");
+  background-color: aqua;
+}
+.blocks {
+  list-style: none;
+}
+.slider {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1;
+}
+.text {
+  width: 30%;
+}
+.container {
+  background-color: usecolor(basic_dark);
+  padding: 10px;
+  margin-bottom: 10px;
+}
