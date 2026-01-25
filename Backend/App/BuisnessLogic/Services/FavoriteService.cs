@@ -9,34 +9,8 @@ using Data.Models.Dto;
 namespace BuisnessLogic.Services;
 public class FavoriteService(UnitOfWork work) : IFavoriteService
 {
-   
-    public async Task<IList<GameDto>?> GetFavoritesFromUser(int count)
-    {
-        var objs = await work.User.GetAllAsync();
 
-        if (objs is null)
-        {
-            return null;
-        }
-        IList<GameDto>? repeat;
-        IList<GameDto> favorites;
-        int oldcount = 0;
-        do
-        {
-            oldcount = count;
-
-            var users = objs.Reverse().Select(x => x as UserDto);
-
-            favorites = users.Where(x => x!.GamesWhichLiked != null).Take(count).SelectMany(x => x.GamesWhichLiked!).ToList();
-
-            repeat = favorites.GroupBy(x => x).Where(g => g.Count() > 1).Select(x => x.Key).ToList();
-
-            count+=count;
-
-        } while ( oldcount >= favorites.Count | (repeat is null || repeat.Count < oldcount) );
-
-        return DeveloperMap();
-    }
+    public IList<GameDto>? GetFavoritesFromUser(int count) => DeveloperMap();
 
     public List<GameDto> DeveloperMap()
     {

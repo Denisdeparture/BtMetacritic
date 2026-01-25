@@ -1,16 +1,52 @@
-<div class="blocks">
-  @if (sections()) {
-    @for (sect of sections(); track sect.id) {
-      <app-caption-component class="caption" [isHasLink]="false"
-        ><p #title>{{ sect.caption!.title }}</p></app-caption-component
-      >
-      <div class="slider">
-        <app-slider-component
-          [maxLengthCell]="sect.games?.length!"
-          [orientation]="'start'"
-          [objects]="mapToSlider(sect.id)"
-        />
-      </div>
+<div class="container">
+  <app-caption-component [isHasLink]="false" [orientation]="'start'">
+    <p #title>Steam API</p>
+  </app-caption-component>
+  <p class="text">
+    Мы используем официальное Steam API, чтобы собирать актуальные обзоры,
+    рейтинги и статистику игр, делая наш сервис максимально информативным и
+    точным. В настоящее время API интегрируется и тестируется для полноценной
+    работы.
+  </p>
+</div>
+<div class="container">
+  <div class="blocks">
+    @if (sections()) {
+      @for (sect of sections(); track sect.id) {
+        <app-caption-component
+          class="caption"
+          orientation="start"
+          [isHasLink]="false"
+          ><p #title>{{ sect.caption!.title }}</p></app-caption-component
+        >
+        <div class="slider">
+          <app-slider-component
+            [maxLengthCell]="sect.games?.length!"
+            [orientation]="'start'"
+            [objects]="mapToSlider(sect.id)"
+          />
+        </div>
+      }
     }
-  }
+  </div>
+</div>
+<div class="container">
+  <app-caption-component [isHasLink]="false" [orientation]="'start'">
+    <p #title>О сервисе</p>
+  </app-caption-component>
+  <p class="text">
+    Наш сайт — это платформа, которая собирает и анализирует игру через API,
+    создавая объективные оценки и рекомендации. В разработке, чтобы стать
+    надежным помощником для геймеров во всём мире.
+  </p>
+</div>
+<div class="container">
+  <app-caption-component [isHasLink]="false" [orientation]="'start'">
+    <p #title>В разработке</p>
+  </app-caption-component>
+  <p class="text">
+    Проект находится на финальной стадии разработки, с интеграцией API для
+    автоматического обновления данных о играх. Мы стремимся предоставить вам
+    лучший опыт оценки и выбора игр в ближайшее время.
+  </p>
 </div>

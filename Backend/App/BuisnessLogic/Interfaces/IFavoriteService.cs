@@ -8,7 +8,7 @@ using Data.Models.Dto;
 namespace BuisnessLogic.Interfaces;
 public interface IFavoriteService
 {
-    Task<IList<GameDto>?> GetFavoritesFromUser(int count);
+   IList<GameDto>? GetFavoritesFromUser(int count);
 
 
 }

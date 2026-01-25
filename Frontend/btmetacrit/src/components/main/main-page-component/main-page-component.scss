@@ -4,19 +4,19 @@
   background-image: url("../../../assets/img/store_steam.png");
   background-color: aqua;
 }
-// :host::before {
-//   position: absolute;
-//   z-index: 3;
-//   opacity: 0.6;
-//   background-color: usecolor(basic_dark);
-// }
 .blocks {
   list-style: none;
 }
 .slider {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-wrap: wrap;
   gap: 1;
+}
+.text {
+  width: 30%;
+}
+.container {
+  background-color: usecolor(basic_dark);
+  padding: 10px;
+  margin-bottom: 10px;
 }

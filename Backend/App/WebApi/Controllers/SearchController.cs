@@ -113,7 +113,7 @@ public class SearchController(
     {
         try
         {
-            var firstes = await favoriteService.GetFavoritesFromUser(count);
+            var firstes = favoriteService.GetFavoritesFromUser(count);
 
             if (firstes is null)
             {
