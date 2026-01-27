@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GeneratorData")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ad0383ea9c131c3369f3e528c5d98f980ccbec20")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+47d7f43cb4bffb8e578efa4f4861804ff466de9e")]
 [assembly: System.Reflection.AssemblyProductAttribute("GeneratorData")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GeneratorData")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

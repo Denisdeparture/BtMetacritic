@@ -21,10 +21,11 @@ import { KindOfSpinner } from '../../common/to-do-spinner/to-do-spinner';
 import { ToDoSpinnerService } from '../../../services/views/to-do-spinner-service';
 import { HintsService } from '../../../services/views/hints-service';
 import { AsyncPipe, CommonModule } from '@angular/common';
+import { AuthService } from '../../../services/auth-service';
 
 @Component({
   selector: 'app-main-page-component',
-  providers: [ToDoSpinnerService],
+  providers: [ToDoSpinnerService, AuthService],
   standalone: true,
   imports: [CaptionComponent, SliderComponent, CommonModule],
   templateUrl: './main-page-component.html',

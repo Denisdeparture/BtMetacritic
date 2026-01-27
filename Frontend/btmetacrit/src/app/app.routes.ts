@@ -6,6 +6,16 @@ export const LINKS = {
   GAME: 'game',
   SEARCH: 'search',
 };
+export const OAUTHLINKS = {
+  GOOGLE: 'signin-google',
+  YANDEX: 'signin-yandex',
+  DISCORD: 'signin-discord',
+};
+export const providerNames = {
+  YANDEX: 'Yandex',
+  GOOGLE: 'Google',
+  DISCORD: 'Discord',
+};
 export const routes: Routes = [
   {
     path: LINKS.GAME + '/:id',
@@ -42,6 +52,36 @@ export const routes: Routes = [
       ),
     resolve: {
       sections: searchResolver,
+    },
+  },
+  {
+    path: OAUTHLINKS.GOOGLE,
+    loadComponent: () =>
+      import('../components/auth/provider-callback-component/provider-callback-component').then(
+        (x) => x.ProviderCallbackComponent,
+      ),
+    data: {
+      provider: providerNames.DISCORD,
+    },
+  },
+  {
+    path: OAUTHLINKS.YANDEX,
+    loadComponent: () =>
+      import('../components/auth/provider-callback-component/provider-callback-component').then(
+        (x) => x.ProviderCallbackComponent,
+      ),
+    data: {
+      provider: providerNames.YANDEX,
+    },
+  },
+  {
+    path: OAUTHLINKS.GOOGLE,
+    loadComponent: () =>
+      import('../components/auth/provider-callback-component/provider-callback-component').then(
+        (x) => x.ProviderCallbackComponent,
+      ),
+    data: {
+      provider: providerNames.GOOGLE,
     },
   },
   {

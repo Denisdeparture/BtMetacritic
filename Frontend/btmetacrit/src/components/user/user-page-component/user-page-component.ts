@@ -33,6 +33,7 @@ import { HintsService } from '../../../services/views/hints-service';
 import { ToDoSpinnerService } from '../../../services/views/to-do-spinner-service';
 import { SteamApiService } from '../../../services/steam-api-service';
 import { TokenStore } from '../../../services/stores/token-store';
+import { AuthService } from '../../../services/auth-service';
 @Component({
   selector: 'app-user-page-component',
   providers: [ToDoSpinnerService],
