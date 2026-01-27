@@ -25,6 +25,7 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { LINKS } from '../../../app/app.routes';
 import { OAuth2Type } from '../../../types';
 import { UserService } from '../../../services/user-service';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   animations: [show],
@@ -44,6 +45,8 @@ export class AuthPopUpComponent implements AfterViewInit {
   rerender = inject(Renderer2);
 
   authService = inject(AuthService);
+
+  oauthService = inject(OAuthService);
 
   userService = inject(UserService);
 
@@ -65,7 +68,7 @@ export class AuthPopUpComponent implements AfterViewInit {
 
   readonly authForm = viewChild(AuthFormComponent);
 
-  readonly OAuth2Buttons: OAuth2Type[] = []; // maybe with resolver like in main
+  readonly OAuth2Buttons: OAuth2Type[] = this.authService.getOAuthProviders();
 
   readonly condition = computed(() =>
     this.option() === KindOfAuthOp.LOGIN.toString() ? true : false,

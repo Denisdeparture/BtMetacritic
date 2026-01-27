@@ -3,6 +3,7 @@ import {
   Component,
   inject,
   input,
+  OnInit,
 } from '@angular/core';
 import { AuthService } from '../../../services/auth-service';
 
@@ -14,8 +15,11 @@ import { AuthService } from '../../../services/auth-service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OAuth2ButtonComponent {
-  readonly logoLink = input.required<string>(); // link in asset or web
-  readonly provider = input.required<string>(); // check
-
+  readonly logoLink = input.required<string>();
+  readonly provider = input.required<string>();
   oAuthService = inject(AuthService);
+
+  clickOnProvider() {
+    this.oAuthService.oAuthlogin(this.provider());
+  }
 }

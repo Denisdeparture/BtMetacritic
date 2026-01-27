@@ -1,3 +1,5 @@
+import { AuthConfig } from 'angular-oauth2-oidc';
+
 //main types
 export type User = {
   id: number;
@@ -166,4 +168,6 @@ export type UserRegisterRequest = UserLoginRequest & {
 export type OAuth2Type = {
   provider: string;
   logoLink: string;
+  logoutLink: string;
+  config?: AuthConfig;
 };

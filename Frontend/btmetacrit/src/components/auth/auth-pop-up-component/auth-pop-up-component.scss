@@ -22,6 +22,10 @@
 .oauth2_list {
   display: flex;
   flex-direction: row;
+  list-style: none;
+}
+.oauth2_list_item {
+  margin-right: 20px;
 }
 .container-up {
   display: flex;

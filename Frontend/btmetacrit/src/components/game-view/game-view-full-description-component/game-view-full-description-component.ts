@@ -26,6 +26,7 @@ export class GameViewFullDescriptionComponent {
 
   private $baseheight = 200;
   getHtml(): SafeHtml {
+    // this.sanitizer.sanitize()
     return this.sanitizer.bypassSecurityTrustHtml(this.description());
   }
   changeHeight(): void {

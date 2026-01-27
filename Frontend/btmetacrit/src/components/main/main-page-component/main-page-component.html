@@ -10,27 +10,6 @@
   </p>
 </div>
 <div class="container">
-  <div class="blocks">
-    @if (sections()) {
-      @for (sect of sections(); track sect.id) {
-        <app-caption-component
-          class="caption"
-          orientation="start"
-          [isHasLink]="false"
-          ><p #title>{{ sect.caption!.title }}</p></app-caption-component
-        >
-        <div class="slider">
-          <app-slider-component
-            [maxLengthCell]="sect.games?.length!"
-            [orientation]="'start'"
-            [objects]="mapToSlider(sect.id)"
-          />
-        </div>
-      }
-    }
-  </div>
-</div>
-<div class="container">
   <app-caption-component [isHasLink]="false" [orientation]="'start'">
     <p #title>О сервисе</p>
   </app-caption-component>
